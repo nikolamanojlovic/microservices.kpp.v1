@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  kpp-veb:
+    build: ./servisi/veb-kpp/
+    volumes:
+      - ./servisi/veb-kpp/react-kpp:/app
+    ports:
+      - 3000:3000
