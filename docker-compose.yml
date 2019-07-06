@@ -7,3 +7,14 @@ services:
       - ./servisi/veb-kpp/react-kpp:/app
     ports:
       - 3000:3000
+    depends_on:
+      - kpp-baza-zaposleni
+      - kpp-baza-procesi
+  kpp-baza-zaposleni:
+    build: ./servisi/baza-zaposleni/
+    ports:
+      - 3005:1433
+  kpp-baza-procesi:
+    build: ./servisi/baza-procesi/
+    ports:
+      - 3006:1433

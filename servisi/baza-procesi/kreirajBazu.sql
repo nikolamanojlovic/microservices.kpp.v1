@@ -1,0 +1,1 @@
+CREATE DATABASE kpp_baza_procesi;

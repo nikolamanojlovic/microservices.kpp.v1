@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/mssql/server:2017-GA-ubuntu
 EXPOSE 1433
 
 ENV ACCEPT_EULA='Y'
-ENV SA_PASSWORD='bazaZaposlenih123'
+ENV SA_PASSWORD='bazaProcesi123'
 
 RUN mkdir /opt/mssql-scripts
 COPY kreirajBazu.sql /opt/mssql-scripts/
