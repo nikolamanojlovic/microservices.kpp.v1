@@ -11,13 +11,13 @@ services:
       - kpp-baza-zaposleni
       - kpp-baza-procesi
   kpp-mikroservis-zaposleni:
-    build: ./servisi/mikroservis-zaposleni/mikroservis-zaposleni/
+    build: ./servisi/mikroservis-zaposleni/
     ports:
       - 3001:80
     depends_on:
       - kpp-baza-zaposleni
   kpp-mikroservis-procesi:
-    build: ./servisi/mikroservis-procesi/mikroservis-procesi/
+    build: ./servisi/mikroservis-procesi/
     ports:
       - 3002:80
     depends_on:
