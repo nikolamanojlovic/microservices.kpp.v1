@@ -22,7 +22,7 @@ COPY --from=publish /app/mikroservis-zaposleni/out ./
 EXPOSE 80
 
 RUN chmod +x ./mikroservis-zaposleni.dll
-ENTRYPOINT ["dotnet, "./mikroservis-zaposleni.dll"]
+ENTRYPOINT ["dotnet", "./mikroservis-zaposleni.dll"]
 
 
 
