@@ -12,6 +12,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using mikroserviszaposleni.Domen;
+using mikroserviszaposleni.Fasada;
+using mikroserviszaposleni.Fasada.implementacija;
+using mikroserviszaposleni.OPP;
+using mikroserviszaposleni.OPP.implementacija;
+using mikroserviszaposleni.Servis;
+using mikroserviszaposleni.Servis.implementacija;
 
 namespace mikroservis_zaposleni
 {
@@ -29,6 +35,15 @@ namespace mikroservis_zaposleni
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<BPKontekst>(opcije => opcije.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Fasade
+            services.AddTransient<IAutentifikacionaFasada, AutentifikacionaFasada>();
+
+            // Servisi
+            services.AddTransient<IAutentifikacioniServis, AutentifikacioniServis>();
+
+            // OPP
+            services.AddTransient<IRadnikOPP, RadnikOPP>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

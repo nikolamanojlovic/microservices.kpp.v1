@@ -29,6 +29,9 @@ namespace mikroserviszaposleni.Domen
         [Column("tip")]
         public String Tip { get; set; }
 
+        [Column("sifra")]
+        public String Sifra { get; set; }
+
         [Column("radno_mesto")]
         public List<RadnoMesto> RadnoMesto { get; set; }
     }

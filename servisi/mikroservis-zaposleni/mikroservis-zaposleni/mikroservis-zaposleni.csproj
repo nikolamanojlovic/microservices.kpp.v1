@@ -8,6 +8,14 @@
     <Folder Include="wwwroot\" />
     <Folder Include="Domen\" />
     <Folder Include="Pomocne\" />
+    <Folder Include="OPP\" />
+    <Folder Include="OPP\implementacija\" />
+    <Folder Include="Servis\" />
+    <Folder Include="Fasada\" />
+    <Folder Include="Servis\implementacija\" />
+    <Folder Include="Izuzeci\" />
+    <Folder Include="Fasada\implementacija\" />
+    <Folder Include="Podaci\" />
   </ItemGroup>
 
   <ItemGroup>
