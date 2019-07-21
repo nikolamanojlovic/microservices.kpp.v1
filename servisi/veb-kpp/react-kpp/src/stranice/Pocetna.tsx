@@ -13,14 +13,17 @@ interface PocetnaStanje {
 
 type Props = PocetnaProps & PocetnaLinkDispatchProps & PocetnaLinkStateProps;
 
-export class Pocetna extends Component<Props, PocetnaStanje> {    
+export class Pocetna extends Component<Props, PocetnaStanje> {
     render() {
         const { korisnik } = this.props;
 
-        return(
+        return (
             <div className="stranica-kontejner">
-                <Navigacija korisnik={korisnik}/>
-                <Sadrzaj/>
+                <div className="sajt-kontejner">
+                    <Navigacija korisnik={korisnik}/>
+                    <Sadrzaj />
+                </div>
+                <div className="pozadina-kontejner"/>
             </div>
         );
     }
