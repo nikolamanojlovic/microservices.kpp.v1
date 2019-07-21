@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
+import { Navigacija } from "../komponente/Navigacija";
+import { Sadrzaj } from "../komponente/Sadrzaj";
 
 interface PocetnaProps {
 }
@@ -13,7 +15,14 @@ type Props = PocetnaProps & PocetnaLinkDispatchProps & PocetnaLinkStateProps;
 
 export class Pocetna extends Component<Props, PocetnaStanje> {    
     render() {
-        return <p>Hello</p>
+        const { korisnik } = this.props;
+
+        return(
+            <div className="stranica-kontejner">
+                <Navigacija korisnik={korisnik}/>
+                <Sadrzaj/>
+            </div>
+        );
     }
 }
 
