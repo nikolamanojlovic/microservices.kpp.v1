@@ -80,12 +80,12 @@
   all: unset;
   margin-top: 0.3em;
 
-  color: rgb(40,40,40, 0.6);
+  color: rgb(48,48,48, 0.6);
   font-size: 1em;
   font-weight: 700;
 }
 
 .input-dugme:hover {
   cursor: pointer;
-  color: rgb(40,40,40);
+  color: rgb(48,48,48);
 }
