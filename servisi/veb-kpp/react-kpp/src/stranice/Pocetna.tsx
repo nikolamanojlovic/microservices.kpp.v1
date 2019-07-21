@@ -11,7 +11,7 @@ interface PocetnaProps {
 interface PocetnaStanje {
 }
 
-type Props = PocetnaProps & PocetnaLinkDispatchProps & PocetnaLinkStateProps;
+type Props = PocetnaProps & PocetnaLinkStateProps;
 
 export class Pocetna extends Component<Props, PocetnaStanje> {
     render() {
@@ -33,17 +33,9 @@ interface PocetnaLinkStateProps {
     korisnik?: IKorisnik
 }
 
-interface PocetnaLinkDispatchProps {
-
-}
-
 // ownProps - props koje je komponenta primila bez obzira na Redux
 const mapStateToProps = (state: StanjeAplikacije, ownProps: PocetnaProps): PocetnaLinkStateProps => ({
     korisnik: state.korisnikReducer.korisnik
 });
 
-const mapDispatchToProps = (): PocetnaLinkDispatchProps => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Pocetna);
+export default connect(mapStateToProps, null)(Pocetna);
