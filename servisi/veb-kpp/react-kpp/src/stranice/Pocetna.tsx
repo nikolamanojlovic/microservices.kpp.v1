@@ -1,7 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 
-export class Pocetna extends React.Component {
-
+export class Pocetna extends Component {    
     render() {
         return <p>Hello</p>
     }

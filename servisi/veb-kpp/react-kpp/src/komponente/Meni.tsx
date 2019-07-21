@@ -1,6 +1,6 @@
 import React from "react";
 
-export class Prijava extends React.Component {
+export class Meni extends React.Component {
 
     render() {
         return {

@@ -1,10 +1,12 @@
-import { IKorisnikStanje, KorisnikTipoviAkcija, PRIJAVA, ODJAVA } from "./tipovi";
+import { IKorisnikStanje, KorisnikAkcije, PRIJAVA, ODJAVA } from "./tipovi";
 
+// INICIJALNO STANJE
 const inicijalnoStanje: IKorisnikStanje = {
     korisnik: undefined
 }
 
-export function korisnikReducer(state = inicijalnoStanje, action: KorisnikTipoviAkcija) : IKorisnikStanje {
+// REDUCER
+const korisnikReducer = (state = inicijalnoStanje, action: KorisnikAkcije) : IKorisnikStanje => {
     switch(action.type) {
         case PRIJAVA:
             return {...state, korisnik: action.payload}
@@ -14,3 +16,5 @@ export function korisnikReducer(state = inicijalnoStanje, action: KorisnikTipovi
             return state;
     }
 }
+
+export {korisnikReducer};
