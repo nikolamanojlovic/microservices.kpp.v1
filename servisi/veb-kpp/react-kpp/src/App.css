@@ -51,9 +51,27 @@
   transform: scale(1.1)
 }
 
+/* NASLOVNA */
+.naslovna-tekst {
+  width:75%;
+  bottom: 6em;
+  right: 3em;
+  position: fixed;
+  text-align: right;
+}
+
+.naslovna-h1 {
+  font-size: 5em;
+  margin-bottom: 0;
+}
+
+.naslovna-p {
+  font-size: 1.25em;
+}
+
 /* CSS FORME */
 .forma-prijava-div {
-  margin-top: 90%;
+  margin-top: 95%;
 }
 
 .forma-prijava {

@@ -1,11 +1,21 @@
 import React from "react";
+import { IKorisnik } from "../store/korisnik/tipovi";
+import { Naslovna } from "./Naslovna";
 
-export class Sadrzaj extends React.Component {
+interface SadrzajProps {
+    korisnik?: IKorisnik
+}
+
+type Props = SadrzajProps;
+
+export class Sadrzaj extends React.Component<Props> {
 
     render() {
+        const {korisnik} = this.props;
+
         return(
             <div className="sadrzaj-kontejner">
-                <p>LOGO</p>
+                 { korisnik ? <p/> : <Naslovna/> }
             </div>
         )
     }
