@@ -41,7 +41,7 @@
   height: 100%;
   width: 100%;
 
-  filter: blur(15px);
+  filter: blur(10px);
  
   background-image: url("./resursi/pozadina.jpg");
   background-position: center;
@@ -70,6 +70,10 @@
   color: rgb(40,40,40, 0.6);
   margin-bottom: 0.5em;
   padding: 0.3em;
+
+  -webkit-box-shadow: -10px 0px 20px 0px rgba(40,40,40,0.1);
+  -moz-box-shadow: -10px 0px 20px 0px rgba(40,40,40,0.1);
+  box-shadow: -10px 0px 20px 0px rgba(40,40,40,0.1);
 }
 
 .input-dugme {
