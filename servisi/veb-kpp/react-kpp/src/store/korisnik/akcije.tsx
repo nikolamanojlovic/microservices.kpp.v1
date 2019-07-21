@@ -1,6 +1,6 @@
-import { KorisnikTipoviAkcija, PRIJAVA, ODJAVA, Korisnik } from "./tipovi";
+import { KorisnikTipoviAkcija, PRIJAVA, ODJAVA, IKorisnik } from "./tipovi";
 
-export function prijava(korisnik: Korisnik): KorisnikTipoviAkcija {
+export function prijava(korisnik: IKorisnik): KorisnikTipoviAkcija {
     return {
       type: PRIJAVA,
       payload: korisnik
