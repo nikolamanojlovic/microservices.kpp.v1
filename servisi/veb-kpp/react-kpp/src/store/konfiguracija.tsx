@@ -8,7 +8,7 @@ export type AkcijeAplikacije = KorisnikAkcije;
 
 // SVI REDUCER-I KOJE APLIKACIJA IMA
 const reducerAplikacije = combineReducers({
-    korisnik: korisnikReducer
+    korisnikReducer
 });
 
 // SVA STANJA KOJE APLIKACIJA IMA
