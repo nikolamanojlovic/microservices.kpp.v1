@@ -1,10 +1,5 @@
 import React, { FormEvent } from "react";
-import { IKorisnik } from "../store/korisnik/tipovi";
-import { PrijaviKorisnika } from "../store/korisnik/akcije";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
-import { AkcijeAplikacije } from "../store/konfiguracija";
-import { bindActionCreators } from "redux";
+import { PrijavaFunkcija } from "../store/korisnik/akcije";
 
 interface PrijavaFormaProps {
 }
@@ -14,7 +9,7 @@ interface PrijavaFormaStanje {
     sifra: string,
 }
 
-type Props = PrijavaFormaProps & PrijavaFormaLinkDispatchProps;
+type Props = PrijavaFormaProps;
 
 export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
 
@@ -29,7 +24,7 @@ export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
 
     _prijavaKorisnika(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(this.state);
+        PrijavaFunkcija(this.state);
     }
 
     render() {
@@ -47,12 +42,4 @@ export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
     }
 }
 
-interface PrijavaFormaLinkDispatchProps {
-    //prijaviKorisnika: ({ korisnickoIme, sifra } : { korisnickoIme: string, sifra : string}) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AkcijeAplikacije>, ownProps: PrijavaFormaProps) : PrijavaFormaLinkDispatchProps => ({
-    prijaviKorisnika: bindActionCreators(PrijaviKorisnika, dispatch)
-});
-
-export default connect(null, mapDispatchToProps)(PrijavaForma);
+export default PrijavaForma;

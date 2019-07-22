@@ -1,5 +1,5 @@
 import { korisnikReducer } from './korisnik/reducer';
-import { combineReducers, createStore, Store, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { KorisnikAkcije } from './korisnik/tipovi';
 import thunk, { ThunkMiddleware } from "redux-thunk";
 

@@ -1,6 +1,4 @@
 import React from "react";
-import { PrijavaForma } from "./PrijavaForma";
-import { NavigacijaForma } from "./NavigacijaForma";
 
 export class Naslovna extends React.Component {
 
