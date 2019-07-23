@@ -32,7 +32,7 @@ export const OdjaviKorisnika = ({ korisnickoIme, sifra }: { korisnickoIme: strin
 }
 
 export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: string, sifra: string }) => {
-  Axios.post(API_ZAPOSLENI + "/autentifikuj", {
+  Axios.post(API_ZAPOSLENI + "/AutentifikacijaKontroler/Autentifikuj", {
     korisnickoIme: korisnickoIme,
     sifra: sifra
   }).then(function (response) {

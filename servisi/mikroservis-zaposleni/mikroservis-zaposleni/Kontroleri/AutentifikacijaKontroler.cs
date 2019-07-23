@@ -7,18 +7,18 @@ using mikroserviszaposleni.Podaci;
 
 namespace mikroserviszaposleni.Kontroleri
 {
-    [Route("api/autentifikuj")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class AutentifikacioniKontroler : ControllerBase
+    public class AutentifikacijaKontroler : ControllerBase
     {
         private IAutentifikacionaFasada _autentifikacionaFasada;
 
-        public AutentifikacioniKontroler(IAutentifikacionaFasada autentifikacionaFasada)
+        public AutentifikacijaKontroler(IAutentifikacionaFasada autentifikacionaFasada)
         {
             _autentifikacionaFasada = autentifikacionaFasada;
         }
 
-        [HttpPost]
+        [HttpPost("Autentifikuj")]
         public ActionResult<Radnik> Autentifikuj([FromBody] Kredencijali kredencijali)
         {
             try

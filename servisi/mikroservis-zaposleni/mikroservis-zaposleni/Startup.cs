@@ -33,6 +33,7 @@ namespace mikroservis_zaposleni
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<BPKontekst>(opcije => opcije.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -55,10 +56,13 @@ namespace mikroservis_zaposleni
             }
             else
             {
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseMvc();
         }
     }
