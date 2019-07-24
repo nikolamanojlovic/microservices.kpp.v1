@@ -58,6 +58,13 @@ namespace mikroservis_zaposleni
             {
             }
 
+            using (var servis = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = servis.ServiceProvider.GetRequiredService<BPKontekst>();
+                context.Database.Migrate();
+                context.Database.EnsureCreated();
+            }
+
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()

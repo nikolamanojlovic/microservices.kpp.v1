@@ -25,9 +25,9 @@ export const PrijaviKorisnika = (korisnik: IKorisnik) => {
   }
 }
 
-export const OdjaviKorisnika = ({ korisnickoIme, sifra }: { korisnickoIme: string, sifra: string }) => {
+export const OdjaviKorisnika = () => {
   return (dispatch: Dispatch<AkcijeAplikacije>, getState: () => StanjeAplikacije) => {
-    // ulaz je data iz response-a dispatch(prijava())
+    dispatch(odjava());
   }
 }
 
@@ -36,9 +36,9 @@ export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: strin
     korisnickoIme: korisnickoIme,
     sifra: sifra
   }).then(function (response) {
-    console.log(response)
+    console.log(response.data)
     PrijaviKorisnika(response.data)
   }).catch(function (response) {
-    console.log(response);
+    console.log(response.data);
   })
 }

@@ -8,8 +8,7 @@ namespace mikroserviszaposleni.OPP.implementacija
     public class RadnikOPP : SuperOPP<Radnik>, IRadnikOPP 
     {
         public RadnikOPP(BPKontekst kontekst) : base(kontekst)
-        {
-
+        { 
         }
 
         public Radnik VratiPoKredencijalima(KeyValuePair<long, string> kredencijali)
