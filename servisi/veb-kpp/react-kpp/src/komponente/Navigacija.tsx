@@ -13,9 +13,10 @@ export class Navigacija extends React.Component<Props> {
 
     render() {
         const {korisnik} = this.props;
-
+    
         return (
             <div className="navigacija-kontejner">
+                { console.log(korisnik) }
                 { korisnik ? <NavigacijaForma/> : <PrijavaForma/> }
             </div>
         )

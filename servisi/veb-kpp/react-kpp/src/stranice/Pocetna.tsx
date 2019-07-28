@@ -38,4 +38,4 @@ const mapStateToProps = (state: StanjeAplikacije, ownProps: PocetnaProps): Pocet
     korisnik: state.korisnikReducer.korisnik
 });
 
-export default connect(mapStateToProps, null)(Pocetna);
+export default connect(mapStateToProps)(Pocetna);

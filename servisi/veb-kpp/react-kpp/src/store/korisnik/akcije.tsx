@@ -1,5 +1,5 @@
 import { PRIJAVA, ODJAVA, IKorisnik } from "./tipovi";
-import { AkcijeAplikacije, StanjeAplikacije } from "../konfiguracija";
+import { AkcijeAplikacije, StanjeAplikacije, store } from "../konfiguracija";
 import { Dispatch } from "redux";
 import Axios from "axios";
 import { API_ZAPOSLENI } from "../../pomocnici/Konstante";
@@ -19,6 +19,7 @@ export const odjava = (): AkcijeAplikacije => {
 }
 
 // KOMUNIKACIJA
+
 export const PrijaviKorisnika = (korisnik: IKorisnik) => {
   return (dispatch: Dispatch<AkcijeAplikacije>, getState: () => StanjeAplikacije) => {
     dispatch(prijava(korisnik))
@@ -36,9 +37,8 @@ export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: strin
     korisnickoIme: korisnickoIme,
     sifra: sifra
   }).then(function (response) {
-    console.log(response.data)
-    PrijaviKorisnika(response.data)
+    PrijaviKorisnika(response.data);
   }).catch(function (response) {
-    console.log(response.data);
+    console.log("erro" + response.data);
   })
 }
