@@ -24,7 +24,7 @@ namespace mikroserviszaposleni.Fasada.implementacija
 
             try
             {
-                KeyValuePair<long, String> kredencijali = new KeyValuePair<long, String>(Int64.Parse(korisnickoIme), sifra);
+                KeyValuePair<int, String> kredencijali = new KeyValuePair<int, String>(Int32.Parse(korisnickoIme), sifra);
                 return _autentifikacioniServis.VratiRadnikaPoKredencijalima(kredencijali);
             }
             catch (Exception ex) when (ex is FormatException)

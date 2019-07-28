@@ -16,7 +16,7 @@ namespace mikroserviszaposleni.Servis.implementacija
             _radnikOPP = radnikOPP;
         }
 
-        public Radnik VratiRadnikaPoKredencijalima(KeyValuePair<long, string> kredencijali)
+        public Radnik VratiRadnikaPoKredencijalima(KeyValuePair<int, string> kredencijali)
         {
             try
             {

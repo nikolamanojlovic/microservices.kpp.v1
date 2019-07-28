@@ -11,9 +11,9 @@ namespace mikroserviszaposleni.OPP.implementacija
         { 
         }
 
-        public Radnik VratiPoKredencijalima(KeyValuePair<long, string> kredencijali)
+        public Radnik VratiPoKredencijalima(KeyValuePair<int, string> kredencijali)
         {
-            return VratiKontekst().Set<Radnik>().Single(r => r.IDRadnika.Equals(kredencijali.Key) && r.Sifra.Equals(kredencijali.Value));
+            return VratiKontekst().Set<Radnik>().SingleOrDefault(r => r.IDRadnika == kredencijali.Key && r.Sifra.Equals(kredencijali.Value));
         }
     }
 }

@@ -8,7 +8,8 @@ namespace mikroserviszaposleni.Domen
     public class RadnoMesto
     {
         [Key, Column("id_radnog_mesta")]
-        public long IDRadnogMesta { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int IDRadnogMesta { get; set; }
 
         [Column("naziv")]
         public String Naziv { get; set; }
@@ -16,7 +17,11 @@ namespace mikroserviszaposleni.Domen
         [Column("opis")]
         public String Opis { get; set; }
 
-        [Column("radnik")]
+        public int RadnikIDRadnika { get; set; }
+
+        public String RadnikJMBG { get; set; }
+
+        [ForeignKey("RadnikIDRadnika, RadnikJMBG")]
         public Radnik Radnik { get; set; }
     }
 }

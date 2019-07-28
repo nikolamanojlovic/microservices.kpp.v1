@@ -6,6 +6,6 @@ namespace mikroserviszaposleni.Servis
 {
     public interface IAutentifikacioniServis
     {
-        Radnik VratiRadnikaPoKredencijalima(KeyValuePair<long, String> kredencijali);
+        Radnik VratiRadnikaPoKredencijalima(KeyValuePair<int, String> kredencijali);
     }
 }

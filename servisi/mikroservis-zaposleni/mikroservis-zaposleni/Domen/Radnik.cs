@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mikroserviszaposleni.Domen
@@ -8,10 +7,12 @@ namespace mikroserviszaposleni.Domen
     [Table("radnik")]
     public class Radnik
     {
-        [Key, Column("id_radnika", Order = 0)]
-        public long IDRadnika { get; set; }
+        [Column("id_radnika")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int IDRadnika { get; set; }
 
-        [Key, Column("jmbg", Order = 1)]
+        [Column("jmbg")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public String JMBG { get; set; }
 
         [Column("ime")]
@@ -32,7 +33,6 @@ namespace mikroserviszaposleni.Domen
         [Column("sifra")]
         public String Sifra { get; set; }
 
-        [Column("radno_mesto")]
         public List<RadnoMesto> RadnoMesto { get; set; }
     }
 }

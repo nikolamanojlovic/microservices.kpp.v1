@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using mikroserviszaposleni.Pomocne;
 
@@ -12,33 +13,36 @@ namespace mikroserviszaposleni.Domen
 
         public DbSet<Radnik> Radnik { get; set; }
         public DbSet<RadnoMesto> RadnoMesto { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Radnik nmanojlovic = new Radnik()
-            {
-                IDRadnika = 115566,
-                JMBG = "000999000",
-                Ime = "Никола",
-                Prezime = "Манојловић",
-                DatumRodjenja = new DateTime(1995, 7, 3),
-                RadniStaz = 3,
-                Sifra = "nikola",
-                Tip = TipRadnika.POSLOVNI_ANALITICAR
-            };
+            modelBuilder.Entity<Radnik>().HasKey(r => new { r.IDRadnika, r.JMBG });
+            modelBuilder.Entity<RadnoMesto>().HasOne(r => r.Radnik).WithMany(rm => rm.RadnoMesto).HasForeignKey(rm => new {rm.RadnikIDRadnika, rm.RadnikJMBG });
 
-            RadnoMesto poslovniAnaliticar = new RadnoMesto()
-            {
-                IDRadnogMesta = 1,
-                Naziv = "Пословни аналитичар",
-                Opis = "Креирање, управљање и анализирање пословних процеса",
-                Radnik = nmanojlovic
-            };
+            modelBuilder.Entity<Radnik>().HasData(
+                new
+                {
+                    IDRadnika = 115566,
+                    JMBG = "000999000",
+                    Ime = "Никола",
+                    Prezime = "Манојловић",
+                    DatumRodjenja = new DateTime(1995, 7, 3),
+                    RadniStaz = 3,
+                    Sifra = "nikola",
+                    Tip = TipRadnika.POSLOVNI_ANALITICAR
+                }
+            );
 
-            nmanojlovic.RadnoMesto.Add(poslovniAnaliticar);
-            
-
-            modelBuilder.Entity<Radnik>().HasData(new Radnik[] { nmanojlovic });
+            modelBuilder.Entity<RadnoMesto>().HasData(
+                new
+                {
+                    IDRadnogMesta = 100,
+                    Naziv = "Пословни аналитичар",
+                    Opis = "Креирање, управљање и анализирање пословних процеса",
+                    RadnikIDRadnika = 115566,
+                    RadnikJMBG = "000999000"
+                }
+            );
         }
     }
 }

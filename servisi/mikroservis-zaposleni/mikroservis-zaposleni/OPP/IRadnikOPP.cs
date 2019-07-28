@@ -10,6 +10,6 @@ namespace mikroserviszaposleni.OPP
         /// Vraca radnika na osnovu kredencijala ukoliko nema radnika, ili ih ima vise od jedan
         /// baca gresku
         /// </summary>
-        Radnik VratiPoKredencijalima(KeyValuePair<long, String> kredencijali);
+        Radnik VratiPoKredencijalima(KeyValuePair<int, String> kredencijali);
     }
 }
