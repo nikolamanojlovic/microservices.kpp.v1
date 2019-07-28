@@ -13,7 +13,7 @@ interface PocetnaStanje {
 
 type Props = PocetnaProps & PocetnaLinkStateProps;
 
-export class Pocetna extends Component<Props, PocetnaStanje> {
+class Pocetna extends Component<Props, PocetnaStanje> {
     render() {
         const { korisnik } = this.props;
 

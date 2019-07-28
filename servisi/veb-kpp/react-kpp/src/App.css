@@ -69,6 +69,19 @@
   font-size: 1.25em;
 }
 
+/* KREIRAJ */
+.kreiraj-proces-h1 {
+  display: block;
+  font-size: 5em;
+  margin-bottom: 0;
+}
+
+.kreiraj-tok-h1 {
+  display: block;
+  font-size: 5em;
+  margin-bottom: 0;
+}
+
 /* CSS FORME */
 .forma-prijava-div {
   margin-top: 60%;
