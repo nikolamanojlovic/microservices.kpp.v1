@@ -16,29 +16,30 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
     render() {
         return (
-            <div className="forma-proces-div">
-                <form className="forma-proces">
-                    <div className="forma-proces-naziv-kategorija">
-                        <label>Назив процеса
-                            <input className="input-tekst" name="naziv" type="text"/>
-                        </label>
-                        <label>Категорија процеса
-                            <select className="input-tekst" name="kategorija">
-                                {
-                                    TIP_PROCESA.map(function(e, i) {
-                                        return <option value={i}>{e}</option>
-                                    })
-                                }
-                            </select>
-                        </label>
-                    </div>
-                    <div className="forma-proces-opis">
-                        <label>Опис процеса
-                            <textarea className="input-tekst" name="opis" rows={4} cols={50}/>
-                        </label>
-                    </div>
-                </form>
-            </div>
+            <form className="forma-proces">
+                <div className="forma-proces-naziv-kategorija">
+                    <label className="input-naziv-kategorija-opis">
+                        <label>Назив процеса</label>
+                        <input className="input-tekst" name="naziv" type="text" />
+                    </label>
+                    <label className="input-naziv-kategorija-opis">
+                        <label>Категорија процеса</label>
+                        <select className="input-tekst" name="kategorija">
+                            {
+                                TIP_PROCESA.map(function (e, i) {
+                                    return <option value={i}>{e}</option>
+                                })
+                            }
+                        </select>
+                    </label>
+                </div>
+                <div className="forma-proces-opis">
+                    <label className="input-naziv-kategorija-opis">
+                        <label>Опис процеса</label>
+                        <textarea className="input-tekst input-opis" name="opis" rows={4} cols={10} />
+                    </label>
+                </div>
+            </form>
         )
     }
 }
