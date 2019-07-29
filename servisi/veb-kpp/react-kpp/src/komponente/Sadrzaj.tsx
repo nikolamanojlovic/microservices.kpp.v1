@@ -1,6 +1,7 @@
 import React from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
 import { Naslovna } from "./Naslovna";
+import { Kreiraj } from "./Kreiraj";
 
 interface SadrzajProps {
     korisnik?: IKorisnik
@@ -15,7 +16,7 @@ export class Sadrzaj extends React.Component<Props> {
 
         return(
             <div className="sadrzaj-kontejner">
-                 { korisnik ? <p/> : <Naslovna/> }
+                 { korisnik ? <Kreiraj/> : <Kreiraj/>  /* TODO: Change this */}
             </div>
         )
     }

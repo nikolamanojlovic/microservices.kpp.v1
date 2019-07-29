@@ -72,14 +72,18 @@
 /* KREIRAJ */
 .kreiraj-proces-h1 {
   display: block;
-  font-size: 5em;
-  margin-bottom: 0;
+  font-size: 3em;
+  margin-top: 0;
+  margin-left: 0.5em;
+  margin-bottom: 1em;
 }
 
 .kreiraj-tok-h1 {
   display: block;
-  font-size: 5em;
-  margin-bottom: 0;
+  font-size: 3em;
+  margin-top: 0;
+  margin-left: 0.5em;
+  margin-bottom: 1em;
 }
 
 /* CSS FORME */
