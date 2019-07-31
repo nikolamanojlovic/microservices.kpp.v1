@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
-import { StanjeAplikacije, AkcijeAplikacije } from "../store/konfiguracija";
+import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { Navigacija } from "../komponente/Navigacija";
 import { Sadrzaj } from "../komponente/Sadrzaj";
-import { bindActionCreators } from "redux";
-import { PrijavaFunkcija, prijava } from "../store/korisnik/akcije";
-import { ThunkDispatch } from "redux-thunk";
 
 interface PocetnaProps {
 }
@@ -24,7 +21,7 @@ class Pocetna extends Component<Props, PocetnaStanje> {
             <div className="stranica-kontejner">
                 <div className="sajt-kontejner">
                     <Navigacija korisnik={korisnik}/>
-                    <Sadrzaj />
+                    <Sadrzaj korisnik={korisnik}/>
                 </div>
                 <div className="pozadina-kontejner"/>
             </div>

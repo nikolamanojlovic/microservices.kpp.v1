@@ -16,7 +16,7 @@ export class Sadrzaj extends React.Component<Props> {
 
         return(
             <div className="sadrzaj-kontejner">
-                 { korisnik ? <Kreiraj/> : <Kreiraj/>  /* TODO: Change this */}
+                {korisnik ? <Kreiraj /> : <Naslovna />}
             </div>
         )
     }
