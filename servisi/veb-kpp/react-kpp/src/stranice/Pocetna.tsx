@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
-import { StanjeAplikacije } from "../store/konfiguracija";
+import { StanjeAplikacije, AkcijeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { Navigacija } from "../komponente/Navigacija";
 import { Sadrzaj } from "../komponente/Sadrzaj";
+import { bindActionCreators } from "redux";
+import { PrijavaFunkcija, prijava } from "../store/korisnik/akcije";
+import { ThunkDispatch } from "redux-thunk";
 
 interface PocetnaProps {
 }
@@ -13,7 +16,7 @@ interface PocetnaStanje {
 
 type Props = PocetnaProps & PocetnaLinkStateProps;
 
-export class Pocetna extends Component<Props, PocetnaStanje> {
+class Pocetna extends Component<Props, PocetnaStanje> {
     render() {
         const { korisnik } = this.props;
 
@@ -37,5 +40,5 @@ interface PocetnaLinkStateProps {
 const mapStateToProps = (state: StanjeAplikacije, ownProps: PocetnaProps): PocetnaLinkStateProps => ({
     korisnik: state.korisnikReducer.korisnik
 });
-
+  
 export default connect(mapStateToProps)(Pocetna);

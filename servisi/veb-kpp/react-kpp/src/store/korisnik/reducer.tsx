@@ -1,4 +1,4 @@
-import { IKorisnikStanje, KorisnikAkcije, PRIJAVA, ODJAVA } from "./tipovi";
+import { IKorisnikStanje, KorisnikAkcije, PRIJAVA, ODJAVA, IKorisnik } from "./tipovi";
 
 // INICIJALNO STANJE
 const inicijalnoStanje: IKorisnikStanje = {

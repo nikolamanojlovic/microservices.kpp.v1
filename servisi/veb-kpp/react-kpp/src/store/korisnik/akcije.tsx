@@ -19,13 +19,6 @@ export const odjava = (): AkcijeAplikacije => {
 }
 
 // KOMUNIKACIJA
-
-export const PrijaviKorisnika = (korisnik: IKorisnik) => {
-  return (dispatch: Dispatch<AkcijeAplikacije>, getState: () => StanjeAplikacije) => {
-    dispatch(prijava(korisnik))
-  }
-}
-
 export const OdjaviKorisnika = () => {
   return (dispatch: Dispatch<AkcijeAplikacije>, getState: () => StanjeAplikacije) => {
     dispatch(odjava());
@@ -37,7 +30,7 @@ export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: strin
     korisnickoIme: korisnickoIme,
     sifra: sifra
   }).then(function (response) {
-    PrijaviKorisnika(response.data);
+    store.dispatch(prijava(response.data));
   }).catch(function (response) {
     console.log("erro" + response.data);
   })

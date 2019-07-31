@@ -1,12 +1,12 @@
 // TIPOVI
 export interface IKorisnik {
-    idRadnika: string,
-    jmbg: string
+    idRadnika: number,
+    jmbg: string,
     ime: string,
-    prezime: String
+    prezime: string,
     datumRodjenja: string,
-    radniStaz: Int32Array,
-    radnoMesto?: Array<String>,
+    radniStaz: number,
+    radnoMesto: [] | null,
     sifra: string,
     tip: string
 }

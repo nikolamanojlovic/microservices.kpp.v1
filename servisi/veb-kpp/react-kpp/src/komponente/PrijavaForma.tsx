@@ -1,6 +1,10 @@
 import React, { FormEvent } from "react";
-import { PrijavaFunkcija } from "../store/korisnik/akcije";
+import { PrijavaFunkcija, prijava } from "../store/korisnik/akcije";
 import logo from "../resursi/logo.svg";
+import { ThunkDispatch } from "redux-thunk";
+import { AkcijeAplikacije } from "../store/konfiguracija";
+import { IKorisnik } from "../store/korisnik/tipovi";
+import { connect } from "react-redux";
 
 interface PrijavaFormaProps {
 }
@@ -25,6 +29,7 @@ export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
 
     _prijavaKorisnika(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        console.log(this.state)
         PrijavaFunkcija(this.state);
     }
 
@@ -43,5 +48,3 @@ export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
         )
     }
 }
-
-export default PrijavaForma;
