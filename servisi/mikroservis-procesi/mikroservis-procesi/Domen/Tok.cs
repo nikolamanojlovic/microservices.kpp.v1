@@ -1,8 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace mikroservisprocesi.Domen
 {
+    [Table("tok")]
     public class Tok
     {
-        public long ID { get; set; }
+        [Key, Column("rb_toka")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long RBToka { get; set; }
     }
 }
