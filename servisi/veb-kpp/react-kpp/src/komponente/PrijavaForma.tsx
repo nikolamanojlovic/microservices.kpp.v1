@@ -4,6 +4,7 @@ import logo from "../resursi/logo.svg";
 import { IPoruka } from "../store/poruke/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
+import { Poruka } from "./Poruka";
 
 interface PrijavaFormaProps {
 }
@@ -43,7 +44,7 @@ class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
                     <input className="input-tekst" name="sifra" type="password" placeholder={sifra} onChange={(e: React.FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} />
                     <input className="input-dugme" type="submit" value="ПРИЈАВИ СЕ" />
                 </form>
-                { poruka ? <p>{poruka.tekst}</p> : <span/> }
+                <Poruka poruka={poruka}/>
             </div>
         )
     }

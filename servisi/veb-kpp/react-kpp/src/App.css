@@ -188,3 +188,9 @@ html, body {
 .input-opis {
   width: 20em;
 }
+
+/* PORUKE */
+.poruka-greska {
+  color: red;
+  text-align: center;
+}
