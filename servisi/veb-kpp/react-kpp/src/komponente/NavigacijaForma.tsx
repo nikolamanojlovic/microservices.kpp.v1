@@ -1,10 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
+import { IKorisnik } from "../store/korisnik/tipovi";
 
-export class NavigacijaForma extends React.Component {
+interface NavigacijaFormaProps {
+    korisnik: IKorisnik
+}
+
+type Props = NavigacijaFormaProps;
+
+export class NavigacijaForma extends Component<Props> {
 
     render() {
+        const {korisnik} = this.props;
+
         return (
-            <p>Hellp</p>
+            <div className="navigacija">
+                <p className="navigacija-ulogovani">{(korisnik.ime + " " + korisnik.prezime).toUpperCase()}</p>
+            </div>
         )
     }
 }

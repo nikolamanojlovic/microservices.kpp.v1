@@ -73,6 +73,17 @@
   font-size: 1.25em;
 }
 
+/* NAVIGACIJA */
+.navigacija {
+  text-align: center;
+}
+
+.navigacija-ulogovani {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 3em;
+}
+
 /* KREIRAJ */
 .kreiraj-proces-h1 {
   display: block;
