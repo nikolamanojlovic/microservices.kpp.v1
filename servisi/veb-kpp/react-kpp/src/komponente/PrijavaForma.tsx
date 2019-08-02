@@ -1,6 +1,9 @@
 import React, { FormEvent } from "react";
 import { PrijavaFunkcija } from "../store/korisnik/akcije";
 import logo from "../resursi/logo.svg";
+import { IPoruka } from "../store/poruke/tipovi";
+import { StanjeAplikacije } from "../store/konfiguracija";
+import { connect } from "react-redux";
 
 interface PrijavaFormaProps {
 }
@@ -10,9 +13,9 @@ interface PrijavaFormaStanje {
     sifra: string,
 }
 
-type Props = PrijavaFormaProps;
+type Props = PrijavaFormaProps & PrijavaFormaLinkStateProps;
 
-export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
+class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
 
     state: Readonly<PrijavaFormaStanje> = {
         korisnickoIme: "ИД",
@@ -30,6 +33,7 @@ export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
 
     render() {
         const { korisnickoIme, sifra } = this.state;
+        const { poruka } = this.props;
 
         return (
             <div className="forma-prijava-div">
@@ -39,7 +43,18 @@ export class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
                     <input className="input-tekst" name="sifra" type="password" placeholder={sifra} onChange={(e: React.FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} />
                     <input className="input-dugme" type="submit" value="ПРИЈАВИ СЕ" />
                 </form>
+                { poruka ? <p>{poruka.tekst}</p> : <span/> }
             </div>
         )
     }
 }
+
+interface PrijavaFormaLinkStateProps {
+    poruka?: IPoruka
+}
+
+const mapStateToProps = (state: StanjeAplikacije, ownProps: PrijavaFormaProps): PrijavaFormaLinkStateProps => ({
+    poruka: state.porukaReducer.poruka
+});
+
+export default connect(mapStateToProps)(PrijavaForma);

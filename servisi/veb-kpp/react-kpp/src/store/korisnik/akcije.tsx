@@ -1,8 +1,9 @@
 import { PRIJAVA, ODJAVA, IKorisnik } from "./tipovi";
-import { AkcijeAplikacije, StanjeAplikacije, store } from "../konfiguracija";
-import { Dispatch } from "redux";
+import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
-import { API_ZAPOSLENI } from "../../pomocnici/Konstante";
+import { API_ZAPOSLENI, TIP_PORUKE } from "../../pomocnici/Konstante";
+import { sacuvajPoruku } from "../poruke/akcije";
+import { IPoruka } from "../poruke/tipovi";
 
 // KREATORI AKCIJA
 export const prijava = (korisnik: IKorisnik): AkcijeAplikacije => {
@@ -29,7 +30,10 @@ export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: strin
     sifra: sifra
   }).then(function (response) {
     store.dispatch(prijava(response.data));
-  }).catch(function (response) {
-    console.log("erro" + response.data);
+  }).catch(function (error) {
+    store.dispatch(sacuvajPoruku({
+      tip: TIP_PORUKE[1],
+      tekst: error.response.data
+    } as IPoruka));
   })
 }

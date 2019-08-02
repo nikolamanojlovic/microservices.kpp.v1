@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
-import { PrijavaForma } from "./PrijavaForma";
+import PrijavaForma from "./PrijavaForma";
 import { NavigacijaForma } from "./NavigacijaForma";
 
 interface NavigacijaProps {

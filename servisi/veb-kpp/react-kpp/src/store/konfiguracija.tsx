@@ -1,8 +1,10 @@
 import { korisnikReducer } from './korisnik/reducer';
+import { porukaReducer } from './poruke/reducer';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { KorisnikAkcije } from './korisnik/tipovi';
 import thunk, { ThunkMiddleware } from "redux-thunk";
 import {STANJE} from '../pomocnici/Konstante';
+import { PorukaAkcije } from './poruke/tipovi';
 
 function ucitajStanje(): StanjeAplikacije | undefined {
     try {
@@ -29,11 +31,12 @@ function sacuvajStanje(stanje: StanjeAplikacije): void {
 
 
 // SVE AKCIJE KOJE APLIKACIJA IMA
-export type AkcijeAplikacije = KorisnikAkcije;
+export type AkcijeAplikacije = KorisnikAkcije | PorukaAkcije;
 
 // SVI REDUCER-I KOJE APLIKACIJA IMA
 const reducerAplikacije = combineReducers({
-    korisnikReducer
+    korisnikReducer,
+    porukaReducer
 });
 
 // SVA STANJA KOJE APLIKACIJA IMA

@@ -1,10 +1,27 @@
 // TIPOVI
 export interface IPoruka {
     tip: string,
-    poruka: string | null
+    tekst: string | null
 }
 
 // TIPOVI STANJA
 export interface IPorukaStanje {
-    poruka: IPoruka
+    poruka?: IPoruka
 }
+
+// TIPOVI AKCIJA
+export const SACUVAJ_PORUKU = "SACUVAJ_PORUKU";
+export const OBRISI_PORUKU = "OBRISI_PORUKU";
+
+// TIPOVI KREATORA AKCIJA
+interface ISacuvajPorukuAkcija {
+    type: typeof SACUVAJ_PORUKU
+    payload: IPoruka
+  }
+
+interface IObrisiPoruku {
+    type: typeof OBRISI_PORUKU
+}
+
+// EXPORT AKCIJA
+export type PorukaAkcije = ISacuvajPorukuAkcija | IObrisiPoruku;
