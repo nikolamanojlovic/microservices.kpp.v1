@@ -20,9 +20,7 @@ export const odjava = (): AkcijeAplikacije => {
 
 // KOMUNIKACIJA
 export const OdjaviKorisnika = () => {
-  return (dispatch: Dispatch<AkcijeAplikacije>, getState: () => StanjeAplikacije) => {
-    dispatch(odjava());
-  }
+  store.dispatch(odjava());
 }
 
 export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: string, sifra: string }) => {
