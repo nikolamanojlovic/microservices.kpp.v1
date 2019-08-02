@@ -2,6 +2,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+html, body {
+  overflow: hidden;
+}
+
 .stranica-kontejner {
   width: 100vw;
   height: 100vh;
@@ -81,10 +85,14 @@
 .navigacija-ulogovani {
   font-size: 1.2em;
   font-weight: bold;
-  margin-top: 3em;
+  margin-top: 2em;
 }
 
 /* KREIRAJ */
+.kreiraj-proces {
+  margin-top: 2em;
+}
+
 .kreiraj-proces-h1 {
   display: block;
   font-size: 3em;

@@ -8,7 +8,6 @@ function ucitajStanje(): StanjeAplikacije | undefined {
     try {
         const serializovanoStanje = localStorage.getItem(STANJE)
 
-
         if (serializovanoStanje === null) {
             return undefined;
         }

@@ -15,6 +15,7 @@ export class NavigacijaForma extends Component<Props> {
         return (
             <div className="navigacija">
                 <p className="navigacija-ulogovani">{(korisnik.ime + " " + korisnik.prezime).toUpperCase()}</p>
+                <input className="input-dugme" type="submit" value="ОДЈАВИ СЕ"/>
             </div>
         )
     }
