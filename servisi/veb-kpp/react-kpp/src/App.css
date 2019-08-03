@@ -49,7 +49,7 @@ html, body {
   height: 100%;
   width: 100%;
 
-  filter: blur(10px);
+  filter: blur(10px) grayscale(1);
  
   background-image: url("./resursi/pozadina.jpg");
   background-position: center;
@@ -208,25 +208,13 @@ html, body {
   display: inline-block;
 }
 
-.input-opis {
-  width: 65%;
-  resize: none;
-  overflow-x: none;
-  overflow-y: scroll;
-}
-
-.input-kreiraj-sacuvaj {
-  margin-top: 2em;
-  display: block;
-}
-
 .label-kreiraj {
   width: 11em;
 }
 
 .label-kreiraj-opis {
   vertical-align: top;
-  width: 9em;
+  width: 8.5em;
 }
 
 .input-kreiraj {
@@ -234,8 +222,45 @@ html, body {
 	-moz-box-shadow: none;
   box-shadow: none;
   
-  border: 1px solid #55308B;
-  border-radius: 2.5px;
+  background-color: rgba(85, 48, 139, 0.05);
+  border-bottom: 1px solid #55308B;
+}
+
+.input-opis {
+  width: 68%;
+  resize: none;
+  overflow-x: none;
+  overflow-y: scroll;
+}
+
+.tok-funkcije-izbor {
+  text-align: center;
+  margin: 0 auto;
+  width: 40px;
+}
+
+.tok-funkcije-meni {
+  top: -1.6em;
+  left: 2.5em;
+  width: 10em;
+  height: 5em;
+  background-color: rgba(85, 48, 139, 0.05);
+}
+
+.input-dodaj {
+  text-align: center;
+  fill: rgb(85, 48, 139);
+}
+
+.input-dugme-tok {
+  display: block;
+  z-index: 1;
+  margin: 0 auto;
+  margin-top: 0.9em;
+}
+
+.tok-funkcije-meni {
+  position: absolute;
 }
 
 /* PORUKE */

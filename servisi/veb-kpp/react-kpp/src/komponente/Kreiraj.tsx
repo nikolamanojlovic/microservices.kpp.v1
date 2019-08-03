@@ -1,5 +1,6 @@
 import React from "react";
-import {ProcesForma} from "./ProcesForma";
+import { ProcesForma } from "./ProcesForma";
+import { TokProstor } from "./TokProstor";
 
 export class Kreiraj extends React.Component {
 
@@ -12,6 +13,7 @@ export class Kreiraj extends React.Component {
                 </div>
                 <div className="kreiraj-tok">
                     <h1 className="kreiraj-tok-h1">Ток процеса</h1>
+                    <TokProstor/>
                 </div>
             </div>
         )
