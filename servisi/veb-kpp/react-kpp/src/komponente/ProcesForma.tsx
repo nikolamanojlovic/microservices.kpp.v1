@@ -39,6 +39,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                         <textarea className="input-tekst input-opis" name="opis" rows={4} cols={10} />
                     </label>
                 </div>
+                <input className="input-dugme" type="submit" value="Сачувај"/>
             </form>
         )
     }
