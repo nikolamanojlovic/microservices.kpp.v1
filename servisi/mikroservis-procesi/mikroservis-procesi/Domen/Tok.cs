@@ -9,6 +9,8 @@ namespace mikroservisprocesi.Domen
     {
         [Key, Column("rb_toka")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long RBToka { get; set; }
+        public int RBToka { get; set; }
+
+        public Proces Proces { get; set; }
     }
 }

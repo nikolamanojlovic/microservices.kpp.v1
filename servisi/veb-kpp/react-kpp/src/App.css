@@ -233,37 +233,6 @@ html, body {
   overflow-y: scroll;
 }
 
-.tok-funkcije-izbor {
-  position: relative;
-  text-align: center;
-  margin: 0 auto;
-  width: 40px;
-}
-
-.tok-funkcije-meni {
-  top: -1.6em;
-  left: 2.5em;
-  width: 10em;
-  height: 5em;
-  background-color: rgba(85, 48, 139, 0.05);
-}
-
-.input-dodaj {
-  text-align: center;
-  fill: rgb(85, 48, 139);
-}
-
-.input-dugme-tok {
-  display: block;
-  z-index: 1;
-  margin: 0 auto;
-  margin-top: 0.9em;
-}
-
-.tok-funkcije-meni {
-  position: absolute;
-}
-
 /* PORUKE */
 .poruka-greska {
   color: #A33333;

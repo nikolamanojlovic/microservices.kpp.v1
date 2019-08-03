@@ -25,5 +25,7 @@ namespace mikroservisprocesi.Domen
         public DateTime VremeKreiranja { get; set; }
 
         public List<Tok> Tokovi { get; set; }
+
+        public List<Tranzicija> Tranzicije { get; set; }
     }
 }

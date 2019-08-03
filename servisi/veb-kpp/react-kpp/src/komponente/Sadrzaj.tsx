@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
 import { Naslovna } from "./Naslovna";
 import { Kreiraj } from "./Kreiraj";
@@ -9,7 +9,7 @@ interface SadrzajProps {
 
 type Props = SadrzajProps;
 
-export class Sadrzaj extends React.Component<Props> {
+export class Sadrzaj extends Component<Props> {
 
     render() {
         const {korisnik} = this.props;
