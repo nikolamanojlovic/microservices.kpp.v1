@@ -27,5 +27,7 @@ namespace mikroservisprocesi.Domen
         public List<Tok> Tokovi { get; set; }
 
         public List<Tranzicija> Tranzicije { get; set; }
+
+        public List<ProcesUToku> ProcesiUToku { get; set; }
     }
 }

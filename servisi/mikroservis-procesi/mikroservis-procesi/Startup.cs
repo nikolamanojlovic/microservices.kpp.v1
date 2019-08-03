@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using mikroservisprocesi.Domen;
 
 namespace mikroservis_procesi
 {
@@ -27,6 +29,7 @@ namespace mikroservis_procesi
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<BPKontekst>(opcije => opcije.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +42,13 @@ namespace mikroservis_procesi
             else
             {
                 app.UseHsts();
+            }
+
+            using (var servis = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = servis.ServiceProvider.GetRequiredService<BPKontekst>();
+                context.Database.EnsureCreated();
+                context.SaveChanges();
             }
 
             app.UseCors(builder => builder

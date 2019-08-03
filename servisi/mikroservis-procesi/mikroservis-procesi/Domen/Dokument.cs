@@ -26,5 +26,9 @@ namespace mikroservisprocesi.Domen
         public String Tip { get; set; }
 
         public List<StavkaDokumenta> Stavke { get; set; }
+
+        public List<Ulaz> AktivnostiUlaz { get; set; }
+
+        public List<Izlaz> AktivnostiIzlaz { get; set; }
     }
 }

@@ -17,5 +17,9 @@ namespace mikroservisprocesi.Domen
 
         [Column("opis")]
         public String Opis { get; set; }
+
+        public List<Ulaz> Ulazi { get; set; }
+
+        public List<Izlaz> Izlazi { get; set; }
     }
 }
