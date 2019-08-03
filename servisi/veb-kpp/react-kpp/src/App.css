@@ -234,6 +234,7 @@ html, body {
 }
 
 .tok-funkcije-izbor {
+  position: relative;
   text-align: center;
   margin: 0 auto;
   width: 40px;
