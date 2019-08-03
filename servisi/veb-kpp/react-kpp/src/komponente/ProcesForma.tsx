@@ -19,12 +19,12 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
             <form className="forma-proces">
                 <div className="forma-proces-naziv-kategorija">
                     <label className="input-naziv-kategorija-opis">
-                        <label>Назив процеса</label>
-                        <input className="input-tekst" name="naziv" type="text" />
+                        <label className="label-kreiraj">Назив процеса:</label>
+                        <input className="input-tekst input-kreiraj" name="naziv" type="text" />
                     </label>
                     <label className="input-naziv-kategorija-opis">
-                        <label>Категорија процеса</label>
-                        <select className="input-tekst" name="kategorija">
+                        <label className="label-kreiraj">Категорија процеса:</label>
+                        <select className="input-tekst input-kreiraj" name="kategorija">
                             {
                                 TIP_PROCESA.map(function (e, i) {
                                     return <option value={i}>{e}</option>
@@ -35,11 +35,11 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                 </div>
                 <div className="forma-proces-opis">
                     <label className="input-naziv-kategorija-opis">
-                        <label>Опис процеса</label>
-                        <textarea className="input-tekst input-opis" name="opis" rows={4} cols={10} />
+                        <label className="label-kreiraj label-kreiraj-opis">Опис процеса:</label>
+                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" rows={4} cols={3}/>
                     </label>
                 </div>
-                <input className="input-dugme" type="submit" value="Сачувај"/>
+                <input className="input-dugme input-kreiraj-sacuvaj" type="submit" value="Сачувај"/>
             </form>
         )
     }
