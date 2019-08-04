@@ -7,7 +7,10 @@ namespace mikroservisprocesi.Domen
 {
     public class Tranzicija
     {
-        [Key, Column("rb_tranzicije")]
+        [Key, Column("id_procesa", Order = 0)]
+        public long IDProcesa { get; set; }
+
+        [Key, Column("rb_tranzicije", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int RBTranzicije { get; set; }
 

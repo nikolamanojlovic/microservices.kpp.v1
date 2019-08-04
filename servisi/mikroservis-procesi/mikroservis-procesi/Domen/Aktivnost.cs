@@ -21,5 +21,7 @@ namespace mikroservisprocesi.Domen
         public List<Ulaz> Ulazi { get; set; }
 
         public List<Izlaz> Izlazi { get; set; }
+
+        public List<AktivnostUToku> AktivnostiUToku { get; set; }
     }
 }

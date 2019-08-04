@@ -6,7 +6,13 @@ namespace mikroservisprocesi.Domen
 {
     public class UslovTranzicije
     {
-        [Key, Column("rezultat")]
+        [Key, Column("id_procesa", Order = 0)]
+        public long IDProcesa { get; set; }
+
+        [Key, Column("rb_tranzicije", Order = 1)]
+        public int RBTranzicije { get; set; }
+
+        [Key, Column("rezultat", Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public String Rezultat { get; set; }
 

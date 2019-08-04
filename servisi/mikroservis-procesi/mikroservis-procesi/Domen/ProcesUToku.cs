@@ -7,15 +7,17 @@ namespace mikroservisprocesi.Domen
     [Table("proces_u_toku")]
     public class ProcesUToku
     {
-        [Key, Column("id_procesa")]
-        public long IDProcesa { get; set; }
-        public Proces Proces { get; set; }
+        [Key, Column("id_nadprocesa", Order = 0)]
+        public long IDNadprocesa { get; set; }
 
-        [Key, Column("rb_toka")]
+        [Key, Column("rb_toka", Order = 1)]
         public int RBToka { get; set; }
 
-        [Key, Column("id_procesa")]
-        public long IDProcesaTok { get; set; }
         public Tok Tok { get; set; }
+
+        [Key, Column("id_podprocesa", Order = 2)]
+        public long IDPodprocesa { get; set; }
+
+        public Proces Proces { get; set; }
     }
 }
