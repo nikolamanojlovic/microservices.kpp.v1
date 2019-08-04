@@ -61,6 +61,21 @@ namespace mikroservisprocesi.Domen
             modelBuilder.Entity<AktivnostUToku>().HasMany(aut => aut.Nadgleda).WithOne(n => n.AktivnostUToku).OnDelete(DeleteBehavior.Cascade);
 
             // DODAVANJE TEST PODATAKA
+            modelBuilder.Entity<Aktivnost>().HasData(
+                new
+                {
+                    IDAktivnosti = Int64.Parse("0"),
+                    Naziv = "Почетна активност",
+                    Opis = "Активност која означава почетак."
+                },
+                new
+                {
+                   IDAktivnosti = Int64.Parse("1"),
+                   Naziv = "Крајња активност",
+                   Opis = "Активност која означава крај."
+                }
+            );
+
             modelBuilder.Entity<Dokument>().HasData(new
             {
                 IDDokumenta = 100,

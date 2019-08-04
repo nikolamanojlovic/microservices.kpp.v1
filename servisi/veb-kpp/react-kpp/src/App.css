@@ -148,6 +148,11 @@ html, body {
   float: left;
 }
 
+.tok-kontejner {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+}
+
 /* CSS FORME */
 .forma-prijava-div {
   margin-top: 60%;

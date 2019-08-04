@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, FormEvent } from "react";
 import { TIP_PROCESA } from "../pomocnici/Konstante";
 
 interface ProcesFormaProps {
@@ -13,6 +13,10 @@ interface ProcesFormaStanje {
 type Props = ProcesFormaProps;
 
 export class ProcesForma extends Component<Props, ProcesFormaStanje> {
+
+    _sacuvajProces = (e : FormEvent<any>) => {
+        e.preventDefault();
+    }
 
     render() {
         return (
@@ -40,7 +44,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                     </label>
                 </div>
                 <div>
-                    <input className="input-dugme input-kreiraj-sacuvaj" type="submit" value="Сачувај"/>
+                    <input className="input-dugme input-kreiraj-sacuvaj" type="button" value="Сачувај" onClick={(e : FormEvent<any>) => this._sacuvajProces(e)}/>
                 </div>
             </form>
         )

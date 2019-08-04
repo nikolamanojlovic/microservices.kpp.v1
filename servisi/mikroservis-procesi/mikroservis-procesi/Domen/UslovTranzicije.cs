@@ -17,7 +17,7 @@ namespace mikroservisprocesi.Domen
         public String Rezultat { get; set; }
 
         [Column("izlazni_proces")]
-        public long IzlazniProce { get; set; }
+        public long IzlazniProces { get; set; }
 
         [Column("izlazni_tok")]
         public int IzlazniTok { get; set; }

@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { Proces } from "./Proces";
 
-export class TokProstor extends Component {
+interface TokProps {
+}
+
+type Props = TokProps;
+
+export class Tok extends Component<Props> {
 
     render() {
         return (
             <div className="tok-kontejner">
-                <Proces pocetni={true}/>
+               
             </div>
         )
     }
