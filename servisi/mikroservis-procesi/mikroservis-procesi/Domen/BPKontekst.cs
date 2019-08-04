@@ -59,6 +59,22 @@ namespace mikroservisprocesi.Domen
 
             modelBuilder.Entity<Nadgleda>().HasKey(n => new { n.IDProcesa, n.RBToka, n.IDAktivnosti });
             modelBuilder.Entity<AktivnostUToku>().HasMany(aut => aut.Nadgleda).WithOne(n => n.AktivnostUToku).OnDelete(DeleteBehavior.Cascade);
+
+            // DODAVANJE TEST PODATAKA
+            modelBuilder.Entity<Dokument>().HasData(new
+            {
+                IDDokumenta = 100,
+                SifraDokumenta = "КИ",
+                Naziv = "Креативни извештај",
+                Opis = "Информације прикупљене од клијента",
+                Tip = "pdf",
+                Stavke = new
+                {
+                    RBStavke = 1,
+                    Naziv = "Клијент",
+                    Opis = "Основне информације о клијенту."
+                }
+            });
         }
     }
 }
