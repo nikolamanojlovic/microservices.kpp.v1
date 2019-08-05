@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Aktivnost } from "./Aktivnost";
+import { Proces } from "./Proces";
 
 interface TokProps {
 }
@@ -10,7 +12,8 @@ export class Tok extends Component<Props> {
     render() {
         return (
             <div className="tok-kontejner">
-               
+               <Aktivnost/>
+               <Proces pocetni={false}/>
             </div>
         )
     }

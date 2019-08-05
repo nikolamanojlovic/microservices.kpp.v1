@@ -42,16 +42,24 @@ export interface ITranzicija {
 // TIPOVI STANJA
 export interface IProcesStanje {
     proces?: IProces
+    aktivnostiSistema: Array<IAktivnost>
 }
 
 // TIPOVI AKCIJA
 export const SACUVAJ_PROCES = "SACUVAJ_PROCES";
 
+export const VRATI_SVE_AKTIVNOSTI = "VRATI_SVE_AKTIVNOSTI";
+
 // TIPOVI KREATORA AKCIJA
 interface ISacuvajProcesAkcija {
     type: typeof SACUVAJ_PROCES
     payload: IProces
-  }
+}
+
+interface IVratiSveAktivnostiSistemaAkcija {
+    type: typeof VRATI_SVE_AKTIVNOSTI
+    payload: Array<IAktivnost>
+}
 
 // EXPORT AKCIJA
-export type ProcesAkcije = ISacuvajProcesAkcija;
+export type ProcesAkcije = ISacuvajProcesAkcija | IVratiSveAktivnostiSistemaAkcija;

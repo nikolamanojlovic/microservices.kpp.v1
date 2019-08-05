@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { Tok } from "./Tok";
 
 interface ProcesProps {
-    pocetni: boolean
+    pocetni: boolean,
 }
 
 interface ProcesStanje {
     brojTokova: number,
+    tokovi: Array<JSX.Element>
 }
 
 type Props = ProcesProps;
@@ -14,17 +15,14 @@ type Props = ProcesProps;
 export class Proces extends Component<Props, ProcesStanje> {
 
     state: Readonly<ProcesStanje> = {
-        brojTokova: this.props.pocetni ? 1 : 2
+        brojTokova: this.props.pocetni ? 1 : 2,
+        tokovi: []
     };
 
     _kreirajTokove() {
-        const tokovi = [];
-
         for (let i = 0; i < this.state.brojTokova; i++) {
-            tokovi.push(<Tok/>)
+            this.state.tokovi.push(<Tok/>)
         }
-
-        return tokovi;
     }
 
     render() {
@@ -32,9 +30,15 @@ export class Proces extends Component<Props, ProcesStanje> {
             <div className="proces-kontejner">
                 <div className="proces">
                     {
-                        this._kreirajTokove()
+                        this.state.tokovi.map((e,i) => {
+                            return e;
+                        })
                     }
                 </div>
+                {
+                                        console.log("fewfwe")
+
+                }
                 {
                     this.props.pocetni ? <span /> :
                         <div className="proces-funkcionalnosti">

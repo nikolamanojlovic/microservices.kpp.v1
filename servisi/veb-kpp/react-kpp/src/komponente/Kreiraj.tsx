@@ -1,6 +1,6 @@
 import React from "react";
 import { ProcesForma } from "./ProcesForma";
-import { TokProstor } from "./TokProstor";
+import TokProstor from "./TokProstor";
 
 export class Kreiraj extends React.Component {
 
