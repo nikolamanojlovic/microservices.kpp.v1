@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from "react";
 import { TIP_PROCESA } from "../pomocnici/Konstante";
+import { SacuvajProces } from "../store/proces/akcije";
 
 interface ProcesFormaProps {
 }
 
 interface ProcesFormaStanje {
     naziv: string,
-    kategorija: string,
+    kategorija: number,
     opis: string
 }
 
@@ -14,8 +15,24 @@ type Props = ProcesFormaProps;
 
 export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
+    state: Readonly<ProcesFormaStanje> = {
+        naziv: "",
+        kategorija: 0,
+        opis: ""
+    };
+
     _sacuvajProces = (e : FormEvent<any>) => {
         e.preventDefault();
+        const naziv = this.state.naziv;
+        const kategorija = TIP_PROCESA[this.state.kategorija];
+        const opis = this.state.opis;
+
+        console.log({naziv, kategorija, opis})
+        SacuvajProces({naziv,kategorija, opis});
+    }
+
+    _obradiPromenu(e: FormEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+        this.setState({ ...this.state, [e.currentTarget.name]: e.currentTarget.value })
     }
 
     render() {
@@ -24,11 +41,11 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                 <div className="forma-proces-naziv-kategorija">
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj">Назив процеса:</label>
-                        <input className="input-tekst input-kreiraj" name="naziv" type="text" />
+                        <input className="input-tekst input-kreiraj" name="naziv" type="text" value={this.state.naziv} onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} />
                     </label>
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj">Категорија процеса:</label>
-                        <select className="input-tekst input-kreiraj" name="kategorija">
+                        <select className="input-tekst input-kreiraj" name="kategorija" value={this.state.kategorija} onChange={(e: FormEvent<HTMLSelectElement>) => this._obradiPromenu(e)}>
                             {
                                 TIP_PROCESA.map(function (e, i) {
                                     return <option value={i}>{e}</option>
@@ -40,7 +57,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                 <div className="forma-proces-opis">
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj label-kreiraj-opis">Опис процеса:</label>
-                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" rows={4} cols={3}/>
+                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" rows={4} cols={3} value={this.state.opis} onChange={(e: FormEvent<HTMLTextAreaElement>) => this._obradiPromenu(e)}/>
                     </label>
                 </div>
                 <div>

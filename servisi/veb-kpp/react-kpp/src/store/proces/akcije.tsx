@@ -13,9 +13,12 @@ export const sacuvajProces = (proces: IProces): AkcijeAplikacije => {
     }
 }
 
-export const SacucajProces = (proces : IProces) => {
-    Axios.post(API_PROCESI + "/AutentifikacijaKontroler/Autentifikuj", {
-      proces: proces
+export const SacuvajProces = ({naziv, kategorija, opis}: {naziv: string, kategorija: string, opis: string}) => {
+  console.log("fgwegowje")
+    Axios.post(API_PROCESI + "/KreriajKontroler/SacuvajProces", {
+      naziv: naziv,
+      kategorija: kategorija,
+      opis: opis
     }).then(function (response) {
       store.dispatch(sacuvajProces(response.data));
     }).catch(function (error) {
