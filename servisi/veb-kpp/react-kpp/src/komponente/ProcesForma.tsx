@@ -29,7 +29,6 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
         const kategorija = TIP_PROCESA[this.state.kategorija];
         const opis = this.state.opis;
 
-        console.log({naziv, kategorija, opis})
         SacuvajProces({naziv,kategorija, opis});
     }
 

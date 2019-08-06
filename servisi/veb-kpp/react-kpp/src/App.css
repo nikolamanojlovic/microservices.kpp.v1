@@ -244,6 +244,25 @@ html, body {
   display: none;
 }
 
+.tok-prostor-funkcionalnosti {
+  text-align: center;
+}
+
+.tok-prostor-funkcionalnosti > * {
+  margin-left: 2em;
+  margin-right: 2em;
+  fill: #55308B;
+}
+
+.tok-prostor-funkcionalnosti > * :hover {
+  cursor: pointer;
+}
+
+.input-tok-prostor > * {
+  margin-right: 0.07em;
+  vertical-align: middle;
+}
+
 /* PORUKE */
 .poruka-greska {
   color: #A33333;
