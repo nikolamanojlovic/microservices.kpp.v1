@@ -29,10 +29,19 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
   }).then(function (response) {
     store.dispatch(sacuvajProces(response.data));
   }).catch(function (error) {
+    store.dispatch(sacuvajProces({
+      IDProcesa: 1,
+      Naziv: naziv,
+      Opis: opis,
+      Kategorija: kategorija,
+      VremeKreiranja: Date.now().toString(),
+    } as IProces));
+    /*
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
       tekst: error.response.data
     } as IPoruka));
+    */
   })
 }
 

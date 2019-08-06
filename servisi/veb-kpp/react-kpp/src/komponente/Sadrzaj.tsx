@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { IKorisnik } from "../store/korisnik/tipovi";
 import { Naslovna } from "./Naslovna";
-import { Kreiraj } from "./Kreiraj";
+import Kreiraj from "./Kreiraj";
 
 interface SadrzajProps {
     korisnik?: IKorisnik

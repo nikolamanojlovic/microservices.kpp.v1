@@ -240,6 +240,10 @@ html, body {
   overflow-y: scroll;
 }
 
+.input-sakriveno {
+  display: none;
+}
+
 /* PORUKE */
 .poruka-greska {
   color: #A33333;

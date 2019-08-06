@@ -1,14 +1,17 @@
 import React, { Component, FormEvent } from "react";
 import { TIP_PROCESA } from "../pomocnici/Konstante";
 import { SacuvajProces } from "../store/proces/akcije";
+import { IProces } from "../store/proces/tipovi";
 
 interface ProcesFormaProps {
+    proces?: IProces
 }
 
 interface ProcesFormaStanje {
     naziv: string,
     kategorija: number,
-    opis: string
+    opis: string,
+    onemoguciUnos: boolean
 }
 
 type Props = ProcesFormaProps;
@@ -16,9 +19,10 @@ type Props = ProcesFormaProps;
 export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
     state: Readonly<ProcesFormaStanje> = {
-        naziv: "",
-        kategorija: 0,
-        opis: ""
+        naziv: this.props.proces ? this.props.proces.Naziv : "",
+        kategorija: this.props.proces ? TIP_PROCESA.indexOf(this.props.proces.Kategorija) : 0,
+        opis: this.props.proces ? this.props.proces.Opis : "",
+        onemoguciUnos: this.props.proces !== undefined
     };
 
     _sacuvajProces = (e : FormEvent<any>) => {
@@ -36,16 +40,18 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
     }
 
     render() {
+        const { onemoguciUnos } = this.state;
+
         return (
             <form className="forma-proces">
                 <div className="forma-proces-naziv-kategorija">
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj">Назив процеса:</label>
-                        <input className="input-tekst input-kreiraj" name="naziv" type="text" value={this.state.naziv} onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} />
+                        <input className="input-tekst input-kreiraj" name="naziv" type="text" value={this.state.naziv} disabled={onemoguciUnos} onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} />
                     </label>
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj">Категорија процеса:</label>
-                        <select className="input-tekst input-kreiraj" name="kategorija" value={this.state.kategorija} onChange={(e: FormEvent<HTMLSelectElement>) => this._obradiPromenu(e)}>
+                        <select className="input-tekst input-kreiraj" name="kategorija" value={this.state.kategorija} disabled={onemoguciUnos} onChange={(e: FormEvent<HTMLSelectElement>) => this._obradiPromenu(e)}>
                             {
                                 TIP_PROCESA.map(function (e, i) {
                                     return <option value={i}>{e}</option>
@@ -57,11 +63,11 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                 <div className="forma-proces-opis">
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj label-kreiraj-opis">Опис процеса:</label>
-                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" rows={4} cols={3} value={this.state.opis} onChange={(e: FormEvent<HTMLTextAreaElement>) => this._obradiPromenu(e)}/>
+                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" disabled={onemoguciUnos} rows={4} cols={3} value={this.state.opis} onChange={(e: FormEvent<HTMLTextAreaElement>) => this._obradiPromenu(e)}/>
                     </label>
                 </div>
                 <div>
-                    <input className="input-dugme input-kreiraj-sacuvaj" type="button" value="Сачувај" onClick={(e : FormEvent<any>) => this._sacuvajProces(e)}/>
+                    <input className={"input-dugme input-kreiraj-sacuvaj " + (onemoguciUnos ? "input-sakriveno" : "") } type="button" value="Сачувај" onClick={(e : FormEvent<any>) => this._sacuvajProces(e)}/>
                 </div>
             </form>
         )
