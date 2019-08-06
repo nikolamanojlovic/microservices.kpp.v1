@@ -70,10 +70,45 @@ namespace mikroservisprocesi.Domen
                 },
                 new
                 {
-                   IDAktivnosti = Int64.Parse("1"),
-                   Naziv = "Крајња активност",
-                   Opis = "Активност која означава крај."
-                }
+                    IDAktivnosti = Int64.Parse("1"),
+                    Naziv = "Крајња активност",
+                    Opis = "Активност која означава крај."
+                },
+                 new
+                 {
+                     IDAktivnosti = Int64.Parse("3"),
+                     Naziv = "Састанак са клијентом",
+                     Opis = "Утврђивање захтева и основих захтева."
+
+                 },
+                  new
+                  {
+                      IDAktivnosti = Int64.Parse("4"),
+                      Naziv = "Израда сцена",
+                      Opis = "Анимирање делова рекламе."
+
+                  },
+                  new
+                  {
+                      IDAktivnosti = Int64.Parse("5"),
+                      Naziv = "Израда звука",
+                      Opis = "Снимање гласа и музике."
+
+                  },
+                  new
+                  {
+                      IDAktivnosti = Int64.Parse("6"),
+                      Naziv = "Монтажа",
+                      Opis = " Интеграција сцена и звука."
+
+                  },
+                  new
+                  {
+                      IDAktivnosti = Int64.Parse("5"),
+                      Naziv = "Слање рекламе клијенту",
+                      Opis = "Слање рекламе путем електронске поште."
+
+                  }
             );
 
             modelBuilder.Entity<Dokument>().HasData(new
