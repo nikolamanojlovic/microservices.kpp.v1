@@ -14,7 +14,6 @@ type Props = KreirajProps & KreirajLinkStateProps;
 class Kreiraj extends Component<Props> {
 
     _kreirajEditorZaTok() {
-        console.log(this.props.proces)
         if (this.props.proces !== undefined) {
             return <div className="kreiraj-tok"><h1 className="kreiraj-tok-h1">Ток процеса</h1><TokProstor/></div>
         }

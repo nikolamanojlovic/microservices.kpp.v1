@@ -11,7 +11,6 @@ interface ProcesFormaStanje {
     naziv: string,
     kategorija: number,
     opis: string,
-    onemoguciUnos: boolean
 }
 
 type Props = ProcesFormaProps;
@@ -21,8 +20,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
     state: Readonly<ProcesFormaStanje> = {
         naziv: this.props.proces ? this.props.proces.Naziv : "",
         kategorija: this.props.proces ? TIP_PROCESA.indexOf(this.props.proces.Kategorija) : 0,
-        opis: this.props.proces ? this.props.proces.Opis : "",
-        onemoguciUnos: this.props.proces !== undefined
+        opis: this.props.proces ? this.props.proces.Opis : ""
     };
 
     _sacuvajProces = (e : FormEvent<any>) => {
@@ -40,7 +38,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
     }
 
     render() {
-        const { onemoguciUnos } = this.state;
+        const onemoguciUnos = this.props.proces !== undefined;
 
         return (
             <form className="forma-proces">

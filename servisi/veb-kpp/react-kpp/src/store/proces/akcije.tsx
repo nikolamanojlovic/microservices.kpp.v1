@@ -25,7 +25,8 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
   Axios.post(API_PROCESI + "/KreriajKontroler/SacuvajProces", {
     naziv: naziv,
     kategorija: kategorija,
-    opis: opis
+    opis: opis,
+    tok: [{ RBToka: 1 }]
   }).then(function (response) {
     store.dispatch(sacuvajProces(response.data));
   }).catch(function (error) {

@@ -4,6 +4,7 @@ import { IAktivnost } from "../store/proces/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { VratiSveAktivnostiSistema } from "../store/proces/akcije";
+import { Tok } from "./Tok";
 
 interface TokProstorProps {
     
@@ -20,7 +21,7 @@ class TokProstor extends Component<Props> {
     render() {
         return (
             <div className="tok-kontejner">
-                <Proces pocetni={true}/>
+                
             </div>
         )
     }

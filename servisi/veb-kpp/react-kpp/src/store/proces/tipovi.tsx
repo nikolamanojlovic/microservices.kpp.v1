@@ -1,6 +1,5 @@
 // TIPOVI
 export interface ITok {
-    IDProcesa: number,
     RBToka: number
 }
 
@@ -49,6 +48,10 @@ export interface IProcesStanje {
 export const SACUVAJ_PROCES = "SACUVAJ_PROCES";
 
 export const VRATI_SVE_AKTIVNOSTI = "VRATI_SVE_AKTIVNOSTI";
+
+export const DODAJ_POCETNU_AKTIVNOST = "DODAJ_POCETNU_AKTIVNOST";
+export const DODAJ_PARALELNU_AKTIVNOST = "DODAJ_PARALELNU_AKTIVNOST";
+export const DODAJ_SEKVENCIJALNU_AKTIVNOST = "DODAJ_SEKVENCIJALNU_AKTIVNOST";
 
 // TIPOVI KREATORA AKCIJA
 interface ISacuvajProcesAkcija {

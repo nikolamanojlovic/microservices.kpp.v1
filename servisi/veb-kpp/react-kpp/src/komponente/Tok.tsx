@@ -12,8 +12,7 @@ export class Tok extends Component<Props> {
     render() {
         return (
             <div className="tok-kontejner">
-               <Aktivnost/>
-               <Proces pocetni={false}/>
+               
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 interface AktivnostProps {
+    //tip: string
 }
 
 type Props = AktivnostProps;
