@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.Fasada;
+using mikroservisprocesi.Podaci;
 
 namespace mikroservisprocesi.Kontroleri
 {
@@ -17,15 +18,9 @@ namespace mikroservisprocesi.Kontroleri
         }
 
         [HttpPost("SacuvajProces")]
-        public ActionResult<Proces> SacuvajProces()
+        public ActionResult<Proces> SacuvajProces([FromBody] ProcesPodaci proces)
         {
             return null;
-        }
-
-        [HttpGet("VratiIDNovogProcesa")]
-        public ActionResult<long> VratiIDNovogProcesa()
-        {
-            return _procesFasada.VratiIDNovogProcesa();
         }
     }
 }

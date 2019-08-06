@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using mikroservisprocesi.Domen;
+using mikroservisprocesi.Podaci;
 using mikroservisprocesi.Servis;
 
 namespace mikroservisprocesi.Fasada.implementacija
@@ -12,9 +15,13 @@ namespace mikroservisprocesi.Fasada.implementacija
             _procesServis = procesServis;
         }
 
-        public long VratiIDNovogProcesa()
+        public Proces SacuvajProces(ProcesPodaci podaci)
         {
-            return _procesServis.VratiIDNovogProcesa();
+            if ( podaci.GetType().GetProperties().All(p => p.GetValue(podaci) != null ))
+            {
+               return _procesServis.SacuvajProces(_procesServis.VratiIDNovogProcesa(), podaci.naziv, podaci.kategorija, podaci.opis);
+            }
+            throw new ArgumentNullException(nameof(podaci), "Поља назив, категорија и опис су обавезна.");
         }
     }
 }
