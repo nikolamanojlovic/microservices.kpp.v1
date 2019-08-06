@@ -104,7 +104,7 @@ namespace mikroservisprocesi.Domen
                   },
                   new
                   {
-                      IDAktivnosti = Int64.Parse("5"),
+                      IDAktivnosti = Int64.Parse("7"),
                       Naziv = "Слање рекламе клијенту",
                       Opis = "Слање рекламе путем електронске поште."
 

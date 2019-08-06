@@ -12,10 +12,10 @@ interface TokProstorProps {
 type Props = TokProstorProps & TokProstorLinkStateProps;
 
 class TokProstor extends Component<Props> {
-/*
+
     UNSAFE_componentWillMount() {
         VratiSveAktivnostiSistema();
-    }*/
+    }
 
     render() {
         return (

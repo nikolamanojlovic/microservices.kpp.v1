@@ -46,7 +46,7 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
 }
 
 export const VratiSveAktivnostiSistema = () => {
-  Axios.get(API_PROCESI + "/PomocniKontroler/VratiSveAktivnostiSistema")
+  Axios.get(API_PROCESI + "/PomocniKontroler/VratiAktivnostiSistema")
     .then(function (response) {
       store.dispatch(vratiSveAktivnostiSistema(response.data));
     }).catch(function (error) {

@@ -39,12 +39,15 @@ namespace mikroservis_procesi
 
             // Fasade
             services.AddTransient<IAktivnostFasada, AktivnostFasada>();
+            services.AddTransient<IProcesFasada, ProcesFasada>();
 
             // Servisi
             services.AddTransient<IAktivnostServis, AktivnostServis>();
+            services.AddTransient<IProcesServis, ProcesServis>();
 
             // OPP
             services.AddTransient<IAktivnostOPP, AktivnostOPP>();
+            services.AddTransient<IProcesOPP, ProcesOPP>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
