@@ -20,10 +20,12 @@ namespace mikroservisprocesi.OPP.implementacija
             return _kontekst.SaveChanges() > 0;
         }
 
-        public bool Sacuvaj(T entitet)
+        public T Sacuvaj(T entitet)
         {
             _kontekst.Set<T>().Add(entitet);
-            return _kontekst.SaveChanges() > 0;
+            _kontekst.SaveChanges();
+
+            return entitet;
         }
 
         public T VratiPoPK<K>(K primarni) where K : class
