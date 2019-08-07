@@ -21,7 +21,7 @@ export class Proces extends Component<Props, ProcesStanje> {
 
     _kreirajTokove() {
         for (let i = 0; i < this.state.brojTokova; i++) {
-            this.state.tokovi.push(<Tok/>)
+            
         }
     }
 

@@ -16,6 +16,7 @@ class TokProstor extends Component<Props> {
 
     UNSAFE_componentWillMount() {
         VratiSveAktivnostiSistema();
+        console.log(this.props.aktivnosti)
     }
 
     render() {
@@ -35,7 +36,7 @@ class TokProstor extends Component<Props> {
                         <label>Паралелна активност</label>
                     </button>
                 </div>
-                <Tok />
+                <Tok aktivnosti={this.props.aktivnosti}/>
             </div>
         )
     }

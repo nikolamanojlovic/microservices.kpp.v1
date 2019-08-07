@@ -4,7 +4,7 @@ export const API_PROCESI: string = "http://0.0.0.0:3002/api";
 export const STANJE: string = "kpp-stanje";
 
 export const TIP_PROCESA: string[] = ["Управљачки", "Кључни", "Помоћни"]
-export const TIP_AKTIVNOSTI: string[] = ["Секвенцијална", "Паралелна"]
+export const TIP_AKTIVNOSTI: string[] = ["Почетна", "Крајња", "Секвенцијална", "Паралелна"]
 export const TIP_DOKUMENTA: string[] = ["doc, docx", "pdf", "mp3", "avi", "mov"]
 export const TIP_PORUKE: string[] = ["Обавештење", "Грешка", "Упозорење"]
 
