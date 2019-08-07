@@ -23,13 +23,13 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
         opis: this.props.proces ? this.props.proces.Opis : ""
     };
 
-    _sacuvajProces = (e : FormEvent<any>) => {
+    _sacuvajProces = (e: FormEvent<any>) => {
         e.preventDefault();
         const naziv = this.state.naziv;
         const kategorija = TIP_PROCESA[this.state.kategorija];
         const opis = this.state.opis;
 
-        SacuvajProces({naziv,kategorija, opis});
+        SacuvajProces({ naziv, kategorija, opis });
     }
 
     _obradiPromenu(e: FormEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
@@ -60,11 +60,11 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                 <div className="forma-proces-opis">
                     <label className="input-naziv-kategorija-opis">
                         <label className="label-kreiraj label-kreiraj-opis">Опис процеса:</label>
-                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" disabled={onemoguciUnos} rows={4} cols={3} value={this.state.opis} onChange={(e: FormEvent<HTMLTextAreaElement>) => this._obradiPromenu(e)}/>
+                        <textarea className="input-tekst input-kreiraj input-opis" name="opis" disabled={onemoguciUnos} rows={4} cols={3} value={this.state.opis} onChange={(e: FormEvent<HTMLTextAreaElement>) => this._obradiPromenu(e)} />
                     </label>
                 </div>
                 <div>
-                    <input className={"input-dugme input-kreiraj-sacuvaj " + (onemoguciUnos ? "input-sakriveno" : "") } type="button" value="Сачувај" onClick={(e : FormEvent<any>) => this._sacuvajProces(e)}/>
+                    <input className={"input-dugme input-kreiraj-sacuvaj " + (onemoguciUnos ? "input-sakriveno" : "")} type="button" value="Сачувај" onClick={(e: FormEvent<any>) => this._sacuvajProces(e)} />
                 </div>
             </form>
         )
