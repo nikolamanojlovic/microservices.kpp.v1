@@ -22,25 +22,42 @@ export class Aktivnost extends Component<Props> {
     UNSAFE_componentWillMount() {
         switch (this.props.tip) {
             case TIP_AKTIVNOSTI[0]:
-                this.setState({ ...this.state, aktivnost: this._vratiAktivnostPoID(0)});
+                this.setState({ ...this.state, aktivnost: this._vratiAktivnostPoID(0) });
+                break;
+            case TIP_AKTIVNOSTI[1]:
+                this.setState({ ...this.state, aktivnost: this._vratiAktivnostPoID(1) });
                 break;
         }
     }
 
     _vratiAktivnostPoID = (id: number): IAktivnost => {
-        // RETURNS SMALL LETTERS INSTEAD OF BIG
         const aktivnost = this.props.aktivnosti.filter(e => {
             return e.idAktivnosti === id;
         });
-
-        console.log(aktivnost)
         return aktivnost[0] as IAktivnost;
     }
 
     _vratiAktivnostUZavisnostiOdTipa = () => {
         switch (this.props.tip) {
             case TIP_AKTIVNOSTI[0]:
-                return (<div className="aktivnost"></div>);
+                return (
+                    <div className="aktivnost aktivnost-pocetna">
+                        <p>{this.state.aktivnost.naziv}</p>
+                    </div>
+                );
+            case TIP_AKTIVNOSTI[2]:
+                return (
+                    <div className="aktivnost">
+                        <p>Изабери активност:</p>
+                        <select className="input-tekst input-kreiraj input-aktivnost" name="izabrana-aktivnost">
+                            {
+                                this.props.aktivnosti.map(function (e, i) {
+                                    return <option value={i}>{e.naziv}</option>
+                                })
+                            }
+                        </select>
+                    </div>
+                );
             default:
                 return <div />;
         }

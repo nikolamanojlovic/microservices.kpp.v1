@@ -4,9 +4,9 @@ export interface ITok {
 }
 
 export interface IAktivnost {
-    IDAktivnosti: number,
-    Naziv: string,
-    Opis: string
+    idAktivnosti: number,
+    naziv: string,
+    opis: string
 }
 
 export interface IProces {

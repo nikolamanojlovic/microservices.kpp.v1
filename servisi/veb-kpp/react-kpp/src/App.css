@@ -119,14 +119,14 @@ html, body {
   font-size: 3em;
   margin-top: 0;
   margin-left: 0.5em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .kreiraj-tok-h1 {
   display: block;
   font-size: 3em;
   margin-left: 0.5em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .forma-proces {
@@ -244,8 +244,13 @@ html, body {
   display: none;
 }
 
+.input-aktivnost {
+  width: 15em;
+}
+
 .tok-prostor-funkcionalnosti {
   text-align: center;
+  margin-bottom: 1em;
 }
 
 .tok-prostor-funkcionalnosti > * {
@@ -259,8 +264,18 @@ html, body {
 }
 
 .input-tok-prostor > * {
-  margin-right: 0.07em;
+  margin-right: 0.09em;
   vertical-align: middle;
+}
+
+.aktivnost {
+  padding-left: 1em;
+  border: 1px solid #55308B;
+  border-radius: 1em;
+}
+
+.aktivnost-pocetna {
+  display: none;
 }
 
 /* PORUKE */

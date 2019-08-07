@@ -6,25 +6,22 @@ import { TIP_AKTIVNOSTI } from "../pomocnici/Konstante";
 
 interface TokProps {
     aktivnosti: Array<IAktivnost>
+    aktivnostiUToku: Array<JSX.Element>
 }
 
 interface TokStanje {
-    aktivnostiUToku: Array<JSX.Element>
+    
 }
 
 type Props = TokProps;
 
 export class Tok extends Component<Props, TokStanje> {
 
-    state: Readonly<TokStanje> = {
-        aktivnostiUToku: [<Aktivnost tip={TIP_AKTIVNOSTI[0]} aktivnosti={this.props.aktivnosti}/>]
-    };
-
     render() {
         return (
             <div className="tok-kontejner">
                 {
-                    this.state.aktivnostiUToku
+                    this.props.aktivnostiUToku
                 }
             </div>
         )
