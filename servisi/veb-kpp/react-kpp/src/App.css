@@ -246,6 +246,7 @@ html, body {
 
 .input-aktivnost {
   width: 15em;
+  border-bottom: 0;
 }
 
 .tok-prostor-funkcionalnosti {
@@ -269,13 +270,61 @@ html, body {
 }
 
 .aktivnost {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.aktivnost-paralelna {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.aktivnost > * {
+  vertical-align: middle;
+}
+
+.aktivnost-detalji {
+  display: inline-block;
+  min-width: 25em;
   padding-left: 1em;
   border: 1px solid #55308B;
   border-radius: 1em;
 }
 
+.aktivnost-funkcionalnost {
+  display: inline-block;
+  margin-left: 0.7em;
+  margin-right: 0.7em;
+}
+
+.lista-dokumenata {
+  display: inline-block;
+}
+
+.aktivnost-funkcionalnost > * {
+  fill: #55308B;
+}
+
 .aktivnost-pocetna {
   display: none;
+}
+
+.document-icon {
+  display: block;
+}
+
+.remove-icon {
+  display: block;
+  fill: #A33333;
+}
+
+.tokovi {
+  display: inline-block;
+  margin-left: 0.7em;
+  margin-right: 0.7em;
+  border-left: 1px solid #55308B;
+  border-right: 1px solid #55308B;
+  border-radius: 1em;
 }
 
 /* PORUKE */

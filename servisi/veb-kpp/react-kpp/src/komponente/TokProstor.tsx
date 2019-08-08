@@ -13,7 +13,7 @@ interface TokProstorProps {
 }
 
 interface TokProstorStanje {
-    aktivnostiUToku: Array<JSX.Element>
+    aktivnostiUToku: Array<JSX.Element>,
 }
 
 type Props = TokProstorProps & TokProstorLinkStateProps;
@@ -21,7 +21,7 @@ type Props = TokProstorProps & TokProstorLinkStateProps;
 class TokProstor extends Component<Props, TokProstorStanje> {
 
     state: Readonly<TokProstorStanje> = {
-        aktivnostiUToku: [<Aktivnost tip={TIP_AKTIVNOSTI[0]} aktivnosti={this.props.aktivnosti}/>]
+        aktivnostiUToku: [<Aktivnost tip={TIP_AKTIVNOSTI[0]} aktivnosti={this.props.aktivnosti}/>],
     };
 
     UNSAFE_componentWillMount() {
@@ -36,7 +36,10 @@ class TokProstor extends Component<Props, TokProstorStanje> {
     }
 
     _dodajParalelnuAktivnost() {
-        
+        const aktivnosti = this.state.aktivnostiUToku;
+        aktivnosti.push(<Aktivnost tip={TIP_AKTIVNOSTI[3]} aktivnosti={this.props.aktivnosti}/>)
+       
+        this.setState({aktivnostiUToku: aktivnosti})
     }
 
     render() {        

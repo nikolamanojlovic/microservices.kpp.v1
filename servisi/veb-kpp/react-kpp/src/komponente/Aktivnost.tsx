@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { IAktivnost } from "../store/proces/tipovi";
 import { TIP_AKTIVNOSTI } from "../pomocnici/Konstante";
+import { AktivnostCvor } from "./AktivnostCvor";
+import { AktivnostParalelniCvor } from "./AktivnostParalelniCvor";
 
 interface AktivnostProps {
     tip: string,
@@ -47,16 +49,11 @@ export class Aktivnost extends Component<Props> {
                 );
             case TIP_AKTIVNOSTI[2]:
                 return (
-                    <div className="aktivnost">
-                        <p>Изабери активност:</p>
-                        <select className="input-tekst input-kreiraj input-aktivnost" name="izabrana-aktivnost">
-                            {
-                                this.props.aktivnosti.map(function (e, i) {
-                                    return <option value={i}>{e.naziv}</option>
-                                })
-                            }
-                        </select>
-                    </div>
+                    <AktivnostCvor aktivnosti={this.props.aktivnosti}/>
+                );
+            case TIP_AKTIVNOSTI[3]:
+                return(
+                    <AktivnostParalelniCvor aktivnosti={this.props.aktivnosti}/>
                 );
             default:
                 return <div />;
@@ -69,9 +66,6 @@ export class Aktivnost extends Component<Props> {
                 {
                     this._vratiAktivnostUZavisnostiOdTipa()
                 }
-                <div className="aktivnost-funkcionalnosti">
-
-                </div>
             </div>
         )
     }
