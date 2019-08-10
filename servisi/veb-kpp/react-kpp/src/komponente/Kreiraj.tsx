@@ -14,14 +14,16 @@ type Props = KreirajProps & KreirajLinkStateProps;
 class Kreiraj extends Component<Props> {
 
     render() {
+        const {proces} = this.props;
+
         return (
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
-                    <ProcesForma proces={this.props.proces}/>
+                    <ProcesForma proces={proces}/>
                 </div>
                 {
-                    this.props.proces ? <div className="kreiraj-tok-proces"><h1 className="kreiraj-proces-h1">Ток процеса</h1><Proces nadproces={true} proces={this.props.proces}/></div> : <span/>
+                    proces ? <div className="kreiraj-tok-proces"><h1 className="kreiraj-proces-h1">Ток процеса</h1><Proces nadproces={true} proces={proces}/></div> : <span/>
                 }
             </div>
         )
@@ -29,7 +31,7 @@ class Kreiraj extends Component<Props> {
 }
 
 interface KreirajLinkStateProps {
-    proces?: IProces
+    proces?: IProces,
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: KreirajProps): KreirajLinkStateProps => ({

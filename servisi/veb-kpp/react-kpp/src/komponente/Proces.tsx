@@ -19,12 +19,14 @@ class Proces extends Component<Props> {
     }
 
     render() {
+        const {proces} = this.props;
+
         return (
             <div className="proces-kontejner">
                 <div className="proces">
                     {
                         this.props.proces.tok.map((e) => {
-                            return <Tok key={e.rbToka} proces={this.props.proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} nadproces={this.props.nadproces}/>
+                            return <Tok key={e.rbToka} proces={proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} nadproces={this.props.nadproces}/>
                         })
                     }
                 </div>

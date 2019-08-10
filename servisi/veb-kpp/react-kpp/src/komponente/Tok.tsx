@@ -21,8 +21,18 @@ type Props = TokProps & TokLinkStateProps;
 class Tok extends Component<Props, TokStanje> {
 
     state: Readonly<TokStanje> = {
-        aktivnostiUToku: [<Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema}/>]
+        aktivnostiUToku: []
     };
+
+    _vratiNizAktivnostKojePostoje() : Array<JSX.Element> {
+        let definisaneAktivnosti: Array<JSX.Element> = [];
+
+        this.props.tok.aktivnostiUToku.map(aut => {
+            definisaneAktivnosti.push()
+        })
+
+        return definisaneAktivnosti;
+    }
 
     _dodajSekvencijalnuAktivnost() {
         OmoguciDodavanjeAktivnosti(false);
@@ -47,6 +57,11 @@ class Tok extends Component<Props, TokStanje> {
         return (
             <div className="tok-kontejner">
                 <div className="tok">
+                    {
+                        this.props.tok.aktivnostiUToku.map((aut) => {
+                            return <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut}/>;
+                        })
+                    }
                     {
                         this.state.aktivnostiUToku.map((aut) => {
                             return aut;

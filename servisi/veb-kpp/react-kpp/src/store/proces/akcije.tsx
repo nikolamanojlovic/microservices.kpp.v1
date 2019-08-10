@@ -104,3 +104,7 @@ export const VratiSveAktivnostiSistema = () => {
 export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {
   store.dispatch(omoguciDodavanjeAktivnosti(omoguci));
 }
+
+export const SacuvajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}) => {
+  store.dispatch(dodajSekvencijalnuAktivnost({proces, tok, aktivnost}));
+}
