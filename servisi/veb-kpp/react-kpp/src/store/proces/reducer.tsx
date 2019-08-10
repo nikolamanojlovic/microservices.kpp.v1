@@ -48,6 +48,7 @@ const _dodajTokAktivnost = ({ state, idProcesa, noviTok }: { state: IProcesStanj
     return state;
 }
 
+// REKURZIVNE FUNKCIJE
 const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni: IProces, proces: IProces, tok: ITok, aktivnost: IAktivnost }): void => {
     pocetni.tok.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {

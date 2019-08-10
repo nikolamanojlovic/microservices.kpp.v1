@@ -4,6 +4,7 @@ import { OmoguciDodavanjeAktivnosti } from "../store/proces/akcije";
 import { Aktivnost } from "./Aktivnost";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
+import Proces from "./Proces";
 
 interface TokProps {
     proces: IProces,
@@ -24,23 +25,14 @@ class Tok extends Component<Props, TokStanje> {
         aktivnostiUToku: undefined
     };
 
-    _vratiNizAktivnostKojePostoje() : Array<JSX.Element> {
-        let definisaneAktivnosti: Array<JSX.Element> = [];
-
-        this.props.tok.aktivnostiUToku.map(aut => {
-            definisaneAktivnosti.push()
-        })
-
-        return definisaneAktivnosti;
-    }
-
     _dodajSekvencijalnuAktivnost() {
         OmoguciDodavanjeAktivnosti(false);
-        this.setState({ ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema}/> })
+        this.setState({ ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} /> })
     }
 
     _dodajParalelnuAktivnost() {
-
+        OmoguciDodavanjeAktivnosti(false);
+        this.setState({ ...this.state, aktivnostiUToku: <Proces nadproces={false} proces={this.props.proces}/> })
     }
 
     _obrisiTok() {
@@ -53,11 +45,11 @@ class Tok extends Component<Props, TokStanje> {
                 <div className="tok">
                     {
                         this.props.tok.aktivnostiUToku.map((aut) => {
-                            return <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut}/>;
+                            return <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} />;
                         })
                     }
                     {
-                         this.props.omoguciDodavanjeAktivnosti ? <span/> : this.state.aktivnostiUToku 
+                        this.props.omoguciDodavanjeAktivnosti ? <span /> : this.state.aktivnostiUToku
                     }
                 </div>
                 <div className="tok-funkcionalnosti">
@@ -76,7 +68,7 @@ class Tok extends Component<Props, TokStanje> {
                     }
                     {
                         this.props.omoguciDodavanjeAktivnosti ?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajParalelnuAktivnost()}>
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
                             </svg> :
                             <span />

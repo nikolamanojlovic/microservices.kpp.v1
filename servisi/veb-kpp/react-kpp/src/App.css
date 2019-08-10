@@ -148,11 +148,6 @@ html, body {
   float: left;
 }
 
-.tok-kontejner {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
-}
-
 /* CSS FORME */
 .forma-prijava-div {
   margin-top: 60%;
@@ -270,6 +265,63 @@ svg {
 
 .svg-obrisi {
   fill: #A33333;
+}
+
+/* PROCES */
+.prces {
+  text-align: center;
+}
+
+/* TOK */
+.tok-kontejner {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  display: inline-block;
+}
+
+.tok-funkcionalnosti {
+  text-align: center;
+}
+
+.tok {
+  background-color: rgba(85, 48, 139, 0.05);
+}
+
+/* AKTIVNOST */
+.aktivnost-kontejner {
+  text-align: center;
+  margin: 1em 1em;
+  min-width: 15em;
+  max-width: 40em;
+}
+
+.aktivnost {
+  background-color: rgb(85, 48, 139);
+  border-radius: 2em;
+  min-height: 3em;
+
+  overflow: hidden;
+}
+
+.aktivnost > * {
+  color: #FFFFFF;
+}
+
+.aktivnost-forma {
+  text-align: center;
+  height: 100%;
+
+  overflow: hidden;
+}
+
+.input-aktivnost {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0);
+
+  text-align-last:center;
+  padding-right: 3px;
+  padding-top: 15px;
+  direction: rtl;
 }
 
 /* PORUKE */

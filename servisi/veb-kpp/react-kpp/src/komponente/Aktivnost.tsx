@@ -34,14 +34,13 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     render() {
-        console.log(this.props.proces)
         return (
             <div className="aktivnost-kontejner">
                 <div className="aktivnost">
                     <div className="aktivnost-forma">
                         {
-                            this.props.aktivnost ? <p>{this.props.aktivnost.naziv}</p> :
-                                <select className="input-tekst input-kreiraj" name="izabrana" onChange={(e: FormEvent<HTMLSelectElement>) => this._promeniIzabranuAktivnost(e)}>
+                            this.props.aktivnost ? <p className="aktivnost-naziv">{this.props.aktivnost.naziv}</p> :
+                                <select className="input-tekst input-aktivnost" name="izabrana" onChange={(e: FormEvent<HTMLSelectElement>) => this._promeniIzabranuAktivnost(e)}>
                                     {
                                         this.props.aktivnostiSistema!.map(function (e, i) {
                                             return <option key={i} value={i}>{e.naziv}</option>
