@@ -13,7 +13,7 @@ interface TokProps {
 }
 
 interface TokStanje {
-    aktivnostiUToku: Array<JSX.Element>,
+    aktivnostiUToku?: JSX.Element,
 }
 
 type Props = TokProps & TokLinkStateProps;
@@ -21,7 +21,7 @@ type Props = TokProps & TokLinkStateProps;
 class Tok extends Component<Props, TokStanje> {
 
     state: Readonly<TokStanje> = {
-        aktivnostiUToku: []
+        aktivnostiUToku: undefined
     };
 
     _vratiNizAktivnostKojePostoje() : Array<JSX.Element> {
@@ -36,13 +36,7 @@ class Tok extends Component<Props, TokStanje> {
 
     _dodajSekvencijalnuAktivnost() {
         OmoguciDodavanjeAktivnosti(false);
-
-        const { aktivnostiUToku } = this.state;
-        aktivnostiUToku.push(
-            <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema}/>
-        )
-
-        this.setState({ ...this.state, aktivnostiUToku: aktivnostiUToku })
+        this.setState({ ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema}/> })
     }
 
     _dodajParalelnuAktivnost() {
@@ -63,9 +57,7 @@ class Tok extends Component<Props, TokStanje> {
                         })
                     }
                     {
-                        this.state.aktivnostiUToku.map((aut) => {
-                            return aut;
-                        })
+                         this.props.omoguciDodavanjeAktivnosti ? <span/> : this.state.aktivnostiUToku 
                     }
                 </div>
                 <div className="tok-funkcionalnosti">

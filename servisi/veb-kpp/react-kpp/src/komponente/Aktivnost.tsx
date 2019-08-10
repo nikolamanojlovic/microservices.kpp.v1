@@ -10,7 +10,7 @@ interface AktivnostProps {
 }
 
 interface AktivnostStanje {
-    izabrana: IAktivnost,
+    izabrana?: IAktivnost,
 }
 
 type Props = AktivnostProps;
@@ -18,7 +18,7 @@ type Props = AktivnostProps;
 export class Aktivnost extends Component<Props, AktivnostStanje> {
 
     state: Readonly<AktivnostStanje> = {
-        izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema[0] : this.props.aktivnost!,
+        izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema[0] : undefined,
     };
 
     _promeniIzabranuAktivnost(e: FormEvent<HTMLSelectElement>) {
@@ -29,7 +29,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     _sacuvajAktivnost() {
         let { proces, tok } = this.props;
         let { izabrana } = this.state;
-        SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana });
+        SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
         OmoguciDodavanjeAktivnosti(true);
     }
 
