@@ -18,9 +18,9 @@ type Props = ProcesFormaProps;
 export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
     state: Readonly<ProcesFormaStanje> = {
-        naziv: this.props.proces ? this.props.proces.Naziv : "",
-        kategorija: this.props.proces ? TIP_PROCESA.indexOf(this.props.proces.Kategorija) : 0,
-        opis: this.props.proces ? this.props.proces.Opis : ""
+        naziv: this.props.proces ? this.props.proces.naziv : "",
+        kategorija: this.props.proces ? TIP_PROCESA.indexOf(this.props.proces.kategorija) : 0,
+        opis: this.props.proces ? this.props.proces.opis : ""
     };
 
     _sacuvajProces = (e: FormEvent<any>) => {
@@ -51,7 +51,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
                         <select className="input-tekst input-kreiraj" name="kategorija" value={this.state.kategorija} disabled={onemoguciUnos} onChange={(e: FormEvent<HTMLSelectElement>) => this._obradiPromenu(e)}>
                             {
                                 TIP_PROCESA.map(function (e, i) {
-                                    return <option value={i}>{e}</option>
+                                    return <option key={i} value={i}>{e}</option>
                                 })
                             }
                         </select>

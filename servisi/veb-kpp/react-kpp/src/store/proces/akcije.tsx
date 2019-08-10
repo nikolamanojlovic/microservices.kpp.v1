@@ -1,4 +1,4 @@
-import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost } from "./tipovi";
+import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -13,10 +13,46 @@ export const sacuvajProces = (proces: IProces): AkcijeAplikacije => {
   }
 }
 
-export const vratiSveAktivnostiSistema = (aktivnostiSistema: Array<IAktivnost>): AkcijeAplikacije => {
+export const dodajTok = ({idProcesa, noviTok} : {idProcesa: number, noviTok: ITok}): AkcijeAplikacije => {
+  return {
+    type: DODAJ_TOK,
+    payload: {idProcesa: idProcesa, noviTok: noviTok}
+  }
+}
+
+export const omoguciDodavanjeAktivnosti = (payload: boolean): AkcijeAplikacije => {
+  return {
+    type: OMOGUCI_DODAVANJE_AKTIVNOSTI,
+    payload: payload
+  }
+}
+
+export const vratiSveAktivnostiSistema = (aktivnosti: Array<IAktivnost>): AkcijeAplikacije => {
   return {
     type: VRATI_SVE_AKTIVNOSTI,
-    payload: aktivnostiSistema
+    payload: aktivnosti
+  }
+}
+
+export const dodajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}): AkcijeAplikacije => {
+  return {
+    type: DODAJ_SEKVENCIJALNU_AKTIVNOST,
+    payload: {
+      proces: proces,
+      tok: tok,
+      aktivnost: aktivnost
+    }
+  }
+}
+
+export const dodajParalelnuAktivnost = ({idProcesa, rbToka, proces} : {idProcesa: number, rbToka: number, proces: IProces}): AkcijeAplikacije => {
+  return {
+    type: DODAJ_PARALELNU_AKTIVNOST,
+    payload: {
+      idProcesa: idProcesa,
+      rbToka: rbToka,
+      proces: proces
+    }
   }
 }
 
@@ -31,11 +67,18 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
     store.dispatch(sacuvajProces(response.data));
   }).catch(function (error) {
     store.dispatch(sacuvajProces({
-      IDProcesa: 1,
-      Naziv: naziv,
-      Opis: opis,
-      Kategorija: kategorija,
-      VremeKreiranja: Date.now().toString(),
+      idProcesa: 1,
+      naziv: naziv,
+      opis: opis,
+      kategorija: kategorija,
+      vremeKreiranja: Date.now().toString(),
+      tok: [{
+        rbToka: 1,
+        aktivnostiUToku: [],
+        podprocesiUToku: [],
+        tranzicije: [],
+      } as ITok],
+      tranzicije: []
     } as IProces));
     /*
     store.dispatch(sacuvajPoruku({
@@ -56,4 +99,8 @@ export const VratiSveAktivnostiSistema = () => {
         tekst: error.response.data
       } as IPoruka));
     })
+}
+
+export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {
+  store.dispatch(omoguciDodavanjeAktivnosti(omoguci));
 }

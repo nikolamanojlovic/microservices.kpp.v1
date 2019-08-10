@@ -25,7 +25,7 @@ export class NavigacijaForma extends Component<Props> {
                 <div className="navigacija-opcije">
                     {
                          STRANICE.map(function (e, i) {
-                            return <NavigacijaOpcija opcija={e}/>
+                            return <NavigacijaOpcija key={i} opcija={e}/>
                         })
                     }
                 </div>

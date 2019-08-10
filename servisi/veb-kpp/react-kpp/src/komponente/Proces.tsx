@@ -1,28 +1,21 @@
 import React, { Component } from "react";
-import { Tok } from "./Tok";
+import { StanjeAplikacije } from "../store/konfiguracija";
+import { IAktivnost, IProces } from "../store/proces/tipovi";
+import { connect } from "react-redux";
+import { VratiSveAktivnostiSistema } from "../store/proces/akcije";
+import Tok from "./Tok";
 
 interface ProcesProps {
-    pocetni: boolean,
+    nadproces: boolean,
+    proces: IProces
 }
 
-interface ProcesStanje {
-    brojTokova: number,
-    tokovi: Array<JSX.Element>
-}
+type Props = ProcesProps & ProcesLinkStateProps;
 
-type Props = ProcesProps;
+class Proces extends Component<Props> {
 
-export class Proces extends Component<Props, ProcesStanje> {
-
-    state: Readonly<ProcesStanje> = {
-        brojTokova: this.props.pocetni ? 1 : 2,
-        tokovi: []
-    };
-
-    _kreirajTokove() {
-        for (let i = 0; i < this.state.brojTokova; i++) {
-            
-        }
+    UNSAFE_componentWillMount() {
+        VratiSveAktivnostiSistema();
     }
 
     render() {
@@ -30,14 +23,17 @@ export class Proces extends Component<Props, ProcesStanje> {
             <div className="proces-kontejner">
                 <div className="proces">
                     {
-                        this.state.tokovi.map((e,i) => {
-                            return e;
+                        this.props.proces.tok.map((e) => {
+                            return <Tok key={e.rbToka} proces={this.props.proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} nadproces={this.props.nadproces}/>
                         })
                     }
                 </div>
                 {
-                    this.props.pocetni ? <span /> :
+                    this.props.nadproces ? <span /> :
                         <div className="proces-funkcionalnosti">
+                            <svg className="svg-obrisi" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" />
+                            </svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
                             </svg>
@@ -47,3 +43,13 @@ export class Proces extends Component<Props, ProcesStanje> {
         )
     }
 }
+
+interface ProcesLinkStateProps {
+    aktivnostiSistema: Array<IAktivnost>
+}
+
+const mapStateToProps = (state: StanjeAplikacije, ownProps: ProcesProps): ProcesLinkStateProps => ({
+    aktivnostiSistema: state.procesReducer.aktivnostiSistema
+});
+
+export default connect(mapStateToProps)(Proces);
