@@ -267,24 +267,39 @@ svg {
   fill: #A33333;
 }
 
-/* PROCES */
-.prces {
+.kreiraj-tok-proces {
+  overflow: scroll;
   text-align: center;
+}
+
+/* PROCES */
+.proces {
+  vertical-align: top;
+  display: inline-block;
+  border: 1px solid rgb(85, 48, 139);
 }
 
 /* TOK */
 .tok-kontejner {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
   display: inline-block;
+
+  margin: 0 1.5em;
+  min-width: 15em;
+  min-height: 3em;
+  border: 1px solid rgb(85, 48, 139);
+  background-color: rgba(85, 48, 139, 0.05);
 }
 
 .tok-funkcionalnosti {
   text-align: center;
 }
 
-.tok {
-  background-color: rgba(85, 48, 139, 0.05);
+.proces-funkcionalnosti {
+  display: inline-block;
+}
+
+.proces-funkcionalnosti > * {
+  display: block;
 }
 
 /* AKTIVNOST */
@@ -318,10 +333,31 @@ svg {
   color: #FFFFFF;
   background-color: rgba(255, 255, 255, 0);
 
+  font-style: italic;
   text-align-last:center;
   padding-right: 3px;
   padding-top: 15px;
   direction: rtl;
+}
+
+.input-tok {
+  margin: 1em 0em;
+}
+
+.input-podroces {
+  all: unset;
+
+  width: 70%;
+  margin: 1em auto;
+  display: block;
+
+  color: rgb(40,40,40, 0.6);
+
+  border-bottom: 1px solid #55308B;
+}
+
+.input:hover {
+  cursor: pointer;
 }
 
 /* PORUKE */

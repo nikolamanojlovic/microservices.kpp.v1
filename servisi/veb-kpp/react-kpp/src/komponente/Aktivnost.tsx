@@ -30,7 +30,6 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         let { proces, tok } = this.props;
         let { izabrana } = this.state;
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
-        OmoguciDodavanjeAktivnosti(true);
     }
 
     render() {

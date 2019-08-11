@@ -1,4 +1,4 @@
-import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI } from "./tipovi";
+import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -10,6 +10,13 @@ export const sacuvajProces = (proces: IProces): AkcijeAplikacije => {
   return {
     type: SACUVAJ_PROCES,
     payload: proces
+  }
+}
+
+export const obrisiPodproces = (podproces: IProces): AkcijeAplikacije => {
+  return {
+    type: OBRISI_PODPROCES,
+    payload: podproces
   }
 }
 
@@ -45,13 +52,13 @@ export const dodajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: 
   }
 }
 
-export const dodajParalelnuAktivnost = ({idProcesa, rbToka, proces} : {idProcesa: number, rbToka: number, proces: IProces}): AkcijeAplikacije => {
+export const dodajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IProces, tok: ITok, podproces: IProces}): AkcijeAplikacije => {
   return {
     type: DODAJ_PARALELNU_AKTIVNOST,
     payload: {
-      idProcesa: idProcesa,
-      rbToka: rbToka,
-      proces: proces
+      proces: proces,
+      tok: tok,
+      podproces: podproces
     }
   }
 }
@@ -101,10 +108,18 @@ export const VratiSveAktivnostiSistema = () => {
     })
 }
 
+export const ObrisiPodproces = (podproces: IProces) => {
+  store.dispatch(obrisiPodproces(podproces));
+}
+
 export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {
   store.dispatch(omoguciDodavanjeAktivnosti(omoguci));
 }
 
 export const SacuvajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}) => {
   store.dispatch(dodajSekvencijalnuAktivnost({proces, tok, aktivnost}));
+}
+
+export const SacuvajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IProces, tok: ITok, podproces: IProces}) => {
+  store.dispatch(dodajParalelnuAktivnost({proces, tok, podproces}));
 }

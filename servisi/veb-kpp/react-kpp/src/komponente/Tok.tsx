@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost } from "../store/proces/akcije";
 import { Aktivnost } from "./Aktivnost";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
@@ -10,7 +10,7 @@ interface TokProps {
     proces: IProces,
     tok: ITok,
     aktivnostiSistema: Array<IAktivnost>,
-    nadproces: boolean
+    nadproces?: IProces
 }
 
 interface TokStanje {
@@ -26,13 +26,23 @@ class Tok extends Component<Props, TokStanje> {
     };
 
     _dodajSekvencijalnuAktivnost() {
-        OmoguciDodavanjeAktivnosti(false);
         this.setState({ ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} /> })
     }
 
     _dodajParalelnuAktivnost() {
-        OmoguciDodavanjeAktivnosti(false);
-        this.setState({ ...this.state, aktivnostiUToku: <Proces nadproces={false} proces={this.props.proces}/> })
+        let { proces, tok } = this.props;
+        let podproces = {
+            idProcesa: parseInt(proces.idProcesa + "" + tok.rbToka + "" + tok.podprocesiUToku.length),
+            naziv: "",
+            opis: "",
+            kategorija: proces.kategorija,
+            vremeKreiranja: Date.now().toString(),
+            tok: [{ rbToka: 1, aktivnostiUToku: [], podprocesiUToku: [] }, { rbToka: 2, aktivnostiUToku: [], podprocesiUToku: [] }],
+            tranzicije: []
+        };
+
+        SacuvajParalelnuAktivnost({proces, tok, podproces});
+        this.setState({...this.state, aktivnostiUToku: <Proces nadproces={this.props.proces} proces={podproces} />})
     }
 
     _obrisiTok() {
@@ -49,29 +59,28 @@ class Tok extends Component<Props, TokStanje> {
                         })
                     }
                     {
-                        this.props.omoguciDodavanjeAktivnosti ? <span /> : this.state.aktivnostiUToku
+                        this.state.aktivnostiUToku
                     }
                 </div>
                 <div className="tok-funkcionalnosti">
                     {
-                        this.props.nadproces ? <span /> :
-                            <svg className="svg-obrisi" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        this.props.nadproces ?
+                            <svg className="input svg-obrisi input-tok-obrisi" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" />
                             </svg>
+                            : <span/>
                     }
                     {
-                        this.props.omoguciDodavanjeAktivnosti ?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajSekvencijalnuAktivnost()}>
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
-                            </svg> :
-                            <span />
+
+                        <svg className="input input-tok-dodaj-aktivnost" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajSekvencijalnuAktivnost()}>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+                        </svg>
                     }
                     {
-                        this.props.omoguciDodavanjeAktivnosti ?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajParalelnuAktivnost()}>
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
-                            </svg> :
-                            <span />
+
+                        <svg className="input input-tok-dodaj-paralelnu-aktivnost" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajParalelnuAktivnost()}>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                        </svg>
                     }
                 </div>
             </div>

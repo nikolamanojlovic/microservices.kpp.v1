@@ -22,8 +22,9 @@ class Kreiraj extends Component<Props> {
                     <h1 className="kreiraj-proces-h1">Процес</h1>
                     <ProcesForma proces={proces}/>
                 </div>
+                { proces ? <h1 className="kreiraj-proces-h1">Ток процеса</h1> : <span/> }
                 {
-                    proces ? <div className="kreiraj-tok-proces"><h1 className="kreiraj-proces-h1">Ток процеса</h1><Proces nadproces={true} proces={proces}/></div> : <span/>
+                    proces ? <div className="kreiraj-tok-proces"><Proces nadproces={undefined} proces={proces}/></div> : <span/>
                 }
             </div>
         )
