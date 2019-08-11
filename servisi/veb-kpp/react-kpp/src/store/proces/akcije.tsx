@@ -1,4 +1,4 @@
-import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES } from "./tipovi";
+import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -23,6 +23,13 @@ export const obrisiPodproces = (podproces: IProces): AkcijeAplikacije => {
 export const dodajTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeAplikacije => {
   return {
     type: DODAJ_TOK,
+    payload: {proces: proces, tok: tok}
+  }
+}
+
+export const obrisiTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeAplikacije => {
+  return {
+    type: OBRISI_TOK,
     payload: {proces: proces, tok: tok}
   }
 }
@@ -114,6 +121,10 @@ export const ObrisiPodproces = (podproces: IProces) => {
 
 export const DodajTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
   store.dispatch(dodajTok({proces, tok}));
+}
+
+export const ObrisiTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
+  store.dispatch(obrisiTok({proces, tok}));
 }
 
 export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {

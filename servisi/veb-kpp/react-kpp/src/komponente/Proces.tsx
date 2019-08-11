@@ -38,7 +38,7 @@ class Proces extends Component<Props> {
         const {proces} = this.props;
         return (
             <div className="proces-kontejner">
-                <div className="proces">
+                <div className={"proces" + (this.props.nadproces ? " podproces-kontejner" : "") }>
                     {
                           this.props.nadproces ? <input className="input-podproces" name="naziv" type="text"/> : <span/>
                     }

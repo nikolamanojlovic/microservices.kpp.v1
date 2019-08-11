@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost, ObrisiTok } from "../store/proces/akcije";
 import { Aktivnost } from "./Aktivnost";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
@@ -25,8 +25,13 @@ class Tok extends Component<Props, TokStanje> {
         aktivnostiUToku: undefined
     };
 
+    _obrisiStanje() {
+        this.setState({aktivnostiUToku: undefined})
+    }
+
     _dodajSekvencijalnuAktivnost() {
-        this.setState({ ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} /> })
+        OmoguciDodavanjeAktivnosti(false);
+        this.setState({ ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} obrisiStanje={() => this._obrisiStanje()} /> })
     }
 
     _dodajParalelnuAktivnost() {
@@ -45,7 +50,8 @@ class Tok extends Component<Props, TokStanje> {
     }
 
     _obrisiTok() {
-
+        let { proces, tok } = this.props;
+        ObrisiTok({proces, tok})
     }
 
     render() {
@@ -68,23 +74,23 @@ class Tok extends Component<Props, TokStanje> {
                 </div>
                 <div className="tok-funkcionalnosti">
                     {
-                        this.props.nadproces ?
-                            <svg className="input svg-obrisi input-tok-obrisi" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        this.props.nadproces && this.props.proces.tok.length > 2 ?
+                            <svg className="input svg-obrisi input-tok-obrisi" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._obrisiTok()}>
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" />
                             </svg>
                             : <span />
                     }
                     {
-
+                        this.props.omoguciDodavanjeAktivnosti ?
                         <svg className="input input-tok-dodaj-aktivnost" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajSekvencijalnuAktivnost()}>
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
-                        </svg>
+                        </svg> : <span/>
                     }
                     {
-
+                        this.props.omoguciDodavanjeAktivnosti ?
                         <svg className="input input-tok-dodaj-paralelnu-aktivnost" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajParalelnuAktivnost()}>
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
-                        </svg>
+                        </svg> : <span/>
                     }
                 </div>
             </div>

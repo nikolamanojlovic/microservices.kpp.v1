@@ -57,6 +57,7 @@ export const DODAJ_PARALELNU_AKTIVNOST = "DODAJ_PARALELNU_AKTIVNOST";
 export const DODAJ_SEKVENCIJALNU_AKTIVNOST = "DODAJ_SEKVENCIJALNU_AKTIVNOST";
 
 export const DODAJ_TOK = "DODAJ_TOK";
+export const OBRISI_TOK = "OBRISI_TOK";
 
 export const OMOGUCI_DODAVANJE_AKTIVNOSTI = "OMOGUCI_DODAVANJE_AKTIVNOSTI";
 
@@ -73,6 +74,14 @@ interface IObrisiPodprocesAkcija {
 
 interface IDodajTokAkcija {
     type: typeof DODAJ_TOK
+    payload: {
+        proces: IProces,
+        tok: ITok
+    }
+}
+
+interface IObrisiTokAkcija {
+    type: typeof OBRISI_TOK
     payload: {
         proces: IProces,
         tok: ITok
@@ -100,4 +109,4 @@ interface IOmoguciDodavanjeAktivnosti {
 }
 
 // EXPORT AKCIJA
-export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IDodajTokAkcija | IVratiSveAktivnostiSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti;
+export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija | IVratiSveAktivnostiSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti;
