@@ -74,8 +74,8 @@ interface IObrisiPodprocesAkcija {
 interface IDodajTokAkcija {
     type: typeof DODAJ_TOK
     payload: {
-        idProcesa: number,
-        noviTok: ITok
+        proces: IProces,
+        tok: ITok
     }
 }
 

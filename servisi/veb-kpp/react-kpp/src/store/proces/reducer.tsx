@@ -24,9 +24,7 @@ const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesS
         case DODAJ_PARALELNU_AKTIVNOST:
             return { ...state, proces: _dodajParalelnuAktivnost({ state: state, proces: action.payload.proces, tok: action.payload.tok, podproces: action.payload.podproces }) };
         case DODAJ_TOK:
-            const { idProcesa, noviTok } = action.payload;
-            _dodajTokAktivnost({ state: state, idProcesa: idProcesa, noviTok: noviTok });
-            return { ...state };
+            return { ...state, proces: _dodajTokAktivnost({ state: state, proces: action.payload.proces, tok: action.payload.tok }) };
         default:
             return { ...state };
     }
@@ -53,10 +51,11 @@ const _dodajParalelnuAktivnost = ({ state, proces, tok, podproces }: { state: IP
     return pocetni;
 }
 
-const _dodajTokAktivnost = ({ state, idProcesa, noviTok }: { state: IProcesStanje, idProcesa: number, noviTok: ITok }): IProcesStanje => {
-    let proces = { ...state.proces! };
-    _dodajTokRekurzija({ proces: proces, tok: noviTok, idProcesa: idProcesa })
-    return state;
+const _dodajTokAktivnost = ({ state, proces, tok }: { state: IProcesStanje, proces: IProces, tok: ITok }): IProces => {
+    let pocetni = { ...state.proces! };
+    _dodajTokRekurzija({ pocetni: pocetni, proces: proces, tok: tok })
+
+    return pocetni;
 }
 
 // REKURZIVNE FUNKCIJE
@@ -69,7 +68,7 @@ const _obrisiPodprocesRekurzija = ({ pocetni, podproces }: { pocetni: IProces, p
                 });
                 return;
             } else {
-                _obrisiPodprocesRekurzija({pocetni: put, podproces: podproces});
+                _obrisiPodprocesRekurzija({ pocetni: put, podproces: podproces });
             }
         })
     });
@@ -81,7 +80,7 @@ const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni
             t.aktivnostiUToku.push(aktivnost);
             return;
         } else {
-            tok.podprocesiUToku.map((pod) => {
+            t.podprocesiUToku.map((pod) => {
                 _dodajAktivnostRekurzija({ pocetni: pod, proces: proces, tok: tok, aktivnost: aktivnost });
             });
         }
@@ -94,22 +93,22 @@ const _dodajParalelnuAktivnostRekurzija = ({ pocetni, proces, tok, podproces }: 
             t.podprocesiUToku.push(podproces);
             return;
         } else {
-            tok.podprocesiUToku.map((pod) => {
+            t.podprocesiUToku.map((pod) => {
                 _dodajParalelnuAktivnostRekurzija({ pocetni: pod, proces: proces, tok: tok, podproces: podproces });
             });
         }
     })
 }
 
-const _dodajTokRekurzija = ({ proces, tok, idProcesa }: { proces: IProces, tok: ITok, idProcesa: number }): void => {
-    if (proces.idProcesa === idProcesa) {
+const _dodajTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proces: IProces, tok: ITok }): void => {
+    if (pocetni.idProcesa === proces.idProcesa) {
         proces.tok.push(tok);
         return;
     }
 
-    proces.tok.map((e) => {
-        e.podprocesiUToku.map((p) => {
-            _dodajTokRekurzija({ proces: p, tok: tok, idProcesa: idProcesa });
+    pocetni.tok.map((t) => {
+        t.podprocesiUToku.map((p) => {
+            _dodajTokRekurzija({ pocetni: p, proces: proces, tok: tok });
         })
     });
 }

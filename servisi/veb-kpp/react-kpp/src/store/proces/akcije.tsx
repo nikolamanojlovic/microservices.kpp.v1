@@ -20,10 +20,10 @@ export const obrisiPodproces = (podproces: IProces): AkcijeAplikacije => {
   }
 }
 
-export const dodajTok = ({idProcesa, noviTok} : {idProcesa: number, noviTok: ITok}): AkcijeAplikacije => {
+export const dodajTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeAplikacije => {
   return {
     type: DODAJ_TOK,
-    payload: {idProcesa: idProcesa, noviTok: noviTok}
+    payload: {proces: proces, tok: tok}
   }
 }
 
@@ -110,6 +110,10 @@ export const VratiSveAktivnostiSistema = () => {
 
 export const ObrisiPodproces = (podproces: IProces) => {
   store.dispatch(obrisiPodproces(podproces));
+}
+
+export const DodajTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
+  store.dispatch(dodajTok({proces, tok}));
 }
 
 export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {

@@ -275,13 +275,12 @@ svg {
 /* PROCES */
 .proces {
   vertical-align: top;
-  display: inline-block;
-  border: 1px solid rgb(85, 48, 139);
 }
 
 /* TOK */
 .tok-kontejner {
   display: inline-block;
+  width: 50%;
 
   margin: 0 1.5em;
   min-width: 15em;
@@ -304,6 +303,7 @@ svg {
 
 /* AKTIVNOST */
 .aktivnost-kontejner {
+  display: block;
   text-align: center;
   margin: 1em 1em;
   min-width: 15em;
@@ -344,7 +344,7 @@ svg {
   margin: 1em 0em;
 }
 
-.input-podroces {
+.input-podproces {
   all: unset;
 
   width: 70%;

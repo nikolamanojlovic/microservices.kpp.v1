@@ -41,8 +41,7 @@ class Tok extends Component<Props, TokStanje> {
             tranzicije: []
         };
 
-        SacuvajParalelnuAktivnost({proces, tok, podproces});
-        this.setState({...this.state, aktivnostiUToku: <Proces nadproces={this.props.proces} proces={podproces} />})
+        SacuvajParalelnuAktivnost({ proces, tok, podproces });
     }
 
     _obrisiTok() {
@@ -60,8 +59,11 @@ class Tok extends Component<Props, TokStanje> {
                     }
                     {
                         this.props.tok.podprocesiUToku.map((put) => {
-                            return <Proces nadproces={this.props.proces} proces={put}/>
+                            return <Proces nadproces={this.props.proces} proces={put} />
                         })
+                    }
+                    {
+                        this.state.aktivnostiUToku
                     }
                 </div>
                 <div className="tok-funkcionalnosti">
@@ -70,7 +72,7 @@ class Tok extends Component<Props, TokStanje> {
                             <svg className="input svg-obrisi input-tok-obrisi" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" />
                             </svg>
-                            : <span/>
+                            : <span />
                     }
                     {
 
