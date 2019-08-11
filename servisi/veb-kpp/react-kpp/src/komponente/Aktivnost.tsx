@@ -8,6 +8,7 @@ interface AktivnostProps {
     aktivnostiSistema?: Array<IAktivnost>,
     aktivnost?: IAktivnost,
     obrisiStanje?: () => void;
+    omoguciriPromenu?: () => boolean;
 }
 
 interface AktivnostStanje {
@@ -33,7 +34,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
         
         this.props.obrisiStanje!();
-        OmoguciDodavanjeAktivnosti(true);
+        OmoguciDodavanjeAktivnosti(this.props.omoguciriPromenu!());
     }
 
     render() {
