@@ -64,9 +64,10 @@ const _obrisiPodprocesRekurzija = ({ pocetni, podproces }: { pocetni: IProces, p
     pocetni.tok.map((t) => {
         t.podprocesiUToku.map((put) => {
             if (put.idProcesa === podproces.idProcesa) {
-                t.podprocesiUToku.filter(function (value) {
+                t.podprocesiUToku = t.podprocesiUToku.filter(function (value) {
                     return value.idProcesa !== podproces.idProcesa;
                 });
+                return;
             } else {
                 _obrisiPodprocesRekurzija({pocetni: put, podproces: podproces});
             }

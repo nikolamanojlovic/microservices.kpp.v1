@@ -59,7 +59,9 @@ class Tok extends Component<Props, TokStanje> {
                         })
                     }
                     {
-                        this.state.aktivnostiUToku
+                        this.props.tok.podprocesiUToku.map((put) => {
+                            return <Proces nadproces={this.props.proces} proces={put}/>
+                        })
                     }
                 </div>
                 <div className="tok-funkcionalnosti">
