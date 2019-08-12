@@ -9,8 +9,6 @@ html, body {
 .stranica-kontejner {
   width: 100vw;
   height: 100vh;
-
-  overflow: hidden;
 }
 
 .sajt-kontejner {
@@ -268,8 +266,13 @@ svg {
 }
 
 .kreiraj-tok-proces {
-  overflow: scroll;
   text-align: center;
+  white-space: nowrap;
+  margin: 0 1.3em;
+  width: 1200x;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* PROCES */

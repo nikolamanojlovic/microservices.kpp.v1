@@ -41,6 +41,7 @@ class Tok extends Component<Props, TokStanje> {
     }
 
     _dodajParalelnuAktivnost() {
+        console.log('fewfewf')
         let { proces, tok } = this.props;
         let podproces = {
             idProcesa: parseInt(proces.idProcesa + "" + tok.rbToka + "" + tok.podprocesiUToku.length),
