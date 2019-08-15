@@ -1,12 +1,13 @@
 import React, { Component, FormEvent } from "react";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu } from "../store/proces/akcije";
 
 interface AktivnostProps {
     proces: IProces,
     tok: ITok,
     aktivnostiSistema?: Array<IAktivnost>,
     aktivnost?: IAktivnost,
+    aktivnostPodprocesa: boolean
     obrisiStanje?: () => void;
     omoguciriPromenu?: () => boolean;
 }
@@ -34,7 +35,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
         
         this.props.obrisiStanje!();
-        OmoguciDodavanjeAktivnosti(this.props.omoguciriPromenu!());
+        this.props.aktivnostPodprocesa ? OmoguciDodavanjeAktivnostiUPodprocesu(true) : OmoguciDodavanjeAktivnosti(this.props.omoguciriPromenu!());
     }
 
     render() {

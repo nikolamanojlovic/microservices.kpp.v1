@@ -45,11 +45,13 @@ export interface IProcesStanje {
     proces?: IProces
     aktivnostiSistema: Array<IAktivnost>
     omoguciDodavanjeAktivnosti: boolean
+    omoguciDodavanjeAktivnostiUPodprocesu: boolean
 }
 
 // TIPOVI AKCIJA
 export const SACUVAJ_PROCES = "SACUVAJ_PROCES";
 export const OBRISI_PODPROCES = "OBRISI_PODPROCES";
+export const AZURIRAJ_NAZIV_PODPROCES = "AZURIRAJ_NAZIV_PODPROCES";
 
 export const VRATI_SVE_AKTIVNOSTI = "VRATI_SVE_AKTIVNOSTI";
 
@@ -60,6 +62,7 @@ export const DODAJ_TOK = "DODAJ_TOK";
 export const OBRISI_TOK = "OBRISI_TOK";
 
 export const OMOGUCI_DODAVANJE_AKTIVNOSTI = "OMOGUCI_DODAVANJE_AKTIVNOSTI";
+export const OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU = "OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU";
 
 // TIPOVI KREATORA AKCIJA
 interface ISacuvajProcesAkcija {
@@ -69,6 +72,11 @@ interface ISacuvajProcesAkcija {
 
 interface IObrisiPodprocesAkcija {
     type: typeof OBRISI_PODPROCES
+    payload: IProces
+}
+
+interface IAzurirajNazivPodprocesAkcija {
+    type: typeof AZURIRAJ_NAZIV_PODPROCES
     payload: IProces
 }
 
@@ -108,5 +116,10 @@ interface IOmoguciDodavanjeAktivnosti {
     payload: boolean
 }
 
+interface IOmoguciDodavanjeAktivnostiUPodprocesu {
+    type: typeof OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU,
+    payload: boolean
+}
+
 // EXPORT AKCIJA
-export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija | IVratiSveAktivnostiSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti;
+export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija | IVratiSveAktivnostiSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti | IOmoguciDodavanjeAktivnostiUPodprocesu;

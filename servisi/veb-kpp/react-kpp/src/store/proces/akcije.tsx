@@ -1,4 +1,4 @@
-import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK } from "./tipovi";
+import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -20,6 +20,13 @@ export const obrisiPodproces = (podproces: IProces): AkcijeAplikacije => {
   }
 }
 
+export const azurirajNazivPodprocesa= (podproces: IProces): AkcijeAplikacije => {
+  return {
+    type: AZURIRAJ_NAZIV_PODPROCES,
+    payload: podproces
+  }
+}
+
 export const dodajTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeAplikacije => {
   return {
     type: DODAJ_TOK,
@@ -37,6 +44,13 @@ export const obrisiTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeA
 export const omoguciDodavanjeAktivnosti = (payload: boolean): AkcijeAplikacije => {
   return {
     type: OMOGUCI_DODAVANJE_AKTIVNOSTI,
+    payload: payload
+  }
+}
+
+export const omoguciDodavanjeUPodprocesu = (payload: boolean): AkcijeAplikacije => {
+  return {
+    type: OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU,
     payload: payload
   }
 }
@@ -119,6 +133,10 @@ export const ObrisiPodproces = (podproces: IProces) => {
   store.dispatch(obrisiPodproces(podproces));
 }
 
+export const AzurirajNazivPodprocesa = (podproces: IProces) => {
+  store.dispatch(azurirajNazivPodprocesa(podproces));
+}
+
 export const DodajTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
   store.dispatch(dodajTok({proces, tok}));
 }
@@ -129,6 +147,10 @@ export const ObrisiTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
 
 export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {
   store.dispatch(omoguciDodavanjeAktivnosti(omoguci));
+}
+
+export const OmoguciDodavanjeAktivnostiUPodprocesu = (omoguci : boolean) => {
+  store.dispatch(omoguciDodavanjeUPodprocesu(omoguci));
 }
 
 export const SacuvajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}) => {

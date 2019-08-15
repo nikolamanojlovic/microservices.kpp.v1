@@ -1,10 +1,11 @@
-import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK } from "./tipovi";
+import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU } from "./tipovi";
 
 // INICIJALNO STANJE
 const inicijalnoStanje: IProcesStanje = {
     proces: undefined,
     aktivnostiSistema: [],
-    omoguciDodavanjeAktivnosti: true
+    omoguciDodavanjeAktivnosti: true,
+    omoguciDodavanjeAktivnostiUPodprocesu: true
 }
 
 // REDUCER
@@ -15,8 +16,12 @@ const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesS
             return { ...state, proces: action.payload };
         case OBRISI_PODPROCES:
             return { ...state, proces: _odbrisiPodprocesAktivnost({ state: state, podproces: action.payload }) };
+        case AZURIRAJ_NAZIV_PODPROCES:
+            return { ...state, proces: _azurirajNazivPodprocesaAktivnost({ state: state, podproces: action.payload }) };
         case OMOGUCI_DODAVANJE_AKTIVNOSTI:
             return { ...state, omoguciDodavanjeAktivnosti: action.payload };
+        case OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU:
+            return { ...state, omoguciDodavanjeAktivnostiUPodprocesu: action.payload };
         case VRATI_SVE_AKTIVNOSTI:
             return { ...state, aktivnostiSistema: action.payload };
         case DODAJ_SEKVENCIJALNU_AKTIVNOST:
@@ -35,6 +40,13 @@ const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesS
 const _odbrisiPodprocesAktivnost = ({ state, podproces }: { state: IProcesStanje, podproces: IProces }): IProces => {
     let pocetni = { ...state.proces! };
     _obrisiPodprocesRekurzija({ pocetni, podproces })
+
+    return pocetni;
+}
+
+const _azurirajNazivPodprocesaAktivnost = ({ state, podproces }: { state: IProcesStanje, podproces: IProces }): IProces => {
+    let pocetni = { ...state.proces! };
+    _azurirajNazivPodprocesaRekurzija({ pocetni, podproces })
 
     return pocetni;
 }
@@ -83,6 +95,19 @@ const _obrisiPodprocesRekurzija = ({ pocetni, podproces }: { pocetni: IProces, p
     });
 }
 
+const _azurirajNazivPodprocesaRekurzija = ({ pocetni, podproces }: { pocetni: IProces, podproces: IProces }): void => {
+    pocetni.tok.map((t) => {
+        t.podprocesiUToku.map((put) => {
+            if (put.idProcesa === podproces.idProcesa) {
+                put.naziv = podproces.naziv;
+                return;
+            } else {
+                _azurirajNazivPodprocesaRekurzija({ pocetni: put, podproces: podproces });
+            }
+        })
+    });
+}
+
 const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni: IProces, proces: IProces, tok: ITok, aktivnost: IAktivnost }): void => {
     pocetni.tok.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {
@@ -124,15 +149,15 @@ const _dodajTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proces
 
 const _obrisiTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proces: IProces, tok: ITok }): void => {
     if (pocetni.idProcesa === proces.idProcesa) {
-        let noviTokovi = pocetni.tok.filter(function(value) {
+        let noviTokovi = pocetni.tok.filter(function (value) {
             return value.rbToka !== tok.rbToka;
         });
 
         // ponovo dodeli brojeve
-        noviTokovi.forEach(function(e, i) {
+        noviTokovi.forEach(function (e, i) {
             e.rbToka = i + 1;
         });
-        
+
         pocetni.tok = noviTokovi;
         return;
     }
