@@ -7,7 +7,6 @@ namespace mikroservisprocesi.OPP
     public interface IProcesOPP : ISuperOPP<Proces>
     {
         long VratiIDNovogProcesa();
-
         List<Proces> VratiSveMogucePodproceseSistema(long id);
     }
 }

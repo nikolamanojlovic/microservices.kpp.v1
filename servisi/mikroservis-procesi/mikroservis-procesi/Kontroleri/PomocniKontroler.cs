@@ -30,5 +30,17 @@ namespace mikroservisprocesi.Kontroleri
         {
             return _procesFasada.VratiSveMogucePodproceseSistema(IDProcesa);
         }
+
+        [HttpGet("VratiPocetnuAktivnost")]
+        public ActionResult<Aktivnost> VratiPocetnuAktivnost()
+        {
+            return _aktivnostFasada.VratiPocetnuAktivnost();
+        }
+
+        [HttpGet("VratiKrajnjuAktivnost")]
+        public ActionResult<Aktivnost> VratiKrajnjuAktivnost()
+        {
+            return _aktivnostFasada.VratiKrajnjuAktivnost();
+        }
     }
 }

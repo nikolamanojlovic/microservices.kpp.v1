@@ -7,5 +7,7 @@ namespace mikroservisprocesi.Fasada
     public interface IAktivnostFasada
     {
         List<Aktivnost> VratiSveAktivnostiSistema();
+        Aktivnost VratiPocetnuAktivnost();
+        Aktivnost VratiKrajnjuAktivnost();
     }
 }

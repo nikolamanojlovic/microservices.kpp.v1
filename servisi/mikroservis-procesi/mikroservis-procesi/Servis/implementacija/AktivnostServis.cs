@@ -14,6 +14,16 @@ namespace mikroservisprocesi.Servis.implementacija
             _aktivnostOPP = aktivnostOPP;
         }
 
+        public Aktivnost VratiKrajnjuAktivnost()
+        {
+            return _aktivnostOPP.VratiKrajnjuAktivnost();
+        }
+
+        public Aktivnost VratiPocetnuAktivnost()
+        {
+            return _aktivnostOPP.VratiPocetnuAktivnost();
+        }
+
         public List<Aktivnost> VratiSveAktivnosti()
         {
             return _aktivnostOPP.VratiSveAktivnostiSistema();

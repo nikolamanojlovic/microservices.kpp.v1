@@ -91,7 +91,7 @@ export const dodajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IPro
   }
 }
 
-export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, ulaznaAktivnost, usloviTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, ulaznaAktivnost: IAktivnost, usloviTranzicije?: Array<IUslovTranzicije>}): AkcijeAplikacije => {
+export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number}): AkcijeAplikacije => {
   return {
     type: DODAJ_TRANZICIJU,
     payload: {
@@ -99,8 +99,7 @@ export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, ula
       nadtok: nadtok,
       ulazniProces: ulazniProces,
       ulazniTok: ulazniTok,
-      ulaznaAktivnost: ulaznaAktivnost,
-      usloviTranzicije: usloviTranzicije
+      idUlaza: idUlaza
     }
   }
 }
@@ -194,6 +193,6 @@ export const SacuvajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IP
   store.dispatch(dodajParalelnuAktivnost({proces, tok, podproces}));
 }
 
-export const DodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, ulaznaAktivnost, usloviTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, ulaznaAktivnost: IAktivnost, usloviTranzicije?: Array<IUslovTranzicije>}) => {
-  store.dispatch(dodajTranziciju({nadproces, nadtok, ulazniProces, ulazniTok, ulaznaAktivnost, usloviTranzicije}));
+export const DodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number}) => {
+  store.dispatch(dodajTranziciju({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza}));
 }

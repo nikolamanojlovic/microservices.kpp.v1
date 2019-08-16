@@ -7,5 +7,7 @@ namespace mikroservisprocesi.OPP
     public interface IAktivnostOPP : ISuperOPP<Aktivnost>
     {
         List<Aktivnost> VratiSveAktivnostiSistema();
+        Aktivnost VratiPocetnuAktivnost();
+        Aktivnost VratiKrajnjuAktivnost();
     }
 }

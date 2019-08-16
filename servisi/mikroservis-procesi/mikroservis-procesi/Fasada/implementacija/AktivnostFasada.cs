@@ -14,6 +14,16 @@ namespace mikroservisprocesi.Fasada.implementacija
             _aktivnostServis = aktivnostServis;
         }
 
+        public Aktivnost VratiKrajnjuAktivnost()
+        {
+            return _aktivnostServis.VratiKrajnjuAktivnost();
+        }
+
+        public Aktivnost VratiPocetnuAktivnost()
+        {
+            return _aktivnostServis.VratiPocetnuAktivnost();
+        }
+
         public List<Aktivnost> VratiSveAktivnostiSistema()
         {
             return _aktivnostServis.VratiSveAktivnosti();

@@ -1,4 +1,4 @@
-import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE } from "./tipovi";
+import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE, DODAJ_TRANZICIJU, IUslovTranzicije, ITranzicija } from "./tipovi";
 
 // INICIJALNO STANJE
 const inicijalnoStanje: IProcesStanje = {
@@ -31,6 +31,8 @@ const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesS
             return { ...state, proces: _dodajSekvencijalnuAktivnost({ state: state, proces: action.payload.proces, tok: action.payload.tok, aktivnost: action.payload.aktivnost }) };
         case DODAJ_PARALELNU_AKTIVNOST:
             return { ...state, proces: _dodajParalelnuAktivnost({ state: state, proces: action.payload.proces, tok: action.payload.tok, podproces: action.payload.podproces }) };
+        case DODAJ_TRANZICIJU:
+            return { ...state, proces: _dodajTranzicijuAktivnost({ state: state, nadproces: action.payload.nadproces, nadtok: action.payload.nadtok, ulazniProces: action.payload.ulazniProces, ulazniTok: action.payload.ulazniTok, idUlaza: action.payload.idUlaza }) };
         case DODAJ_TOK:
             return { ...state, proces: _dodajTokAktivnost({ state: state, proces: action.payload.proces, tok: action.payload.tok }) };
         case OBRISI_TOK:
@@ -64,6 +66,13 @@ const _dodajSekvencijalnuAktivnost = ({ state, proces, tok, aktivnost }: { state
 const _dodajParalelnuAktivnost = ({ state, proces, tok, podproces }: { state: IProcesStanje, proces: IProces, tok: ITok, podproces: IProces }): IProces => {
     let pocetni = { ...state.proces! };
     _dodajParalelnuAktivnostRekurzija({ pocetni, proces, tok, podproces })
+
+    return pocetni;
+}
+
+const _dodajTranzicijuAktivnost = ({ state, nadproces, nadtok, ulazniProces, ulazniTok, idUlaza }: { state: IProcesStanje, nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number }): IProces => {
+    let pocetni = { ...state.proces! };
+    _dodajTranzicijuRekurzija({ pocetni, nadproces, nadtok, ulazniProces, ulazniTok, idUlaza });
 
     return pocetni;
 }
@@ -134,6 +143,27 @@ const _dodajParalelnuAktivnostRekurzija = ({ pocetni, proces, tok, podproces }: 
                 _dodajParalelnuAktivnostRekurzija({ pocetni: pod, proces: proces, tok: tok, podproces: podproces });
             });
         }
+    })
+}
+
+const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, ulazniTok, idUlaza }: { pocetni: IProces, nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number }): void => {
+    if (nadproces.idProcesa === pocetni.idProcesa) {
+        let novaTranzicija = {
+            idProcesa: nadproces.idProcesa,
+            rbTranzicije: nadtok.rbToka,
+            ulazniProces: ulazniProces.idProcesa,
+            ulazniTok: ulazniTok.rbToka,
+            idUlaza: idUlaza,
+            tip: "",
+            uslov: "",
+            uslovTranzicije: []
+        } as ITranzicija;
+    }
+
+    pocetni.tok.map((t) => {
+        t.podprocesiUToku.map((p) => {
+            _dodajTranzicijuRekurzija({ pocetni: p, nadproces: nadproces, nadtok: nadtok, ulazniProces: ulazniProces, ulazniTok: ulazniTok, idUlaza: idUlaza });
+        });
     })
 }
 

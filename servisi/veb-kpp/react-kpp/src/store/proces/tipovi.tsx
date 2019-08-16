@@ -122,7 +122,7 @@ interface IDodajParalelnuAktivnostAkcija {
 
 interface IDodajTranziciju {
     type: typeof DODAJ_TRANZICIJU,
-    payload: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, ulaznaAktivnost: IAktivnost, usloviTranzicije?: Array<IUslovTranzicije>}
+    payload: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number}
 }
 
 interface IOmoguciDodavanjeAktivnosti {
