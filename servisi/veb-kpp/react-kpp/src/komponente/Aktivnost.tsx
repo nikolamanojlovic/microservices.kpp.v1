@@ -6,6 +6,7 @@ interface AktivnostProps {
     proces: IProces,
     tok: ITok,
     aktivnostiSistema?: Array<IAktivnost>,
+    podprocesiSistema?: Array<IProces>,
     aktivnost?: IAktivnost,
     aktivnostPodprocesa: boolean
     obrisiStanje?: () => void;
@@ -33,7 +34,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         let { proces, tok } = this.props;
         let { izabrana } = this.state;
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
-        
+
         this.props.obrisiStanje!();
         this.props.aktivnostPodprocesa ? OmoguciDodavanjeAktivnostiUPodprocesu(true) : OmoguciDodavanjeAktivnosti(this.props.omoguciriPromenu!());
     }
@@ -49,6 +50,16 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                                     {
                                         this.props.aktivnostiSistema!.map(function (e, i) {
                                             return <option key={i} value={i}>{e.naziv}</option>
+                                        })
+                                    }
+                                    {
+                                        this.props.podprocesiSistema!.map(function (e, i) {
+                                            return <option key={i} value={i}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+                                                </svg>
+                                                {e.naziv}
+                                            </option>
                                         })
                                     }
                                 </select>

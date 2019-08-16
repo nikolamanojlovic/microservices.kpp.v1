@@ -10,6 +10,7 @@ interface TokProps {
     proces: IProces,
     tok: ITok,
     aktivnostiSistema: Array<IAktivnost>,
+    podprocesiSistema: Array<IProces>,
     nadproces?: IProces
 }
 
@@ -37,7 +38,7 @@ class Tok extends Component<Props, TokStanje> {
         this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(false) :  OmoguciDodavanjeAktivnosti(false);
        
         this.setState({
-            ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema}
+            ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema}
                 obrisiStanje={() => this._obrisiStanje()} omoguciriPromenu={() => this._daLiOmogucitiDodavanjeAktivnosti()} aktivnostPodprocesa={this.props.nadproces !== undefined}/>
         })
     }

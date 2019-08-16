@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.OPP;
 
@@ -27,6 +28,11 @@ namespace mikroservisprocesi.Servis.implementacija
         public long VratiIDNovogProcesa()
         {
             return _procesOPP.VratiIDNovogProcesa();
+        }
+
+        public List<Proces> VratiSveMogucePodproceseSistema(long id)
+        {
+            return _procesOPP.VratiSveMogucePodproceseSistema(id);
         }
     }
 }

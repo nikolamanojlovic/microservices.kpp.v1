@@ -44,6 +44,7 @@ export interface ITranzicija {
 export interface IProcesStanje {
     proces?: IProces
     aktivnostiSistema: Array<IAktivnost>
+    podprocesiSistema: Array<IProces>
     omoguciDodavanjeAktivnosti: boolean
     omoguciDodavanjeAktivnostiUPodprocesu: boolean
 }
@@ -54,6 +55,7 @@ export const OBRISI_PODPROCES = "OBRISI_PODPROCES";
 export const AZURIRAJ_NAZIV_PODPROCES = "AZURIRAJ_NAZIV_PODPROCES";
 
 export const VRATI_SVE_AKTIVNOSTI = "VRATI_SVE_AKTIVNOSTI";
+export const VRATI_SVE_PODPROCESE = "VRATI_SVE_PODPROCESE";
 
 export const DODAJ_PARALELNU_AKTIVNOST = "DODAJ_PARALELNU_AKTIVNOST";
 export const DODAJ_SEKVENCIJALNU_AKTIVNOST = "DODAJ_SEKVENCIJALNU_AKTIVNOST";
@@ -101,6 +103,11 @@ interface IVratiSveAktivnostiSistemaAkcija {
     payload: Array<IAktivnost>
 }
 
+interface IVratiSvePodproceseSistemaAkcija {
+    type: typeof VRATI_SVE_PODPROCESE
+    payload: Array<IProces>
+}
+
 interface IDodajSekvencijalnuAktivnostAkcija {
     type: typeof DODAJ_SEKVENCIJALNU_AKTIVNOST
     payload: { proces: IProces, tok: ITok, aktivnost: IAktivnost }
@@ -122,4 +129,4 @@ interface IOmoguciDodavanjeAktivnostiUPodprocesu {
 }
 
 // EXPORT AKCIJA
-export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija | IVratiSveAktivnostiSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti | IOmoguciDodavanjeAktivnostiUPodprocesu;
+export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija | IVratiSveAktivnostiSistemaAkcija | IVratiSvePodproceseSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti | IOmoguciDodavanjeAktivnostiUPodprocesu;

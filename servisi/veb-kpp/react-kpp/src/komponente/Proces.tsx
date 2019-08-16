@@ -2,7 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { IAktivnost, IProces } from "../store/proces/tipovi";
 import { connect } from "react-redux";
-import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu } from "../store/proces/akcije";
+import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema } from "../store/proces/akcije";
 import Tok from "./Tok";
 import { sacuvajPoruku, SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
 import { TIP_PORUKE, PORUKE } from "../pomocnici/Konstante";
@@ -25,7 +25,9 @@ class Proces extends Component<Props, ProcesStanje> {
     }
 
     UNSAFE_componentWillMount() {
+        let { nadproces, proces } = this.props;
         VratiSveAktivnostiSistema();
+        VratiSvePodproceseSistema(nadproces === undefined ? proces.idProcesa : nadproces.idProcesa);
     }
 
     _obrisiPodproces() {
@@ -77,7 +79,7 @@ class Proces extends Component<Props, ProcesStanje> {
                     }
                     {
                         this.props.proces.tok.map((e) => {
-                            return <Tok key={e.rbToka} proces={proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} nadproces={this.props.nadproces}/>
+                            return <Tok key={e.rbToka} proces={proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema} nadproces={this.props.nadproces}/>
                         })
                     }
                 </div>
@@ -101,11 +103,13 @@ class Proces extends Component<Props, ProcesStanje> {
 }
 
 interface ProcesLinkStateProps {
-    aktivnostiSistema: Array<IAktivnost>
+    aktivnostiSistema: Array<IAktivnost>,
+    podprocesiSistema: Array<IProces>
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: ProcesProps): ProcesLinkStateProps => ({
-    aktivnostiSistema: state.procesReducer.aktivnostiSistema
+    aktivnostiSistema: state.procesReducer.aktivnostiSistema,
+    podprocesiSistema: state.procesReducer.podprocesiSistema
 });
 
 export default connect(mapStateToProps)(Proces);

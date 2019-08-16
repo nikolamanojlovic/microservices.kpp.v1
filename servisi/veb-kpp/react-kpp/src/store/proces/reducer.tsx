@@ -1,9 +1,10 @@
-import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU } from "./tipovi";
+import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE } from "./tipovi";
 
 // INICIJALNO STANJE
 const inicijalnoStanje: IProcesStanje = {
     proces: undefined,
     aktivnostiSistema: [],
+    podprocesiSistema: [],
     omoguciDodavanjeAktivnosti: true,
     omoguciDodavanjeAktivnostiUPodprocesu: true
 }
@@ -24,6 +25,8 @@ const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesS
             return { ...state, omoguciDodavanjeAktivnostiUPodprocesu: action.payload };
         case VRATI_SVE_AKTIVNOSTI:
             return { ...state, aktivnostiSistema: action.payload };
+        case VRATI_SVE_PODPROCESE:
+            return { ...state, podprocesiSistema: action.payload };
         case DODAJ_SEKVENCIJALNU_AKTIVNOST:
             return { ...state, proces: _dodajSekvencijalnuAktivnost({ state: state, proces: action.payload.proces, tok: action.payload.tok, aktivnost: action.payload.aktivnost }) };
         case DODAJ_PARALELNU_AKTIVNOST:

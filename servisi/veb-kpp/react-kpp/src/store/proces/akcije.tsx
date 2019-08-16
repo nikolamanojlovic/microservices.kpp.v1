@@ -1,4 +1,4 @@
-import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU } from "./tipovi";
+import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -62,6 +62,13 @@ export const vratiSveAktivnostiSistema = (aktivnosti: Array<IAktivnost>): Akcije
   }
 }
 
+export const vratiSvePodproceseSistema = (podprocesi: Array<IProces>): AkcijeAplikacije => {
+  return {
+    type: VRATI_SVE_PODPROCESE,
+    payload: podprocesi
+  }
+}
+
 export const dodajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}): AkcijeAplikacije => {
   return {
     type: DODAJ_SEKVENCIJALNU_AKTIVNOST,
@@ -121,6 +128,18 @@ export const VratiSveAktivnostiSistema = () => {
   Axios.get(API_PROCESI + "/PomocniKontroler/VratiAktivnostiSistema")
     .then(function (response) {
       store.dispatch(vratiSveAktivnostiSistema(response.data));
+    }).catch(function (error) {
+      store.dispatch(sacuvajPoruku({
+        tip: TIP_PORUKE[1],
+        tekst: error.response.data
+      } as IPoruka));
+    })
+}
+
+export const VratiSvePodproceseSistema = (IDPorcesa: number) => {
+  Axios.get(API_PROCESI + "/PomocniKontroler/VratiSveMogucePodproceseSistema/" + IDPorcesa)
+    .then(function (response) {
+      store.dispatch(vratiSvePodproceseSistema(response.data));
     }).catch(function (error) {
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[1],
