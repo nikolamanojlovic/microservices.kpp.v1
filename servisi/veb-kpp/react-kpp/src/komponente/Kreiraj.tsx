@@ -4,6 +4,8 @@ import { IProces } from "../store/proces/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import Proces from "./Proces";
+import { Poruka } from "./Poruka";
+import { IPoruka } from "../store/poruke/tipovi";
 
 interface KreirajProps {
 
@@ -23,9 +25,8 @@ class Kreiraj extends Component<Props> {
                     <ProcesForma proces={proces}/>
                 </div>
                 { proces ? <h1 className="kreiraj-proces-h1">Ток процеса</h1> : <span/> }
-                {
-                    proces ? <div className="kreiraj-tok-proces"><Proces nadproces={undefined} proces={proces}/></div> : <span/>
-                }
+                <Poruka poruka={this.props.poruka}/>
+                { proces ? <div className="kreiraj-tok-proces"><Proces nadproces={undefined} proces={proces}/></div> : <span/> }
             </div>
         )
     }
@@ -33,10 +34,12 @@ class Kreiraj extends Component<Props> {
 
 interface KreirajLinkStateProps {
     proces?: IProces,
+    poruka?: IPoruka
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: KreirajProps): KreirajLinkStateProps => ({
-    proces: state.procesReducer.proces
+    proces: state.procesReducer.proces,
+    poruka: state.porukaReducer.poruka
 });
 
 export default connect(mapStateToProps)(Kreiraj);

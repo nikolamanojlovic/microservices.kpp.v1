@@ -4,6 +4,8 @@ import { IAktivnost, IProces } from "../store/proces/tipovi";
 import { connect } from "react-redux";
 import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu } from "../store/proces/akcije";
 import Tok from "./Tok";
+import { sacuvajPoruku, SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
+import { TIP_PORUKE, PORUKE } from "../pomocnici/Konstante";
 
 interface ProcesProps {
     nadproces?: IProces,
@@ -46,10 +48,19 @@ class Proces extends Component<Props, ProcesStanje> {
     _izmeniProces() {
         let {proces} = this.props;
 
+        if ( this.state.naziv.length < 3 ) {
+            SacuvajPoruku({
+                tip: TIP_PORUKE[1],
+                tekst: PORUKE.nazivPodprocesaGreska
+            });
+            return;
+        }
+
         proces.naziv = this.state.naziv;
         AzurirajNazivPodprocesa(this.props.proces);
-        OmoguciDodavanjeAktivnostiUPodprocesu(false);
+        OmoguciDodavanjeAktivnostiUPodprocesu(true);
         OmoguciDodavanjeAktivnosti(true);
+        ObrisiPoruku();
     }
 
     _obradiPromenu(e: FormEvent<HTMLInputElement>) {

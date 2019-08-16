@@ -7,6 +7,7 @@ const inicijalnoStanje: IPorukaStanje = {
 
 // REDUCER
 const porukaReducer = (state = inicijalnoStanje, action: PorukaAkcije) : IPorukaStanje => {
+    console.log(state)
     switch(action.type) {
         case SACUVAJ_PORUKU:
             return {...state, poruka: action.payload}
