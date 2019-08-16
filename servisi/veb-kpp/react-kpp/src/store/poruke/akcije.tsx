@@ -1,7 +1,7 @@
 import { IPoruka, SACUVAJ_PORUKU, OBRISI_PORUKU } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 
-// KREATORI AKCIJA
+/******************************** KREATORI AKCIJA ********************************/
 export const sacuvajPoruku = (poruka: IPoruka): AkcijeAplikacije => {
     return {
         type: SACUVAJ_PORUKU,
@@ -15,6 +15,7 @@ export const obrisiPoruku = (): AkcijeAplikacije => {
     }
 }
 
+/********************************* FUNKCIJE *********************************/ 
 export const SacuvajPoruku = (poruka: IPoruka) => {
     store.dispatch(sacuvajPoruku(poruka));
 }

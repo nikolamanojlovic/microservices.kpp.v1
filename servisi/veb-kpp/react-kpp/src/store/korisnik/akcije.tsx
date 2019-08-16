@@ -5,7 +5,7 @@ import { API_ZAPOSLENI, TIP_PORUKE } from "../../pomocnici/Konstante";
 import { sacuvajPoruku } from "../poruke/akcije";
 import { IPoruka } from "../poruke/tipovi";
 
-// KREATORI AKCIJA
+/******************************** KREATORI AKCIJA ********************************/
 export const prijava = (korisnik: IKorisnik): AkcijeAplikacije => {
   return {
     type: PRIJAVA,
@@ -19,7 +19,7 @@ export const odjava = (): AkcijeAplikacije => {
   }
 }
 
-// KOMUNIKACIJA
+/********************************* FUNKCIJE *********************************/ 
 export const OdjaviKorisnika = () => {
   store.dispatch(odjava());
 }

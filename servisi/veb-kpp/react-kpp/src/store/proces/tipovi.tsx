@@ -1,4 +1,4 @@
-// TIPOVI
+/********************************* TIPOVI *********************************/ 
 export interface ITok {
     rbToka: number
     podprocesiUToku: Array<IProces>
@@ -8,7 +8,8 @@ export interface ITok {
 export interface IAktivnost {
     idAktivnosti: number,
     naziv: string,
-    opis: string
+    opis: string,
+    tip: string
 }
 
 export interface IProces {
@@ -40,7 +41,7 @@ export interface ITranzicija {
     uslovTranzicije: Array<IUslovTranzicije>
 }
 
-// TIPOVI STANJA
+/********************************* TIP STANJA *********************************/ 
 export interface IProcesStanje {
     proces?: IProces
     aktivnostiSistema: Array<IAktivnost>
@@ -49,7 +50,7 @@ export interface IProcesStanje {
     omoguciDodavanjeAktivnostiUPodprocesu: boolean
 }
 
-// TIPOVI AKCIJA
+/********************************* TIP AKCIJA *********************************/ 
 export const SACUVAJ_PROCES = "SACUVAJ_PROCES";
 export const OBRISI_PODPROCES = "OBRISI_PODPROCES";
 export const AZURIRAJ_NAZIV_PODPROCES = "AZURIRAJ_NAZIV_PODPROCES";
@@ -59,6 +60,7 @@ export const VRATI_SVE_PODPROCESE = "VRATI_SVE_PODPROCESE";
 
 export const DODAJ_PARALELNU_AKTIVNOST = "DODAJ_PARALELNU_AKTIVNOST";
 export const DODAJ_SEKVENCIJALNU_AKTIVNOST = "DODAJ_SEKVENCIJALNU_AKTIVNOST";
+export const DODAJ_TRANZICIJU = "DODAJ_TRANZICIJU";
 
 export const DODAJ_TOK = "DODAJ_TOK";
 export const OBRISI_TOK = "OBRISI_TOK";
@@ -66,7 +68,7 @@ export const OBRISI_TOK = "OBRISI_TOK";
 export const OMOGUCI_DODAVANJE_AKTIVNOSTI = "OMOGUCI_DODAVANJE_AKTIVNOSTI";
 export const OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU = "OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU";
 
-// TIPOVI KREATORA AKCIJA
+/********************************* TIP KREATORA AKCIJA *********************************/ 
 interface ISacuvajProcesAkcija {
     type: typeof SACUVAJ_PROCES
     payload: IProces
@@ -118,6 +120,11 @@ interface IDodajParalelnuAktivnostAkcija {
     payload: { proces: IProces, tok: ITok, podproces: IProces }
 }
 
+interface IDodajTranziciju {
+    type: typeof DODAJ_TRANZICIJU,
+    payload: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, ulaznaAktivnost: IAktivnost, usloviTranzicije?: Array<IUslovTranzicije>}
+}
+
 interface IOmoguciDodavanjeAktivnosti {
     type: typeof OMOGUCI_DODAVANJE_AKTIVNOSTI,
     payload: boolean
@@ -128,5 +135,7 @@ interface IOmoguciDodavanjeAktivnostiUPodprocesu {
     payload: boolean
 }
 
-// EXPORT AKCIJA
-export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija | IVratiSveAktivnostiSistemaAkcija | IVratiSvePodproceseSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti | IOmoguciDodavanjeAktivnostiUPodprocesu;
+/********************************* EKSPORT *********************************/ 
+export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija 
+                           | IVratiSveAktivnostiSistemaAkcija | IVratiSvePodproceseSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija 
+                           | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti | IOmoguciDodavanjeAktivnostiUPodprocesu | IDodajTranziciju;

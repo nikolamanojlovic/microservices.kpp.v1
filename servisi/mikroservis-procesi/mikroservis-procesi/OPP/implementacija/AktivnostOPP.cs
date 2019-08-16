@@ -14,7 +14,7 @@ namespace mikroservisprocesi.OPP.implementacija
 
         public List<Aktivnost> VratiSveAktivnostiSistema()
         {
-            return VratiKontekst().Set<Aktivnost>().Where(a =>  a.IDAktivnosti != 0 || a.IDAktivnosti != 1).ToList();
+            return VratiKontekst().Set<Aktivnost>().Where(a =>  a.IDAktivnosti != 0 && a.IDAktivnosti != 1).ToList();
         }
     }
 }
