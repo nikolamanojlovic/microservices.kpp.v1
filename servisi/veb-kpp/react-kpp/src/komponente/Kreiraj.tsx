@@ -15,18 +15,39 @@ type Props = KreirajProps & KreirajLinkStateProps;
 
 class Kreiraj extends Component<Props> {
 
+    _renderujFunkcionalnosti() {
+        let { proces, poruka } = this.props;
+        let funkcionalnosti: Array<JSX.Element> = [];
+
+        if ( proces ) {
+            funkcionalnosti.push(
+                <h1 className="kreiraj-proces-h1">Ток процеса</h1>
+            );
+            funkcionalnosti.push(
+                poruka ? <Poruka poruka={this.props.poruka} /> : <input className={"input-dugme input-kreiraj-sacuvaj "} type="button" value="Сачувај ток процеса"/>
+            );
+            funkcionalnosti.push(
+                <div className="kreiraj-tok-proces">
+                    <Proces nadproces={undefined} proces={proces} />
+                </div>
+            )
+        }
+
+        return funkcionalnosti;
+    }
+
     render() {
-        const {proces} = this.props;
+        const { proces } = this.props;
 
         return (
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
-                    <ProcesForma proces={proces}/>
+                    <ProcesForma proces={proces} />
                 </div>
-                { proces ? <h1 className="kreiraj-proces-h1">Ток процеса</h1> : <span/> }
-                <Poruka poruka={this.props.poruka}/>
-                { proces ? <div className="kreiraj-tok-proces"><Proces nadproces={undefined} proces={proces}/></div> : <span/> }
+                {
+                    this._renderujFunkcionalnosti()
+                }
             </div>
         )
     }
