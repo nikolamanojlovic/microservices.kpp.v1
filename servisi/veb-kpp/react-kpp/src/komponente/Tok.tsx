@@ -27,8 +27,10 @@ class Tok extends Component<Props, TokStanje> {
     };
 
     UNSAFE_componentWillMount() {
-        let {proces, tok} = this.props;
-        SacuvajPocetnuAktivnost({proces, tok});
+        let { proces, tok } = this.props;
+        if (tok.aktivnostiUToku.length === 0) {
+            SacuvajPocetnuAktivnost({ proces, tok });
+        }
     }
 
     _obrisiStanje() {
@@ -40,11 +42,11 @@ class Tok extends Component<Props, TokStanje> {
     }
 
     _dodajSekvencijalnuAktivnost() {
-        this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(false) :  OmoguciDodavanjeAktivnosti(false);
-       
+        this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(false) : OmoguciDodavanjeAktivnosti(false);
+
         this.setState({
             ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema}
-                obrisiStanje={() => this._obrisiStanje()} omoguciPromenu={() => this._daLiOmogucitiDodavanjeAktivnosti()} aktivnostPodprocesa={this.props.nadproces !== undefined}/>
+                obrisiStanje={() => this._obrisiStanje()} omoguciPromenu={() => this._daLiOmogucitiDodavanjeAktivnosti()} aktivnostPodprocesa={this.props.nadproces !== undefined} />
         })
     }
 
@@ -69,7 +71,7 @@ class Tok extends Component<Props, TokStanje> {
         ObrisiTok({ proces, tok })
     }
 
-    _kreirajFunkcionalnosti() {        
+    _kreirajFunkcionalnosti() {
         if (this.props.nadproces) {
             return (<div className="tok-funkcionalnosti">
                 {
@@ -110,7 +112,7 @@ class Tok extends Component<Props, TokStanje> {
                 <div className="tok">
                     {
                         this.props.tok.aktivnostiUToku.map((aut) => {
-                            return <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined}/>;
+                            return <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined} />;
                         })
                     }
                     {
