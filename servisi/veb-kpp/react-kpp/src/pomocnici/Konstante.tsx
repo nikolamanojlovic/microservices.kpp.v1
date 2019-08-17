@@ -12,5 +12,6 @@ export const TIP_TRANZICIJE: string[] = ["Условни", "Безусловни
 export const STRANICE: string[] = ["Почетна", "Претрага", "Креирај активност", "Креирај процес"];
 
 export const PORUKE = {
-    nazivPodprocesaGreska: "Назив подпроцеса мора имати бар три карактера."
+    nazivPodprocesaGreska: "Назив подпроцеса мора имати бар три карактера.",
+    brojAktivnostiUTokuGreska: "Сваки ток мора имати бар једну активност или бар један подпроцес."
 };

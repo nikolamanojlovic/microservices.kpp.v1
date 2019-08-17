@@ -49,7 +49,7 @@ class Proces extends Component<Props, ProcesStanje> {
     }
 
     _izmeniProces() {
-        let { proces, nadproces, nadtok } = this.props;
+        let { proces } = this.props;
 
         if (this.state.naziv.length < 3) {
             SacuvajPoruku({
@@ -59,9 +59,33 @@ class Proces extends Component<Props, ProcesStanje> {
             return;
         }
 
+
+        let prikaziGresku: boolean = false;
+
         proces.tok.forEach(t => {
-            VratiKrajnjuAktivnost({proces: proces, tok: t});
-            DodajTranziciju({nadproces: proces, nadtok: t, ulazniProces: proces, ulazniTok: t, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
+            let aktivnosti: number = t.aktivnostiUToku.filter(a => {
+                return a.idAktivnosti !== 0 && a.idAktivnosti !== 1;
+            }).length;
+
+            let podprocesi: number = t.podprocesiUToku.length;
+
+            if (aktivnosti + podprocesi < 1) {
+                prikaziGresku = true;
+            }
+        })
+
+        if (prikaziGresku) {
+            SacuvajPoruku({
+                tip: TIP_PORUKE[1],
+                tekst: PORUKE.brojAktivnostiUTokuGreska
+            });
+            return;
+        }
+
+
+        proces.tok.forEach(t => {
+            VratiKrajnjuAktivnost({ proces: proces, tok: t });
+            DodajTranziciju({ nadproces: proces, nadtok: t, ulazniProces: proces, ulazniTok: t, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
         });
 
         proces.naziv = this.state.naziv;
