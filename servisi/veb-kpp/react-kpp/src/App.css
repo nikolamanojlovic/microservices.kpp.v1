@@ -422,3 +422,12 @@ svg {
   max-width: 27em;
   text-align: left;
 }
+
+.input-dugme-crveno:hover {
+  color: #A33333;
+}
+
+.input-dugme-kreiraj {
+  margin-left: 1em;
+  margin-right: 1em;
+}

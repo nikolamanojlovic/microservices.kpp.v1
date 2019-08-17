@@ -29,7 +29,11 @@ class Kreiraj extends Component<Props> {
                 <h1 className="kreiraj-proces-h1">Ток процеса</h1>
             );
             funkcionalnosti.push(
-                poruka ? <Poruka poruka={this.props.poruka} /> : <div className="input-kreiraj-sacuvaj-tok"><input className="input-dugme" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()}/></div>
+                poruka ? <Poruka poruka={this.props.poruka} /> : 
+                <div className="input-kreiraj-sacuvaj-tok">
+                    <input className="input-dugme input-dugme-kreiraj" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()}/>
+                    <input className="input-dugme input-dugme-kreiraj input-dugme-crveno" type="button" value="Обриши процес"/>
+                </div>
             );
             funkcionalnosti.push(
                 <div className="kreiraj-tok-proces">
