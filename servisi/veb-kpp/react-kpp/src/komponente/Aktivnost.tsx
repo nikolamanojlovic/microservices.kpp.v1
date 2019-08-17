@@ -45,7 +45,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     render() {
         return (
             <div className="aktivnost-kontejner">
-                <div className="aktivnost">
+                <div className={"aktivnost" + (this.props.aktivnost && this.props.aktivnost.idAktivnosti === 0 ? " aktivnost-pocetna" : "" )}>
                     <div className="aktivnost-forma">
                         {
                             this.props.aktivnost ? <p className="aktivnost-naziv">{this.props.aktivnost.naziv}</p> :

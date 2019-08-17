@@ -4,6 +4,7 @@ import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
 import { sacuvajPoruku } from "../poruke/akcije";
 import { IPoruka } from "../poruke/tipovi";
+import { string } from "prop-types";
 
 /******************************** KREATORI AKCIJA ********************************/
 export const sacuvajProces = (proces: IProces): AkcijeAplikacije => {
@@ -91,7 +92,7 @@ export const dodajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IPro
   }
 }
 
-export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number}): AkcijeAplikacije => {
+export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije>}): AkcijeAplikacije => {
   return {
     type: DODAJ_TRANZICIJU,
     payload: {
@@ -99,7 +100,10 @@ export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idU
       nadtok: nadtok,
       ulazniProces: ulazniProces,
       ulazniTok: ulazniTok,
-      idUlaza: idUlaza
+      idUlaza: idUlaza,
+      tip: tip,
+      uslov: uslov,
+      uslovTranzicije: uslovTranzicije
     }
   }
 }
@@ -193,6 +197,18 @@ export const SacuvajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IP
   store.dispatch(dodajParalelnuAktivnost({proces, tok, podproces}));
 }
 
-export const DodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number}) => {
-  store.dispatch(dodajTranziciju({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza}));
+export const SacuvajPocetnuAktivnost = ({proces, tok} : {proces: IProces, tok: ITok}) => {
+  Axios.get(API_PROCESI + "/PomocniKontroler/VratiPocetnuAktivnost")
+    .then(function (response) {
+      SacuvajSekvencijalnuAktivnost({proces: proces, tok: tok, aktivnost: response.data});
+    }).catch(function (error) {
+      store.dispatch(sacuvajPoruku({
+        tip: TIP_PORUKE[1],
+        tekst: error.response.data
+      } as IPoruka));
+    })
+}
+
+export const DodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije>}) => {
+  store.dispatch(dodajTranziciju({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}));
 }

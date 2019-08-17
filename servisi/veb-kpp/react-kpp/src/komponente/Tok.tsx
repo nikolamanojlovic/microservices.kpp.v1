@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost, ObrisiTok, OmoguciDodavanjeAktivnostiUPodprocesu } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost, ObrisiTok, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajPocetnuAktivnost } from "../store/proces/akcije";
 import { Aktivnost } from "./Aktivnost";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
@@ -25,6 +25,11 @@ class Tok extends Component<Props, TokStanje> {
     state: Readonly<TokStanje> = {
         aktivnostiUToku: undefined
     };
+
+    UNSAFE_componentWillMount() {
+        let {proces, tok} = this.props;
+        SacuvajPocetnuAktivnost({proces, tok});
+    }
 
     _obrisiStanje() {
         this.setState({ aktivnostiUToku: undefined })
