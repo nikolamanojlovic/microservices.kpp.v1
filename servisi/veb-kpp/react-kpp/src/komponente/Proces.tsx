@@ -2,7 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
 import { connect } from "react-redux";
-import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju } from "../store/proces/akcije";
+import { VratiSveAktivnostiSistema, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju } from "../store/proces/akcije";
 import Tok from "./Tok";
 import { sacuvajPoruku, SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
 import { TIP_PORUKE, PORUKE, TIP_TRANZICIJE } from "../pomocnici/Konstante";
@@ -61,11 +61,8 @@ class Proces extends Component<Props, ProcesStanje> {
 
         proces.tok.forEach(t => {
             VratiKrajnjuAktivnost({proces: proces, tok: t});
+            DodajTranziciju({nadproces: proces, nadtok: t, ulazniProces: proces, ulazniTok: t, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
         });
-
-        if ( this.props.nadproces ) {
-            DodajTranziciju({nadproces: nadproces!, nadtok: nadtok!, ulazniProces: nadproces!, ulazniTok: nadtok!, idUlaza: proces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
-        }
 
         proces.naziv = this.state.naziv;
         AzurirajNazivPodprocesa(this.props.proces);

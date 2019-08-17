@@ -17,6 +17,7 @@ interface TokProps {
 
 interface TokStanje {
     aktivnostiUToku?: JSX.Element,
+    tok: Array<JSX.Element>
 }
 
 type Props = TokProps & TokLinkStateProps;
@@ -24,7 +25,8 @@ type Props = TokProps & TokLinkStateProps;
 class Tok extends Component<Props, TokStanje> {
 
     state: Readonly<TokStanje> = {
-        aktivnostiUToku: undefined
+        aktivnostiUToku: undefined,
+        tok: []
     };
 
     UNSAFE_componentWillMount() {
@@ -65,6 +67,7 @@ class Tok extends Component<Props, TokStanje> {
         };
 
         SacuvajParalelnuAktivnost({ proces, tok, podproces });
+        DodajTranziciju({nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: podproces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
         OmoguciDodavanjeAktivnosti(false);
     }
 
@@ -108,19 +111,31 @@ class Tok extends Component<Props, TokStanje> {
         }
     }
 
+    _renderujTok() {
+        let tok: Array<JSX.Element> = [];
+
+        this.props.proces.tranzicije.forEach(t => {
+            this.props.tok.aktivnostiUToku.filter((aut) => {
+                if ( t.ulazniTok === this.props.tok.rbToka && t.idUlaza === aut.idAktivnosti ) {
+                    tok.push(<Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined}/>);
+                }
+            });
+            this.props.tok.podprocesiUToku.filter((put) => {
+                if ( t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa ) {
+                    tok.push(<Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />);
+                }
+            });
+        })
+
+        return tok;
+    }
+
     render() {
         return (
             <div className="tok-kontejner">
                 <div className="tok">
                     {
-                        this.props.tok.aktivnostiUToku.map((aut) => {
-                            return <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined} />;
-                        })
-                    }
-                    {
-                        this.props.tok.podprocesiUToku.map((put) => {
-                            return <Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />
-                        })
+                       this._renderujTok()
                     }
                     {
                         this.state.aktivnostiUToku
