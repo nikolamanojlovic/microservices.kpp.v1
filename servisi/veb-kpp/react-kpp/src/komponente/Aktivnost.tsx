@@ -2,6 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { IAktivnost, IProces, ITok, IUslovTranzicije } from "../store/proces/tipovi";
 import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu, DodajTranziciju } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
+import { Granjanje } from "./Granjanje";
 
 interface AktivnostProps {
     proces: IProces,
@@ -16,7 +17,8 @@ interface AktivnostProps {
 
 interface AktivnostStanje {
     izabrana?: IAktivnost,
-    usloviTranzicije: Array<IUslovTranzicije>
+    usloviTranzicije: Array<IUslovTranzicije>,
+    granjanje?: JSX.Element
 }
 
 type Props = AktivnostProps;
@@ -25,12 +27,21 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
 
     state: Readonly<AktivnostStanje> = {
         izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema[0] : undefined,
-        usloviTranzicije: []
+        usloviTranzicije: [],
+        granjanje: undefined
     };
+
+    _izgasiGranjanje() {
+        this.setState({granjanje: undefined})
+    }
 
     _promeniIzabranuAktivnost(e: FormEvent<HTMLSelectElement>) {
         let aktivnost = this.props.aktivnostiSistema![parseInt(e.currentTarget.value)];
         this.setState({ izabrana: aktivnost });
+    }
+
+    _dodajGranjanje() {
+        this.setState({granjanje: <Granjanje izgasiGranjanje={() => this._izgasiGranjanje()}/>})
     }
 
     _sacuvajAktivnost() {
@@ -47,6 +58,9 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     render() {
         return (
             <div className="aktivnost-kontejner">
+                {
+                    this.state.granjanje
+                }
                 <div className={"aktivnost" + (this.props.aktivnost && (this.props.aktivnost.idAktivnosti === 0 || this.props.aktivnost.idAktivnosti === 1) ? " aktivnost-pocetna" : "" )}>
                     <div className="aktivnost-forma">
                         {
@@ -74,8 +88,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                 {
                     this.props.aktivnost ? <span /> :
                         <div className="aktivnost-funkcionalnosti">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajGranjanje()}>
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
                             </svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._sacuvajAktivnost()}>

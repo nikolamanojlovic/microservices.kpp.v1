@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
+import { OmoguciDodavanjeAktivnosti } from "../store/proces/akcije";
 
 interface KreirajProps {
 
@@ -14,6 +15,10 @@ interface KreirajProps {
 type Props = KreirajProps & KreirajLinkStateProps;
 
 class Kreiraj extends Component<Props> {
+
+    _sacuvajTokProcesa() {
+        OmoguciDodavanjeAktivnosti(false);
+    }
 
     _renderujFunkcionalnosti() {
         let { proces, poruka } = this.props;
@@ -24,7 +29,7 @@ class Kreiraj extends Component<Props> {
                 <h1 className="kreiraj-proces-h1">Ток процеса</h1>
             );
             funkcionalnosti.push(
-                poruka ? <Poruka poruka={this.props.poruka} /> : <input className={"input-dugme input-kreiraj-sacuvaj "} type="button" value="Сачувај ток процеса"/>
+                poruka ? <Poruka poruka={this.props.poruka} /> : <div className="input-kreiraj-sacuvaj-tok"><input className="input-dugme" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()}/></div>
             );
             funkcionalnosti.push(
                 <div className="kreiraj-tok-proces">

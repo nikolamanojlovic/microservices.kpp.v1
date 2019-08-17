@@ -4,7 +4,7 @@ import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
 import { connect } from "react-redux";
 import { VratiSveAktivnostiSistema, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju } from "../store/proces/akcije";
 import Tok from "./Tok";
-import { sacuvajPoruku, SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
+import { SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
 import { TIP_PORUKE, PORUKE, TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 interface ProcesProps {

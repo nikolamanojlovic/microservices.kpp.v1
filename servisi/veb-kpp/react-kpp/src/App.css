@@ -318,6 +318,7 @@ svg {
 /* AKTIVNOST */
 .aktivnost-kontejner {
   display: block;
+  position: relative;
   margin: 1em auto;
   width: 15em;
 }
@@ -380,4 +381,43 @@ svg {
 .poruka-greska {
   color: #A33333;
   text-align: center;
+}
+
+.input-kreiraj-sacuvaj-tok {
+  display: block;
+  text-align: center;
+}
+
+.granjanje-kontejner {
+  position: absolute;
+  left: -50%; 
+  top: -250%;
+  width: 30em;
+  height: 15em;
+  border: 1px solid #55308B;
+  background-color: rgb(255,255,255);
+
+  -webkit-box-shadow: -10px 0px 20px 0px rgba(40,40,40,0.1);
+  -moz-box-shadow: -10px 0px 20px 0px rgba(40,40,40,0.1);
+  box-shadow: -10px 0px 20px 0px rgba(40,40,40,0.1);
+}
+
+.granjanje-funkcionalnosti {
+  margin-top: 1em;
+  margin-right: 1em;
+  text-align: right;
+}
+
+.label-granjanje {
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  text-align: left;
+  display: block;
+}
+
+.input-granjanje {
+  margin-left: 1em;
+  display: block;
+  max-width: 27em;
+  text-align: left;
 }
