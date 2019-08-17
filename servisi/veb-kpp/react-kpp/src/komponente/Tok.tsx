@@ -33,7 +33,7 @@ class Tok extends Component<Props, TokStanje> {
         let { proces, tok } = this.props;
         if (tok.aktivnostiUToku.length === 0) {
             SacuvajPocetnuAktivnost({ proces, tok });
-            DodajTranziciju({nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []})
+            DodajTranziciju({ nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] })
         }
         OmoguciDodavanjeAktivnosti(true);
     }
@@ -69,7 +69,7 @@ class Tok extends Component<Props, TokStanje> {
         };
 
         SacuvajParalelnuAktivnost({ proces, tok, podproces });
-        DodajTranziciju({nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: podproces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
+        DodajTranziciju({ nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: podproces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
         OmoguciDodavanjeAktivnosti(false);
     }
 
@@ -115,18 +115,24 @@ class Tok extends Component<Props, TokStanje> {
 
     _renderujTok() {
         let tok: Array<JSX.Element> = [];
+        let aktivnostOffset = 0;
+        let podprocesiOffset = 0;
 
         this.props.proces.tranzicije.forEach(t => {
-            this.props.tok.aktivnostiUToku.forEach((aut) => {
-                if ( t.ulazniTok === this.props.tok.rbToka && t.idUlaza === aut.idAktivnosti ) {
-                    tok.push(<Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined}/>);
-                }
-            });
-            this.props.tok.podprocesiUToku.forEach((put) => {
-                if ( t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa ) {
-                    tok.push(<Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />);
-                }
-            });
+
+            let aut = this.props.tok.aktivnostiUToku.slice(aktivnostOffset).find((aut) => { return t.ulazniTok === this.props.tok.rbToka && t.idUlaza === aut.idAktivnosti });
+
+            if (aut) {
+                tok.push(<Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined} />);
+                aktivnostOffset = aktivnostOffset + 1;
+            }
+
+            let put = this.props.tok.podprocesiUToku.slice(podprocesiOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);
+
+            if (put) {
+                tok.push(<Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />);
+                podprocesiOffset = podprocesiOffset + 1;
+            }
         })
 
         return tok;
@@ -137,7 +143,7 @@ class Tok extends Component<Props, TokStanje> {
             <div className="tok-kontejner">
                 <div className="tok">
                     {
-                       this._renderujTok()
+                        this._renderujTok()
                     }
                     {
                         this.state.aktivnostiUToku
