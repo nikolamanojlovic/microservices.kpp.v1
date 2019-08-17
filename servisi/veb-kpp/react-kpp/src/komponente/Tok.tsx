@@ -40,6 +40,7 @@ class Tok extends Component<Props, TokStanje> {
 
     _obrisiStanje() {
         this.setState({ aktivnostiUToku: undefined })
+        OmoguciDodavanjeAktivnosti(true);
     }
 
     _daLiOmogucitiDodavanjeAktivnosti(): boolean {
@@ -116,12 +117,12 @@ class Tok extends Component<Props, TokStanje> {
         let tok: Array<JSX.Element> = [];
 
         this.props.proces.tranzicije.forEach(t => {
-            this.props.tok.aktivnostiUToku.filter((aut) => {
+            this.props.tok.aktivnostiUToku.forEach((aut) => {
                 if ( t.ulazniTok === this.props.tok.rbToka && t.idUlaza === aut.idAktivnosti ) {
                     tok.push(<Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined}/>);
                 }
             });
-            this.props.tok.podprocesiUToku.filter((put) => {
+            this.props.tok.podprocesiUToku.forEach((put) => {
                 if ( t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa ) {
                     tok.push(<Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />);
                 }
