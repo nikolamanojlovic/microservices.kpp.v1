@@ -11,14 +11,21 @@ export interface IKorisnik {
     tip: string
 }
 
+export interface INavigacija {
+    strana: string
+}
+
 // TIPOVI STANJA
 export interface IKorisnikStanje {
     korisnik?: IKorisnik
+    strana: string
 }
 
 // TIPOVI AKCIJA
 export const PRIJAVA = "PRIJAVA";
 export const ODJAVA = "ODJAVA";
+
+export const PROMENA_STRANE = "PROMENA_STRANE";
 
 // TIPOVI KREATORA AKCIJA
 interface IPrijavaAkcija {
@@ -30,5 +37,10 @@ interface IOdjavaAkcija {
     type: typeof ODJAVA
 }
 
+interface IPromenaStrane {
+    type: typeof PROMENA_STRANE
+    payload: string
+}
+
 // EXPORT AKCIJA
-export type KorisnikAkcije = IPrijavaAkcija | IOdjavaAkcija;
+export type KorisnikAkcije = IPrijavaAkcija | IOdjavaAkcija | IPromenaStrane;

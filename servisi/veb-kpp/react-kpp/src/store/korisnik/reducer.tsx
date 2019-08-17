@@ -1,20 +1,25 @@
-import { IKorisnikStanje, KorisnikAkcije, PRIJAVA, ODJAVA } from "./tipovi";
+import { IKorisnikStanje, KorisnikAkcije, PRIJAVA, ODJAVA, PROMENA_STRANE } from "./tipovi";
+import { STRANICE } from "../../pomocnici/Konstante";
 
 // INICIJALNO STANJE
 const inicijalnoStanje: IKorisnikStanje = {
-    korisnik: undefined
+    korisnik: undefined,
+    strana: STRANICE[3]
 }
 
 // REDUCER
-const korisnikReducer = (state = inicijalnoStanje, action: KorisnikAkcije) : IKorisnikStanje => {
-    switch(action.type) {
+const korisnikReducer = (state = inicijalnoStanje, action: KorisnikAkcije): IKorisnikStanje => {
+    console.log(state)
+    switch (action.type) {
         case PRIJAVA:
-            return {...state, korisnik: action.payload}
+            return { ...state, korisnik: action.payload }
         case ODJAVA:
-            return {...state, korisnik: undefined}
+            return { ...state, korisnik: undefined }
+        case PROMENA_STRANE:
+            return { ...state, strana: action.payload }
         default:
             return state;
     }
 }
 
-export {korisnikReducer};
+export { korisnikReducer };

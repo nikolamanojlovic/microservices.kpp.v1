@@ -26,7 +26,7 @@ type Props = AktivnostProps;
 export class Aktivnost extends Component<Props, AktivnostStanje> {
 
     state: Readonly<AktivnostStanje> = {
-        izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema[0] : undefined,
+        izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema![0] : undefined,
         usloviTranzicije: [],
         granjanje: undefined
     };
@@ -56,6 +56,8 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     render() {
+        const ofset =this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0
+
         return (
             <div className="aktivnost-kontejner">
                 {
@@ -73,7 +75,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                                     }
                                     {
                                         this.props.podprocesiSistema!.map(function (e, i) {
-                                            return <option key={i} value={i}>
+                                            return <option key={i+ofset} value={i}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                     <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
                                                 </svg>

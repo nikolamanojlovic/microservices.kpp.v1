@@ -3,7 +3,7 @@ import { IKorisnik } from "../store/korisnik/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { Navigacija } from "../komponente/Navigacija";
-import { Sadrzaj } from "../komponente/Sadrzaj";
+import Sadrzaj from "../komponente/Sadrzaj";
 
 interface PocetnaProps {
 }

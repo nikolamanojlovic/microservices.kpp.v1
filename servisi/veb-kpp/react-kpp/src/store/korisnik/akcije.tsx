@@ -1,4 +1,4 @@
-import { PRIJAVA, ODJAVA, IKorisnik } from "./tipovi";
+import { PRIJAVA, ODJAVA, IKorisnik, PROMENA_STRANE } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_ZAPOSLENI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -19,6 +19,13 @@ export const odjava = (): AkcijeAplikacije => {
   }
 }
 
+export const promeniStranicu = (stranica: string): AkcijeAplikacije => {
+  return {
+    type: PROMENA_STRANE,
+    payload: stranica
+  }
+}
+
 /********************************* FUNKCIJE *********************************/ 
 export const OdjaviKorisnika = () => {
   store.dispatch(odjava());
@@ -36,4 +43,8 @@ export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: strin
       tekst: error.response.data
     } as IPoruka));
   })
+}
+
+export const PromeniStranicu = (strana: string) => {
+  store.dispatch(promeniStranicu(strana))
 }
