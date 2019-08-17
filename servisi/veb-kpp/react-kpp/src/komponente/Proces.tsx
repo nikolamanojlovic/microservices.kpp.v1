@@ -1,14 +1,15 @@
 import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
-import { IAktivnost, IProces } from "../store/proces/tipovi";
+import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
 import { connect } from "react-redux";
-import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost } from "../store/proces/akcije";
+import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju } from "../store/proces/akcije";
 import Tok from "./Tok";
 import { sacuvajPoruku, SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
-import { TIP_PORUKE, PORUKE } from "../pomocnici/Konstante";
+import { TIP_PORUKE, PORUKE, TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 interface ProcesProps {
     nadproces?: IProces,
+    nadtok?: ITok,
     proces: IProces
 }
 
@@ -48,7 +49,7 @@ class Proces extends Component<Props, ProcesStanje> {
     }
 
     _izmeniProces() {
-        let { proces } = this.props;
+        let { proces, nadproces, nadtok } = this.props;
 
         if (this.state.naziv.length < 3) {
             SacuvajPoruku({
@@ -61,6 +62,10 @@ class Proces extends Component<Props, ProcesStanje> {
         proces.tok.forEach(t => {
             VratiKrajnjuAktivnost({proces: proces, tok: t});
         });
+
+        if ( this.props.nadproces ) {
+            DodajTranziciju({nadproces: nadproces!, nadtok: nadtok!, ulazniProces: nadproces!, ulazniTok: nadtok!, idUlaza: proces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
+        }
 
         proces.naziv = this.state.naziv;
         AzurirajNazivPodprocesa(this.props.proces);

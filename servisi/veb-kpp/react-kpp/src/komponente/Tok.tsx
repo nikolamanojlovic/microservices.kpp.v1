@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost, ObrisiTok, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajPocetnuAktivnost } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajParalelnuAktivnost, ObrisiTok, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajPocetnuAktivnost, DodajTranziciju } from "../store/proces/akcije";
 import { Aktivnost } from "./Aktivnost";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import Proces from "./Proces";
+import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 interface TokProps {
     proces: IProces,
@@ -30,6 +31,7 @@ class Tok extends Component<Props, TokStanje> {
         let { proces, tok } = this.props;
         if (tok.aktivnostiUToku.length === 0) {
             SacuvajPocetnuAktivnost({ proces, tok });
+            DodajTranziciju({nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []})
         }
     }
 
@@ -117,7 +119,7 @@ class Tok extends Component<Props, TokStanje> {
                     }
                     {
                         this.props.tok.podprocesiUToku.map((put) => {
-                            return <Proces nadproces={this.props.proces} proces={put} />
+                            return <Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />
                         })
                     }
                     {

@@ -167,7 +167,7 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
                 poslednjiUslovTranzicije.izlazniProces = idUlaza;
             } else {
                 // ako nema poslednju tranziciju onda je bezuslovna
-                let poslednjiUslovTranzicije = {
+                poslednjiUslovTranzicije = {
                     rbTranzicije: 1,
                     rezultat: "",
                     izlazniProces: ulazniProces.idProcesa,
@@ -176,13 +176,14 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
                 }
             }
 
-            poslednjaTranzicija.uslovTranzicije.push(poslednjiUslovTranzicije!);
+            poslednjaTranzicija.uslovTranzicije.push(poslednjiUslovTranzicije!)
+            pocetni.tranzicije.push(poslednjaTranzicija);
         }
 
         // dodavanje nove tranzicije
         pocetni.tranzicije.push({
             idProcesa: nadproces.idProcesa,
-            rbTranzicije: pocetni.tranzicije.length,
+            rbTranzicije: pocetni.tranzicije.length + 1,
             ulazniProces: ulazniProces.idProcesa,
             ulazniTok: ulazniTok.rbToka,
             idUlaza: idUlaza,

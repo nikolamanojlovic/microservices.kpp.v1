@@ -1,6 +1,7 @@
 import React, { Component, FormEvent } from "react";
 import { IAktivnost, IProces, ITok, IUslovTranzicije } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu, DodajTranziciju } from "../store/proces/akcije";
+import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 interface AktivnostProps {
     proces: IProces,
@@ -37,6 +38,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         let { izabrana } = this.state;
 
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
+        DodajTranziciju({nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
 
         this.props.obrisiStanje!();
         this.props.aktivnostPodprocesa ? OmoguciDodavanjeAktivnostiUPodprocesu(true) : OmoguciDodavanjeAktivnosti(this.props.omoguciPromenu!());
