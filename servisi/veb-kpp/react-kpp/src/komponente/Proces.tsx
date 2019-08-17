@@ -2,7 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { IAktivnost, IProces } from "../store/proces/tipovi";
 import { connect } from "react-redux";
-import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema } from "../store/proces/akcije";
+import { VratiSveAktivnostiSistema, SacuvajParalelnuAktivnost, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost } from "../store/proces/akcije";
 import Tok from "./Tok";
 import { sacuvajPoruku, SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
 import { TIP_PORUKE, PORUKE } from "../pomocnici/Konstante";
@@ -36,7 +36,7 @@ class Proces extends Component<Props, ProcesStanje> {
     }
 
     _dodajTok() {
-        let {proces} = this.props;
+        let { proces } = this.props;
         DodajTok({
             proces: proces,
             tok: {
@@ -48,15 +48,19 @@ class Proces extends Component<Props, ProcesStanje> {
     }
 
     _izmeniProces() {
-        let {proces} = this.props;
+        let { proces } = this.props;
 
-        if ( this.state.naziv.length < 3 ) {
+        if (this.state.naziv.length < 3) {
             SacuvajPoruku({
                 tip: TIP_PORUKE[1],
                 tekst: PORUKE.nazivPodprocesaGreska
             });
             return;
         }
+
+        proces.tok.forEach(t => {
+            VratiKrajnjuAktivnost({proces: proces, tok: t});
+        });
 
         proces.naziv = this.state.naziv;
         AzurirajNazivPodprocesa(this.props.proces);
@@ -70,16 +74,16 @@ class Proces extends Component<Props, ProcesStanje> {
     }
 
     render() {
-        const {proces} = this.props;
+        const { proces } = this.props;
         return (
             <div className="proces-kontejner">
-                <div className={"proces" + (this.props.nadproces ? " podproces-kontejner" : "") }>
+                <div className={"proces" + (this.props.nadproces ? " podproces-kontejner" : "")}>
                     {
-                          this.props.nadproces ? <input className="input-podproces" name="naziv" type="text" value={this.props.proces.naziv !== "" ? this.props.proces.naziv : this.state.naziv} disabled={this.props.proces.naziv !== ""} onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenu(e)}/> : <span/>
+                        this.props.nadproces ? <input className="input-podproces" name="naziv" type="text" value={this.props.proces.naziv !== "" ? this.props.proces.naziv : this.state.naziv} disabled={this.props.proces.naziv !== ""} onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} /> : <span />
                     }
                     {
                         this.props.proces.tok.map((e) => {
-                            return <Tok key={e.rbToka} proces={proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema} nadproces={this.props.nadproces}/>
+                            return <Tok key={e.rbToka} proces={proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema} nadproces={this.props.nadproces} />
                         })
                     }
                 </div>
@@ -95,7 +99,7 @@ class Proces extends Component<Props, ProcesStanje> {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._izmeniProces()}>
                                 <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
                             </svg>
-                        </div> : <span/>
+                        </div> : <span />
                 }
             </div>
         )

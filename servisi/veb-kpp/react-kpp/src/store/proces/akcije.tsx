@@ -209,6 +209,19 @@ export const SacuvajPocetnuAktivnost = ({proces, tok} : {proces: IProces, tok: I
     })
 }
 
+export const VratiKrajnjuAktivnost = ({proces, tok} : {proces: IProces, tok: ITok}) => {
+    Axios.get(API_PROCESI + "/PomocniKontroler/VratiKrajnjuAktivnost")
+    .then(function (response) {
+      SacuvajSekvencijalnuAktivnost({proces: proces, tok: tok, aktivnost: response.data});
+    }).catch(function (error) {
+      store.dispatch(sacuvajPoruku({
+        tip: TIP_PORUKE[1],
+        tekst: error.response.data
+      } as IPoruka));
+    })
+}
+
+
 export const DodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije>}) => {
   store.dispatch(dodajTranziciju({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}));
 }
