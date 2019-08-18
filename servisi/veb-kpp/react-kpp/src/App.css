@@ -425,6 +425,9 @@ svg {
 
 .input-granjanje-uslov {
   max-width: 10em;
+  margin-left: 1em;
+  display: inline;
+  vertical-align: top;
 }
 
 .input-dugme-crveno:hover {
@@ -436,20 +439,27 @@ svg {
   margin-right: 1em;
 }
 
+.granjanje-uslovi-uslov {
+  margin-top: 1em;
+}
 .granjanje-uslovi-sadrzaj {
-  height: 190px;
-  overflow: auto;
+  height: 100px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.input-granjanje-funkcionalnosti {
+  float: left;
+  margin: 0;
+}
+
+.input-granjanje-dodaj {
+  margin-left: 1em;
+  text-align: left;
 }
 
 .granjanje-uslovi-input {
-  margin-left: 1em;
-  margin-right: 1.4em;
-}
-
-.granjanje-uslov-label-levo {
-  margin-right: 1em;
-}
-
-.granjanje-uslov-label-desno {
-  margin-left: 1em;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.5em;
 }
