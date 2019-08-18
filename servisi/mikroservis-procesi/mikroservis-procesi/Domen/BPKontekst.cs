@@ -111,6 +111,7 @@ namespace mikroservisprocesi.Domen
                   }
             );
 
+            /*
             modelBuilder.Entity<Dokument>().HasData(new
             {
                 IDDokumenta = 100,
@@ -124,7 +125,7 @@ namespace mikroservisprocesi.Domen
                     Naziv = "Клијент",
                     Opis = "Основне информације о клијенту."
                 }
-            });
+            });*/
         }
     }
 }

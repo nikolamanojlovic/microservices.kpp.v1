@@ -12,11 +12,13 @@ namespace mikroservisprocesi.Kontroleri
     {
         private IAktivnostFasada _aktivnostFasada;
         private IProcesFasada _procesFasada;
+        private IDokumentFasada _dokumentFasada;
 
-        public PomocniKontroler(IAktivnostFasada aktivnostFasada, IProcesFasada procesFasada)
+        public PomocniKontroler(IAktivnostFasada aktivnostFasada, IProcesFasada procesFasada, IDokumentFasada dokumentFasada)
         {
             _aktivnostFasada = aktivnostFasada;
             _procesFasada = procesFasada;
+            _dokumentFasada = dokumentFasada;
         }
 
         [HttpGet("VratiAktivnostiSistema")]
@@ -29,6 +31,12 @@ namespace mikroservisprocesi.Kontroleri
         public ActionResult<List<Proces>> VratiSveMogucePodproceseSistema(long IDProcesa)
         {
             return _procesFasada.VratiSveMogucePodproceseSistema(IDProcesa);
+        }
+
+        [HttpGet("VratiDokumenteSistema")]
+        public ActionResult<List<Dokument>> VratiDokumenteSistema()
+        {
+            return _dokumentFasada.VratiSveDokumenteSistema();
         }
 
         [HttpGet("VratiPocetnuAktivnost")]

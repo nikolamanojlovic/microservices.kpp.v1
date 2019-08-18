@@ -488,3 +488,34 @@ svg {
   fill: rgb(48,48,48);
   vertical-align: middle;
 }
+
+.kreiraj-aktivnost-forma {
+  margin-left: 1.4em;
+}
+
+.input-kreiraj-aktivnost {
+  display: block;
+  margin: 1em 0;
+  width: 30em;
+}
+
+.kreiraj-aktivnost-forma-dokumenta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forma-dokumenta {
+  margin-right: 1.4em;
+}
+
+.forma-dokumenti-izbor {
+  margin: 1em 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-kreiraj-aktivnost-select {
+  margin: 0 0;
+  width: 90%;
+}

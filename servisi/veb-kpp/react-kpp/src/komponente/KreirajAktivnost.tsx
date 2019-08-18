@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { ProcesForma } from "./ProcesForma";
-import { IProces } from "../store/proces/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
-import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti } from "../store/proces/akcije";
+import KreirajAktivnostForma from "./KreirajAktivnostForma";
+import KreirajAktivnostFormaDokumenta from "./KreirajAktivnostFormaDokumenta";
 
 interface KreirajAktivnostProps {
 
@@ -21,11 +19,12 @@ class KreirajAktivnost extends Component<Props> {
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Активност</h1>
-
+                    <Poruka poruka={this.props.poruka} />
+                    <KreirajAktivnostForma />
                 </div>
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Улази и излази</h1>
-
+                    <KreirajAktivnostFormaDokumenta />
                 </div>
             </div>
         )
@@ -33,9 +32,11 @@ class KreirajAktivnost extends Component<Props> {
 }
 
 interface KreirajAktivnostLinkStateProps {
+    poruka?: IPoruka
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: KreirajAktivnostProps): KreirajAktivnostLinkStateProps => ({
+    poruka: state.porukaReducer.poruka
 });
 
 export default connect(mapStateToProps)(KreirajAktivnost);
