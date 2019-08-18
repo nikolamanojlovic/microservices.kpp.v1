@@ -49,7 +49,7 @@ class Tok extends Component<Props, TokStanje> {
     }
 
     _dodajSekvencijalnuAktivnost() {
-        let {tok} = this.props;
+        let { tok } = this.props;
         this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(false) : OmoguciDodavanjeAktivnosti(false);
 
         let aktivnostiSistema = this.props.aktivnostiSistema.filter(e => tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined);
@@ -130,6 +130,22 @@ class Tok extends Component<Props, TokStanje> {
             if (aut) {
                 tok.push(<Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnost={aut} aktivnostPodprocesa={this.props.nadproces !== undefined} />);
                 aktivnostOffset = aktivnostOffset + 1;
+
+                if (t.uslovTranzicije.length > 1) {
+                    tok.push(
+                        <div className="uslov-u-toku">
+                            <svg className="svg-granjanje" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M11 9.16V2c-5 .5-9 4.79-9 10s4 9.5 9 10v-7.16c-1-.41-2-1.52-2-2.84s1-2.43 2-2.84zM14.86 11H22c-.48-4.75-4-8.53-9-9v7.16c1 .3 1.52.98 1.86 1.84zM13 14.84V22c5-.47 8.52-4.25 9-9h-7.14c-.34.86-.86 1.54-1.86 1.84z" />
+                            </svg>
+                            <p className="uslov-u-toku-tekst-uslova">{t.uslov}</p>
+                            {
+                                t.uslovTranzicije.slice(1).map(ut => {
+                                    return <p className="uslov-u-toku-tekst-redirekcija">{"[" + ut.rezultat + "] => " + this.props.aktivnostiSistema.filter(e => e.idAktivnosti === ut.idIzlaza)[0].naziv}</p>
+                                })
+                            }
+                        </div>
+                    )
+                }
             }
 
             let put = this.props.tok.podprocesiUToku.slice(podprocesiOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);

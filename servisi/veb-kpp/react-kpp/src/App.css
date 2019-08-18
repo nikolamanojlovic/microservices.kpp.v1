@@ -463,3 +463,28 @@ svg {
   text-align: left;
   margin-bottom: 0.5em;
 }
+
+.uslov-u-toku-tekst-uslova {
+  display: inline;
+  vertical-align: middle;
+  font-weight: bold;
+  color: rgb(48,48,48);
+}
+
+.uslov-u-toku-tekst-uslova:hover {
+  cursor: default;
+}
+
+.uslov-u-toku-tekst-redirekcija {
+  cursor: default;
+  font-style: italic;
+  font-size: 0.8em;
+  color: rgb(48,48,48);
+}
+
+.svg-granjanje {
+  display: inline;
+  margin-right: 0.5em;
+  fill: rgb(48,48,48);
+  vertical-align: middle;
+}
