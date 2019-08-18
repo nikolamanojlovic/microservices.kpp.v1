@@ -49,10 +49,12 @@ class Tok extends Component<Props, TokStanje> {
     }
 
     _dodajSekvencijalnuAktivnost() {
+        let {tok} = this.props;
         this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(false) : OmoguciDodavanjeAktivnosti(false);
 
+        let aktivnostiSistema = this.props.aktivnostiSistema.filter(e => tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined);
         this.setState({
-            ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={this.props.tok} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema}
+            ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={tok} aktivnostiSistema={aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema}
                 obrisiStanje={() => this._obrisiStanje()} omoguciPromenu={() => this._daLiOmogucitiDodavanjeAktivnosti()} aktivnostPodprocesa={this.props.nadproces !== undefined} />
         })
     }
