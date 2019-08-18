@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.Fasada;
@@ -36,7 +37,14 @@ namespace mikroservisprocesi.Kontroleri
         [HttpGet("VratiDokumenteSistema")]
         public ActionResult<List<Dokument>> VratiDokumenteSistema()
         {
-            return _dokumentFasada.VratiSveDokumenteSistema();
+            try
+            {
+                return _dokumentFasada.VratiSveDokumenteSistema();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status204NoContent, ex.Message);
+            }
         }
 
         [HttpGet("VratiPocetnuAktivnost")]
