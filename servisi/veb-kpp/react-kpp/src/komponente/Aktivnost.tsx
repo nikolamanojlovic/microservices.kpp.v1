@@ -3,6 +3,7 @@ import { IAktivnost, IProces, ITok, IUslovTranzicije } from "../store/proces/tip
 import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu, DodajTranziciju } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 import { Granjanje } from "./Granjanje";
+import { string } from "prop-types";
 
 interface AktivnostProps {
     proces: IProces,
@@ -17,6 +18,7 @@ interface AktivnostProps {
 
 interface AktivnostStanje {
     izabrana?: IAktivnost,
+    uslov: string
     usloviTranzicije: Array<IUslovTranzicije>,
     granjanje?: JSX.Element
 }
@@ -27,12 +29,17 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
 
     state: Readonly<AktivnostStanje> = {
         izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema![0] : undefined,
+        uslov: "",
         usloviTranzicije: [],
         granjanje: undefined
     };
 
     _izgasiGranjanje() {
-        this.setState({granjanje: undefined})
+        this.setState({ granjanje: undefined })
+    }
+
+    _postaviUsloveTranzicijeZaAktivnost(uslov: string, uslovi: Array<IUslovTranzicije>) {
+        this.setState({ uslov: uslov, usloviTranzicije: uslovi });
     }
 
     _promeniIzabranuAktivnost(e: FormEvent<HTMLSelectElement>) {
@@ -41,7 +48,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     _dodajGranjanje() {
-        this.setState({granjanje: <Granjanje izgasiGranjanje={() => this._izgasiGranjanje()}/>})
+        this.setState({ granjanje: <Granjanje proces={this.props.proces} tok={this.props.tok} izgasiGranjanje={() => this._izgasiGranjanje()} /> })
     }
 
     _sacuvajAktivnost() {
@@ -49,21 +56,24 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         let { izabrana } = this.state;
         console.log(izabrana)
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
-        DodajTranziciju({nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: []});
+        DodajTranziciju({
+            nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1],
+            uslov: this.state.uslov, uslovTranzicije: this.state.usloviTranzicije
+        });
 
         this.props.obrisiStanje!();
         this.props.aktivnostPodprocesa ? OmoguciDodavanjeAktivnostiUPodprocesu(true) : OmoguciDodavanjeAktivnosti(this.props.omoguciPromenu!());
     }
 
     render() {
-        const ofset =this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0
+        const ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0
 
         return (
             <div className="aktivnost-kontejner">
                 {
                     this.state.granjanje
                 }
-                <div className={"aktivnost" + (this.props.aktivnost && (this.props.aktivnost.idAktivnosti === 0 || this.props.aktivnost.idAktivnosti === 1) ? " aktivnost-pocetna" : "" )}>
+                <div className={"aktivnost" + (this.props.aktivnost && (this.props.aktivnost.idAktivnosti === 0 || this.props.aktivnost.idAktivnosti === 1) ? " aktivnost-pocetna" : "")}>
                     <div className="aktivnost-forma">
                         {
                             this.props.aktivnost ? <p className="aktivnost-naziv">{this.props.aktivnost.naziv}</p> :
@@ -75,7 +85,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                                     }
                                     {
                                         this.props.podprocesiSistema!.map(function (e, i) {
-                                            return <option key={i+ofset} value={i}>
+                                            return <option key={i + ofset} value={i}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                     <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
                                                 </svg>

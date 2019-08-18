@@ -392,7 +392,7 @@ svg {
 .granjanje-kontejner {
   position: absolute;
   left: -50%; 
-  top: -250%;
+  top: -150%;
   width: 30em;
   height: 15em;
   border: 1px solid #55308B;
@@ -423,6 +423,10 @@ svg {
   text-align: left;
 }
 
+.input-granjanje-uslov {
+  max-width: 10em;
+}
+
 .input-dugme-crveno:hover {
   color: #A33333;
 }
@@ -430,4 +434,22 @@ svg {
 .input-dugme-kreiraj {
   margin-left: 1em;
   margin-right: 1em;
+}
+
+.granjanje-uslovi-sadrzaj {
+  height: 190px;
+  overflow: auto;
+}
+
+.granjanje-uslovi-input {
+  margin-left: 1em;
+  margin-right: 1.4em;
+}
+
+.granjanje-uslov-label-levo {
+  margin-right: 1em;
+}
+
+.granjanje-uslov-label-desno {
+  margin-left: 1em;
 }
