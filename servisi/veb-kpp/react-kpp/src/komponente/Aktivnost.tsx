@@ -38,7 +38,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         this.setState({ granjanje: undefined })
     }
 
-    _postaviUsloveTranzicijeZaAktivnost(uslov: string, uslovi: Array<IUslovTranzicije>) {
+    _postaviUsloveTranzicijeZaAktivnost = (uslov: string, uslovi: Array<IUslovTranzicije>) => {
         this.setState({ uslov: uslov, usloviTranzicije: uslovi });
     }
 
@@ -48,13 +48,13 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     _dodajGranjanje() {
-        this.setState({ granjanje: <Granjanje proces={this.props.proces} tok={this.props.tok} izgasiGranjanje={() => this._izgasiGranjanje()} /> })
+        this.setState({ granjanje: <Granjanje proces={this.props.proces} tok={this.props.tok} postojeciUslovi={this.state.usloviTranzicije} izgasiGranjanje={() => this._izgasiGranjanje()} postaviUsloveTranzicijeZaAktivnost={this._postaviUsloveTranzicijeZaAktivnost}/> })
     }
 
     _sacuvajAktivnost() {
         let { proces, tok } = this.props;
         let { izabrana } = this.state;
-        console.log(izabrana)
+
         SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
         DodajTranziciju({
             nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1],
