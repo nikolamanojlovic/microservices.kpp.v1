@@ -111,7 +111,7 @@ namespace mikroservisprocesi.Domen
                   }
             );
 
-            /*
+
             modelBuilder.Entity<Dokument>().HasData(new
             {
                 IDDokumenta = 100,
@@ -125,7 +125,21 @@ namespace mikroservisprocesi.Domen
                     Naziv = "Клијент",
                     Opis = "Основне информације о клијенту."
                 }
-            });*/
+            },
+            new
+            {
+                IDDokumenta = 101,
+                SifraDokumenta = "СЦЕ",
+                Naziv = "Сцене",
+                Opis = "Анимиране сцене",
+                Tip = "аеp",
+                Stavke = new
+                {
+                    RBStavke = 1,
+                    Naziv = "AEP датотека",
+                    Opis = "Пројекат који садржи сцене."
+                }
+            });
         }
     }
 }

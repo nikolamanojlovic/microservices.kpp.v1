@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.Izuzeci;
 using mikroservisprocesi.Servis;
@@ -19,7 +20,8 @@ namespace mikroservisprocesi.Fasada.implementacija
         {
             List<Dokument> dokumenti = _dokumentServis.VratiSveDokumente();
 
-            if (dokumenti.Count == 0)
+            
+            if (!dokumenti.Any())
             {
                 throw new SistemNemaDokumenataIzuzetak("У систему тренутно нема докумената!");
             }

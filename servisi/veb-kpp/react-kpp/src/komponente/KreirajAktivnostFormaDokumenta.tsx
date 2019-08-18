@@ -26,8 +26,8 @@ class KreirajAktivnostFormaDokumenta extends Component<Props> {
                     <form className="forma-dokumenti-izbor">
                         <select className="input-tekst input-kreiraj input-kreiraj-aktivnost input-kreiraj-aktivnost-select" name="ulazni">
                             {
-                                this.props.dokumenti.map(function (e, i) {
-                                    return <option key={i} value={i}>{e}</option>
+                                this.props.dokumenti.map((e, i) => {
+                                    return <option key={i} value={i}>{e.sifraDokumenta + " - " + e.naziv}</option>
                                 })
                             }
                         </select>
@@ -43,8 +43,8 @@ class KreirajAktivnostFormaDokumenta extends Component<Props> {
                     <form className="forma-dokumenti-izbor">
                         <select className="input-tekst input-kreiraj input-kreiraj-aktivnost input-kreiraj-aktivnost-select" name="izlazi">
                             {
-                                this.props.dokumenti.map(function (e, i) {
-                                    return <option key={i} value={i}>{e}</option>
+                                this.props.dokumenti.map((e, i) => {
+                                    return <option key={i} value={i}>{e.sifraDokumenta + " - " + e.naziv}</option>
                                 })
                             }
                         </select>

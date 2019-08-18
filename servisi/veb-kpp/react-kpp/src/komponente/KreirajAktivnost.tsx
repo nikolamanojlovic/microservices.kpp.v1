@@ -26,6 +26,9 @@ class KreirajAktivnost extends Component<Props> {
                     <h1 className="kreiraj-proces-h1">Улази и излази</h1>
                     <KreirajAktivnostFormaDokumenta />
                 </div>
+                <div className="input-sacuvaj-aktivnost">
+                    <input className="input-dugme input-kreiraj-sacuvaj" type="button" value="Сачувај"/>
+                </div>
             </div>
         )
     }
