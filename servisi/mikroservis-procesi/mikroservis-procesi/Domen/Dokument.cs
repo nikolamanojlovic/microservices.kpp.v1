@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace mikroservisprocesi.Domen
 {
@@ -27,8 +29,12 @@ namespace mikroservisprocesi.Domen
 
         public List<StavkaDokumenta> Stavke { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<Ulaz> AktivnostiUlaz { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<Izlaz> AktivnostiIzlaz { get; set; }
     }
 }

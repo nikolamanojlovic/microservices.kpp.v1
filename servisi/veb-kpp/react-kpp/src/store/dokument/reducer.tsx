@@ -7,6 +7,7 @@ const inicijalnoStanje: IDokumentStanje = {
 
 // REDUCER
 const dokumentReducer = (state = inicijalnoStanje, action: DokumentAkcije): IDokumentStanje => {
+    console.log(state);
     switch (action.type) {
         case VRATI_DOKUMENTE:
             return { ...state, dokumenti: action.payload }

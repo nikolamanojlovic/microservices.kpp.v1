@@ -7,6 +7,7 @@ import KreirajAktivnostForma from "./KreirajAktivnostForma";
 import KreirajAktivnostFormaDokumenta from "./KreirajAktivnostFormaDokumenta";
 import { IDokument } from "../store/dokument/tipovi";
 import { SacuvajPoruku } from "../store/poruke/akcije";
+import { SacuvajAktivnost } from "../store/proces/akcije";
 
 interface KreirajAktivnostProps {
 
@@ -60,7 +61,8 @@ class KreirajAktivnost extends Component<Props, KreirajAktivnostiStanje> {
     }
 
     _sacuvajAktivnost() {
-
+        let {naziv, opis, ulaznaDokumenta, izlaznaDokumenta} = this.state;
+        SacuvajAktivnost({naziv: naziv, opis: opis, ulazniDokumenti: ulaznaDokumenta, izlazniDokumenti: izlaznaDokumenta});
     }
 
     render() {

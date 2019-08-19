@@ -4,7 +4,7 @@ import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
 import { sacuvajPoruku } from "../poruke/akcije";
 import { IPoruka } from "../poruke/tipovi";
-import { string } from "prop-types";
+import { IDokument } from "../dokument/tipovi";
 
 /******************************** KREATORI AKCIJA ********************************/
 export const sacuvajProces = (proces: IProces): AkcijeAplikacije => {
@@ -27,24 +27,24 @@ export const obrisiPodproces = (podproces: IProces): AkcijeAplikacije => {
   }
 }
 
-export const azurirajNazivPodprocesa= (podproces: IProces): AkcijeAplikacije => {
+export const azurirajNazivPodprocesa = (podproces: IProces): AkcijeAplikacije => {
   return {
     type: AZURIRAJ_NAZIV_PODPROCES,
     payload: podproces
   }
 }
 
-export const dodajTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeAplikacije => {
+export const dodajTok = ({ proces, tok }: { proces: IProces, tok: ITok }): AkcijeAplikacije => {
   return {
     type: DODAJ_TOK,
-    payload: {proces: proces, tok: tok}
+    payload: { proces: proces, tok: tok }
   }
 }
 
-export const obrisiTok = ({proces, tok} : {proces: IProces, tok: ITok}): AkcijeAplikacije => {
+export const obrisiTok = ({ proces, tok }: { proces: IProces, tok: ITok }): AkcijeAplikacije => {
   return {
     type: OBRISI_TOK,
-    payload: {proces: proces, tok: tok}
+    payload: { proces: proces, tok: tok }
   }
 }
 
@@ -76,7 +76,7 @@ export const vratiSvePodproceseSistema = (podprocesi: Array<IProces>): AkcijeApl
   }
 }
 
-export const dodajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}): AkcijeAplikacije => {
+export const dodajSekvencijalnuAktivnost = ({ proces, tok, aktivnost }: { proces: IProces, tok: ITok, aktivnost: IAktivnost }): AkcijeAplikacije => {
   return {
     type: DODAJ_SEKVENCIJALNU_AKTIVNOST,
     payload: {
@@ -87,7 +87,7 @@ export const dodajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: 
   }
 }
 
-export const dodajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IProces, tok: ITok, podproces: IProces}): AkcijeAplikacije => {
+export const dodajParalelnuAktivnost = ({ proces, tok, podproces }: { proces: IProces, tok: ITok, podproces: IProces }): AkcijeAplikacije => {
   return {
     type: DODAJ_PARALELNU_AKTIVNOST,
     payload: {
@@ -98,7 +98,7 @@ export const dodajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IPro
   }
 }
 
-export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije>}): AkcijeAplikacije => {
+export const dodajTranziciju = ({ nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije }: { nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije> }): AkcijeAplikacije => {
   return {
     type: DODAJ_TRANZICIJU,
     payload: {
@@ -114,7 +114,7 @@ export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idU
   }
 }
 
-/********************************* FUNKCIJE *********************************/ 
+/********************************* FUNKCIJE *********************************/
 export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kategorija: string, opis: string }) => {
   Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajProces", {
     naziv: naziv,
@@ -134,12 +134,31 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
 
 export const ObrisiProces = (IDProcesa: number) => {
   Axios.post(API_PROCESI + "/KreirajKontroler/ObrisiProces/" + IDProcesa)
-  .then(function (response) {
+    .then(function (response) {
+      store.dispatch(sacuvajPoruku({
+        tip: TIP_PORUKE[0],
+        tekst: response.data
+      }));
+      store.dispatch(obrisiProces());
+    }).catch(function (error) {
+      store.dispatch(sacuvajPoruku({
+        tip: TIP_PORUKE[1],
+        tekst: error.response.data
+      } as IPoruka));
+    })
+}
+
+export const SacuvajAktivnost = ({ naziv, opis, ulazniDokumenti, izlazniDokumenti }: { naziv: string, opis: string, ulazniDokumenti: Array<IDokument>, izlazniDokumenti: Array<IDokument> }) => {
+  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajAktivnost", {
+    naziv: naziv,
+    opis: opis,
+    ulazi: ulazniDokumenti,
+    izlazi: izlazniDokumenti
+  }).then(function (response) {
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[0],
       tekst: response.data
-    }));
-    store.dispatch(obrisiProces());
+    } as IPoruka));
   }).catch(function (error) {
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
@@ -180,34 +199,34 @@ export const AzurirajNazivPodprocesa = (podproces: IProces) => {
   store.dispatch(azurirajNazivPodprocesa(podproces));
 }
 
-export const DodajTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
-  store.dispatch(dodajTok({proces, tok}));
+export const DodajTok = ({ proces, tok }: { proces: IProces, tok: ITok }) => {
+  store.dispatch(dodajTok({ proces, tok }));
 }
 
-export const ObrisiTok = ({proces, tok} : {proces: IProces, tok: ITok}) => {
-  store.dispatch(obrisiTok({proces, tok}));
+export const ObrisiTok = ({ proces, tok }: { proces: IProces, tok: ITok }) => {
+  store.dispatch(obrisiTok({ proces, tok }));
 }
 
-export const OmoguciDodavanjeAktivnosti = (omoguci : boolean) => {
+export const OmoguciDodavanjeAktivnosti = (omoguci: boolean) => {
   store.dispatch(omoguciDodavanjeAktivnosti(omoguci));
 }
 
-export const OmoguciDodavanjeAktivnostiUPodprocesu = (omoguci : boolean) => {
+export const OmoguciDodavanjeAktivnostiUPodprocesu = (omoguci: boolean) => {
   store.dispatch(omoguciDodavanjeUPodprocesu(omoguci));
 }
 
-export const SacuvajSekvencijalnuAktivnost = ({proces, tok, aktivnost} : {proces: IProces, tok: ITok, aktivnost: IAktivnost}) => {
-  store.dispatch(dodajSekvencijalnuAktivnost({proces, tok, aktivnost}));
+export const SacuvajSekvencijalnuAktivnost = ({ proces, tok, aktivnost }: { proces: IProces, tok: ITok, aktivnost: IAktivnost }) => {
+  store.dispatch(dodajSekvencijalnuAktivnost({ proces, tok, aktivnost }));
 }
 
-export const SacuvajParalelnuAktivnost = ({proces, tok, podproces} : {proces: IProces, tok: ITok, podproces: IProces}) => {
-  store.dispatch(dodajParalelnuAktivnost({proces, tok, podproces}));
+export const SacuvajParalelnuAktivnost = ({ proces, tok, podproces }: { proces: IProces, tok: ITok, podproces: IProces }) => {
+  store.dispatch(dodajParalelnuAktivnost({ proces, tok, podproces }));
 }
 
-export const SacuvajPocetnuAktivnost = ({proces, tok} : {proces: IProces, tok: ITok}) => {
+export const SacuvajPocetnuAktivnost = ({ proces, tok }: { proces: IProces, tok: ITok }) => {
   Axios.get(API_PROCESI + "/PomocniKontroler/VratiPocetnuAktivnost")
     .then(function (response) {
-      SacuvajSekvencijalnuAktivnost({proces: proces, tok: tok, aktivnost: response.data});
+      SacuvajSekvencijalnuAktivnost({ proces: proces, tok: tok, aktivnost: response.data });
     }).catch(function (error) {
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[1],
@@ -216,10 +235,10 @@ export const SacuvajPocetnuAktivnost = ({proces, tok} : {proces: IProces, tok: I
     })
 }
 
-export const VratiKrajnjuAktivnost = ({proces, tok} : {proces: IProces, tok: ITok}) => {
-    Axios.get(API_PROCESI + "/PomocniKontroler/VratiKrajnjuAktivnost")
+export const VratiKrajnjuAktivnost = ({ proces, tok }: { proces: IProces, tok: ITok }) => {
+  Axios.get(API_PROCESI + "/PomocniKontroler/VratiKrajnjuAktivnost")
     .then(function (response) {
-      SacuvajSekvencijalnuAktivnost({proces: proces, tok: tok, aktivnost: response.data});
+      SacuvajSekvencijalnuAktivnost({ proces: proces, tok: tok, aktivnost: response.data });
     }).catch(function (error) {
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[1],
@@ -229,6 +248,6 @@ export const VratiKrajnjuAktivnost = ({proces, tok} : {proces: IProces, tok: ITo
 }
 
 
-export const DodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}: {nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije>}) => {
-  store.dispatch(dodajTranziciju({nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije}));
+export const DodajTranziciju = ({ nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije }: { nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije> }) => {
+  store.dispatch(dodajTranziciju({ nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije }));
 }

@@ -12,10 +12,12 @@ namespace mikroservisprocesi.Kontroleri
     public class KreirajKontroler : ControllerBase
     {
         private IProcesFasada _procesFasada;
+        private IAktivnostFasada _aktivnostFasada;
 
-        public KreirajKontroler(IProcesFasada procesFasada)
+        public KreirajKontroler(IProcesFasada procesFasada, IAktivnostFasada aktivnostFasada)
         {
             _procesFasada = procesFasada;
+            _aktivnostFasada = aktivnostFasada;
         }
 
         [HttpPost("SacuvajProces")]
@@ -45,11 +47,11 @@ namespace mikroservisprocesi.Kontroleri
         }
 
         [HttpPost("SacuvajAktivnost")]
-        public ActionResult<Proces> SacuvajAktivnost([FromBody] ProcesPodaci proces)
+        public ActionResult<String> SacuvajAktivnost([FromBody] AktivnostPodaci aktivnost)
         {
             try
             {
-                return _procesFasada.SacuvajProces(proces);
+                return _aktivnostFasada.SacuvajAktivnost(aktivnost);
             }
             catch (Exception ex)
             {

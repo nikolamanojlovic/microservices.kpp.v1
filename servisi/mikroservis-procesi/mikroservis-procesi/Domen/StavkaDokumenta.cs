@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace mikroservisprocesi.Domen
 {
@@ -22,6 +24,8 @@ namespace mikroservisprocesi.Domen
         [Column("opis")]
         public String Opis { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public Dokument Dokument { get; set; }
     }
 }

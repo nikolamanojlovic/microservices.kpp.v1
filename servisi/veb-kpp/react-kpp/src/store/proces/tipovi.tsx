@@ -9,7 +9,9 @@ export interface IAktivnost {
     idAktivnosti: number,
     naziv: string,
     opis: string,
-    tip: string
+    tip: string,
+    ulazi?: Array<IUlaz>,
+    izlazi?: Array<IIzlaz>
 }
 
 export interface IProces {
@@ -39,6 +41,18 @@ export interface ITranzicija {
     tip: string,
     uslov: string,
     uslovTranzicije: Array<IUslovTranzicije>
+}
+
+export interface IUlaz {
+    IDAktivnosti: number,
+    IDDokumenta: number,
+    sifraDokumenta: string
+}
+
+export interface IIzlaz {
+    IDAktivnosti: number,
+    IDDokumenta: number,
+    sifraDokumenta: string
 }
 
 /********************************* TIP STANJA *********************************/ 

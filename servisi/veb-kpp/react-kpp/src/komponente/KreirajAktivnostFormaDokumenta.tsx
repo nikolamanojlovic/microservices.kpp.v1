@@ -33,21 +33,24 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
     _obradiSelect(e: FormEvent<HTMLSelectElement>, ulaz: boolean) {
         let dokument = this.props.dokumenti[parseInt(e.currentTarget.value)];
 
-        if ( ulaz ) {
-            this.setState({ulazniDokument: dokument})
+        if (ulaz) {
+            this.setState({ ulazniDokument: dokument })
             return;
-        } 
-        this.setState({izlazniDokumet: dokument})
+        }
+        this.setState({ izlazniDokumet: dokument })
     }
 
     _vratiVrednostZaTekst(dokumenti: Array<IDokument>): string {
-        let finalni = "";
+        if (dokumenti && dokumenti.length > 0) {
+            let finalni = "";
 
-        dokumenti.forEach(d => {
-            finalni += d.sifraDokumenta + " - " + d.naziv + "\n";
-        });
+            dokumenti.forEach(d => {
+                finalni += d.sifraDokumenta + " - " + d.naziv + "\n";
+            });
 
-        return finalni;
+            return finalni;
+        }
+        return "";
     }
 
     _dodajDokument(ulazni: boolean) {

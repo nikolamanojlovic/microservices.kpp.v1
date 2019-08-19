@@ -41,21 +41,6 @@ namespace mikroservisprocesi.Servis.implementacija
 
         public void SacuvajTokZaProces(long idProcesa, int rbToka)
         {
-           // Proces p = _procesOPP.VratiPoPK(idProcesa);
-
-            /*
-            if ( p.Tokovi == null )
-            {
-                p.Tokovi = new List<Tok>();
-            }
-
-            p.Tokovi.Add(new Tok
-            {
-                IDProcesa = idProcesa,
-                RBToka = rbToka
-            });
-            */
-
             _tokOPP.Sacuvaj(new Tok {
                 IDProcesa = idProcesa,
                 RBToka = rbToka
