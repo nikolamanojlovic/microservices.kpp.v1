@@ -18,7 +18,7 @@ export interface IProces {
     opis: string,
     kategorija: string,
     vremeKreiranja: string,
-    tok: Array<ITok>
+    tokovi: Array<ITok>
     tranzicije: Array<ITranzicija>
 }
 

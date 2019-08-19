@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace mikroservisprocesi.Podaci
 {
     public class ProcesPodaci
     {
-        public String naziv;
-        public String kategorija;
-        public String opis;
+        public string naziv { get; set; }
+        public string kategorija { get; set; }
+        public string opis { get; set; }
+        public List<TokPodaci> tokovi { get; set; }
     }
 }

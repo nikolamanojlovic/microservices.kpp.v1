@@ -30,6 +30,7 @@ namespace mikroservisprocesi.OPP.implementacija
 
         public T VratiPoPK<K>(K primarni) where K : struct
         {
+
             return _kontekst.Set<T>().Find(primarni);
         }
 

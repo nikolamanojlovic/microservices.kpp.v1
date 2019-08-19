@@ -35,7 +35,6 @@ class Kreiraj extends Component<Props> {
                 <h1 className="kreiraj-proces-h1">Ток процеса</h1>
             );
             funkcionalnosti.push(
-                poruka && poruka.tip === TIP_PORUKE[1] ? <Poruka poruka={this.props.poruka} /> : 
                 <div className="input-kreiraj-sacuvaj-tok">
                     <input className="input-dugme input-dugme-kreiraj" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()}/>
                     <input className="input-dugme input-dugme-kreiraj input-dugme-crveno" type="button" value="Обриши процес" onClick={() => this._obrisiProces()}/>
@@ -58,10 +57,10 @@ class Kreiraj extends Component<Props> {
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
-                    <ProcesForma proces={proces} />
-                    { 
-                        poruka && poruka.tip === TIP_PORUKE[0] ? <Poruka poruka={this.props.poruka} /> : <span/>
+                    {
+                        this.props.poruka ? <Poruka poruka={this.props.poruka} /> : <span/>
                     }
+                    <ProcesForma proces={proces} />
                 </div>
                 {
                     this._renderujFunkcionalnosti()

@@ -41,7 +41,7 @@ class Proces extends Component<Props, ProcesStanje> {
         DodajTok({
             proces: proces,
             tok: {
-                rbToka: proces.tok.length + 1,
+                rbToka: proces.tokovi.length + 1,
                 aktivnostiUToku: [],
                 podprocesiUToku: []
             }
@@ -62,7 +62,7 @@ class Proces extends Component<Props, ProcesStanje> {
 
         let prikaziGresku: boolean = false;
 
-        proces.tok.forEach(t => {
+        proces.tokovi.forEach(t => {
             let aktivnosti: number = t.aktivnostiUToku.filter(a => {
                 return a.idAktivnosti !== 0 && a.idAktivnosti !== 1;
             }).length;
@@ -83,7 +83,7 @@ class Proces extends Component<Props, ProcesStanje> {
         }
 
 
-        proces.tok.forEach(t => {
+        proces.tokovi.forEach(t => {
             VratiKrajnjuAktivnost({ proces: proces, tok: t });
             DodajTranziciju({ nadproces: proces, nadtok: t, ulazniProces: proces, ulazniTok: t, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
         });
@@ -108,7 +108,7 @@ class Proces extends Component<Props, ProcesStanje> {
                         this.props.nadproces ? <input className="input-podproces" name="naziv" type="text" value={this.props.proces.naziv !== "" ? this.props.proces.naziv : this.state.naziv} disabled={this.props.proces.naziv !== ""} onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenu(e)} /> : <span />
                     }
                     {
-                        this.props.proces.tok.map((e) => {
+                        this.props.proces.tokovi.map((e) => {
                             return <Tok key={e.rbToka} proces={proces} tok={e} aktivnostiSistema={this.props.aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema} nadproces={this.props.nadproces} />
                         })
                     }

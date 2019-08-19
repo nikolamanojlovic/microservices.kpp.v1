@@ -14,8 +14,8 @@ namespace mikroservisprocesi.OPP.implementacija
 
         public long VratiIDNovogProcesa()
         {
-            DbSet<Proces> procesi = VratiKontekst().Proces;
-            return procesi.Any() ? 0 : procesi.Last().IDProcesa + 1;
+            DbSet<Proces> procesi = VratiKontekst().Set<Proces>();
+            return !procesi.Any() ? 0 : procesi.Last().IDProcesa + 1;
         }
 
         public List<Proces> VratiSveMogucePodproceseSistema(long id)

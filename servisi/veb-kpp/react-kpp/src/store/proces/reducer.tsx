@@ -100,7 +100,7 @@ const _obrisiTokAktivnost = ({ state, proces, tok }: { state: IProcesStanje, pro
 
 // REKURZIVNE FUNKCIJE
 const _obrisiPodprocesRekurzija = ({ pocetni, podproces }: { pocetni: IProces, podproces: IProces }): void => {
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((put) => {
             if (put.idProcesa === podproces.idProcesa) {
                 t.podprocesiUToku = t.podprocesiUToku.filter(function (value) {
@@ -115,7 +115,7 @@ const _obrisiPodprocesRekurzija = ({ pocetni, podproces }: { pocetni: IProces, p
 }
 
 const _azurirajNazivPodprocesaRekurzija = ({ pocetni, podproces }: { pocetni: IProces, podproces: IProces }): void => {
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((put) => {
             if (put.idProcesa === podproces.idProcesa) {
                 put.naziv = podproces.naziv;
@@ -128,8 +128,11 @@ const _azurirajNazivPodprocesaRekurzija = ({ pocetni, podproces }: { pocetni: IP
 }
 
 const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni: IProces, proces: IProces, tok: ITok, aktivnost: IAktivnost }): void => {
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {
+            if ( t.aktivnostiUToku === null ) {
+                t.aktivnostiUToku = [];
+            }
             t.aktivnostiUToku.push(aktivnost);
             return;
         } else {
@@ -141,7 +144,7 @@ const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni
 }
 
 const _dodajParalelnuAktivnostRekurzija = ({ pocetni, proces, tok, podproces }: { pocetni: IProces, proces: IProces, tok: ITok, podproces: IProces }): void => {
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {
             t.podprocesiUToku.push(podproces);
             return;
@@ -156,31 +159,34 @@ const _dodajParalelnuAktivnostRekurzija = ({ pocetni, proces, tok, podproces }: 
 const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, ulazniTok, idUlaza, tip, uslov, uslovTranzicije }: { pocetni: IProces, nadproces: IProces, nadtok: ITok, ulazniProces: IProces, ulazniTok: ITok, idUlaza: number, tip: string, uslov: string, uslovTranzicije: Array<IUslovTranzicije> }): void => {
     if (nadproces.idProcesa === pocetni.idProcesa) {
 
-        let poslednjaTranzicija = pocetni.tranzicije.pop();
+        if (pocetni.tranzicije === null) {
+            pocetni.tranzicije = [];
+            let poslednjaTranzicija = pocetni.tranzicije.pop();
 
-        // PROSLA 
-        // izmena stare tranzicije
-        if (poslednjaTranzicija) {
-            // ako ima poslednju tranziciju onda je uslovna
-            let poslednjiUslovTranzicije = poslednjaTranzicija.uslovTranzicije.pop();
+            // PROSLA 
+            // izmena stare tranzicije
+            if (poslednjaTranzicija) {
+                // ako ima poslednju tranziciju onda je uslovna
+                let poslednjiUslovTranzicije = poslednjaTranzicija.uslovTranzicije.pop();
 
-            if (poslednjiUslovTranzicije) {
-                poslednjaTranzicija.uslovTranzicije[0].izlazniProces = ulazniProces.idProcesa;
-                poslednjaTranzicija.uslovTranzicije[0].izlazniTok = ulazniTok.rbToka;
-                poslednjaTranzicija.uslovTranzicije[0].idIzlaza = idUlaza;
-            } else {
-                // ako nema poslednju tranziciju onda je bezuslovna
-                poslednjiUslovTranzicije = {
-                    rbTranzicije: 1,
-                    rezultat: "",
-                    izlazniProces: ulazniProces.idProcesa,
-                    izlazniTok: ulazniTok.rbToka,
-                    idIzlaza: idUlaza
+                if (poslednjiUslovTranzicije) {
+                    poslednjaTranzicija.uslovTranzicije[0].izlazniProces = ulazniProces.idProcesa;
+                    poslednjaTranzicija.uslovTranzicije[0].izlazniTok = ulazniTok.rbToka;
+                    poslednjaTranzicija.uslovTranzicije[0].idIzlaza = idUlaza;
+                } else {
+                    // ako nema poslednju tranziciju onda je bezuslovna
+                    poslednjiUslovTranzicije = {
+                        rbTranzicije: 1,
+                        rezultat: "",
+                        izlazniProces: ulazniProces.idProcesa,
+                        izlazniTok: ulazniTok.rbToka,
+                        idIzlaza: idUlaza
+                    }
                 }
-            }
 
-            poslednjaTranzicija.uslovTranzicije.push(poslednjiUslovTranzicije!)
-            pocetni.tranzicije.push(poslednjaTranzicija);
+                poslednjaTranzicija.uslovTranzicije.push(poslednjiUslovTranzicije!)
+                pocetni.tranzicije.push(poslednjaTranzicija);
+            }
         }
 
         // NOVA - SLEDECA
@@ -199,7 +205,7 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
         return;
     }
 
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((p) => {
             _dodajTranzicijuRekurzija({ pocetni: p, nadproces: nadproces, nadtok: nadtok, ulazniProces: ulazniProces, ulazniTok: ulazniTok, idUlaza: idUlaza, tip: tip, uslov: uslov, uslovTranzicije: uslovTranzicije });
         });
@@ -208,11 +214,11 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
 
 const _dodajTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proces: IProces, tok: ITok }): void => {
     if (pocetni.idProcesa === proces.idProcesa) {
-        pocetni.tok.push(tok);
+        pocetni.tokovi.push(tok);
         return;
     }
 
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((p) => {
             _dodajTokRekurzija({ pocetni: p, proces: proces, tok: tok });
         })
@@ -221,7 +227,7 @@ const _dodajTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proces
 
 const _obrisiTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proces: IProces, tok: ITok }): void => {
     if (pocetni.idProcesa === proces.idProcesa) {
-        let noviTokovi = pocetni.tok.filter(function (value) {
+        let noviTokovi = pocetni.tokovi.filter(function (value) {
             return value.rbToka !== tok.rbToka;
         });
 
@@ -230,11 +236,11 @@ const _obrisiTokRekurzija = ({ pocetni, proces, tok }: { pocetni: IProces, proce
             e.rbToka = i + 1;
         });
 
-        pocetni.tok = noviTokovi;
+        pocetni.tokovi = noviTokovi;
         return;
     }
 
-    pocetni.tok.map((t) => {
+    pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((p) => {
             _obrisiTokRekurzija({ pocetni: p, proces: proces, tok: tok });
         })

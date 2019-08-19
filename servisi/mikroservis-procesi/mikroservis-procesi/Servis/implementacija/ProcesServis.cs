@@ -8,10 +8,17 @@ namespace mikroservisprocesi.Servis.implementacija
     public class ProcesServis : IProcesServis
     {
         private IProcesOPP _procesOPP;
+        private ITokOPP _tokOPP;
 
-        public ProcesServis(IProcesOPP procesOPP)
+        public ProcesServis(IProcesOPP procesOPP, ITokOPP tokOPP)
         {
             _procesOPP = procesOPP;
+            _tokOPP = tokOPP;
+        }
+
+        public Proces VratiProcesPoID(long id)
+        {
+            return _procesOPP.VratiPoPK(id);
         }
 
         public bool ObrisiProces(long id)
@@ -21,12 +28,37 @@ namespace mikroservisprocesi.Servis.implementacija
 
         public Proces SacuvajProces(long id, string naziv, string kategorija, string opis)
         {
-            return _procesOPP.Sacuvaj(new Proces()
+            _procesOPP.Sacuvaj(new Proces()
             {
                 IDProcesa = id,
                 Naziv = naziv,
                 Kategorija = kategorija,
                 Opis = opis
+            });
+
+            return _procesOPP.VratiPoPK(id);
+        }
+
+        public void SacuvajTokZaProces(long idProcesa, int rbToka)
+        {
+           // Proces p = _procesOPP.VratiPoPK(idProcesa);
+
+            /*
+            if ( p.Tokovi == null )
+            {
+                p.Tokovi = new List<Tok>();
+            }
+
+            p.Tokovi.Add(new Tok
+            {
+                IDProcesa = idProcesa,
+                RBToka = rbToka
+            });
+            */
+
+            _tokOPP.Sacuvaj(new Tok {
+                IDProcesa = idProcesa,
+                RBToka = rbToka
             });
         }
 
@@ -38,6 +70,20 @@ namespace mikroservisprocesi.Servis.implementacija
         public List<Proces> VratiSveMogucePodproceseSistema(long id)
         {
             return _procesOPP.VratiSveMogucePodproceseSistema(id);
+        }
+
+        public Proces SacuvajProcesSaTokovima(long id, string naziv, string kategorija, string opis, List<Tok> tokovi)
+        {
+            _procesOPP.Sacuvaj(new Proces()
+            {
+                IDProcesa = id,
+                Naziv = naziv,
+                Kategorija = kategorija,
+                Opis = opis,
+                Tokovi = tokovi
+            });
+
+            return _procesOPP.VratiPoPK(id);
         }
     }
 }

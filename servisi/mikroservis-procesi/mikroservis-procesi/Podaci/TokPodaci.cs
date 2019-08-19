@@ -3,8 +3,6 @@ namespace mikroservisprocesi.Podaci
 {
     public class TokPodaci
     {
-        public TokPodaci()
-        {
-        }
+        public int rbToka { get; set; }
     }
 }

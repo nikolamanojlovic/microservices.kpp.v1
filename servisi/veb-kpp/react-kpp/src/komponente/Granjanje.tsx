@@ -42,7 +42,7 @@ export class Granjanje extends Component<Props, GranjanjeStanje> {
     _renderujOpcije(): Array<JSX.Element> {
         let opcije: Array<JSX.Element> = [];
 
-        this.props.proces.tok.map((t) => {
+        this.props.proces.tokovi.map((t) => {
             t.aktivnostiUToku.map((e, i) => {
                 if (e.idAktivnosti !== 0 && e.idAktivnosti !== 1) {
                     opcije.push(<option key={i} value={e.idAktivnosti}>{(opcije.length + 1) + " - " + t.rbToka + " " + e.naziv}</option>)

@@ -21,7 +21,14 @@ namespace mikroservisprocesi.Kontroleri
         [HttpPost("SacuvajProces")]
         public ActionResult<Proces> SacuvajProces([FromBody] ProcesPodaci proces)
         {
-            return null;
+            try
+            {
+                return _procesFasada.SacuvajProces(proces);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
+            }
         }
 
         [HttpPost("ObrisiProces/{IDProcesa}")]

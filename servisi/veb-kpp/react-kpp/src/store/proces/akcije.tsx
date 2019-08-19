@@ -116,34 +116,19 @@ export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idU
 
 /********************************* FUNKCIJE *********************************/ 
 export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kategorija: string, opis: string }) => {
-  Axios.post(API_PROCESI + "&&&&/KreirajKontroler/SacuvajProces", {
+  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajProces", {
     naziv: naziv,
     kategorija: kategorija,
     opis: opis,
-    tok: [{ RBToka: 1 }]
+    tokovi: [{ rbToka: 1 }]
   }).then(function (response) {
+    console.log(response.data)
     store.dispatch(sacuvajProces(response.data));
   }).catch(function (error) {
-    store.dispatch(sacuvajProces({
-      idProcesa: 1,
-      naziv: naziv,
-      opis: opis,
-      kategorija: kategorija,
-      vremeKreiranja: Date.now().toString(),
-      tok: [{
-        rbToka: 1,
-        aktivnostiUToku: [],
-        podprocesiUToku: [],
-        tranzicije: [],
-      } as ITok],
-      tranzicije: []
-    } as IProces));
-    /*
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
       tekst: error.response.data
     } as IPoruka));
-    */
   })
 }
 
@@ -224,6 +209,7 @@ export const SacuvajPocetnuAktivnost = ({proces, tok} : {proces: IProces, tok: I
     .then(function (response) {
       SacuvajSekvencijalnuAktivnost({proces: proces, tok: tok, aktivnost: response.data});
     }).catch(function (error) {
+      console.log(error)
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[1],
         tekst: error.response.data

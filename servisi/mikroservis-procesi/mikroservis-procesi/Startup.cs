@@ -18,6 +18,7 @@ using mikroservisprocesi.OPP;
 using mikroservisprocesi.OPP.implementacija;
 using mikroservisprocesi.Servis;
 using mikroservisprocesi.Servis.implementacija;
+using Newtonsoft.Json;
 
 namespace mikroservis_procesi
 {
@@ -51,6 +52,7 @@ namespace mikroservis_procesi
             services.AddTransient<IAktivnostOPP, AktivnostOPP>();
             services.AddTransient<IProcesOPP, ProcesOPP>();
             services.AddTransient<IDokumentOPP, DokumentOPP>();
+            services.AddTransient<ITokOPP, TokOPP>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,10 +75,10 @@ namespace mikroservis_procesi
             }
 
             app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
             app.UseMvc();
         }
     }
