@@ -17,7 +17,7 @@ export class Poruka extends Component<Props> {
             case TIP_PORUKE[2]:
                 return <p className="poruka-upozorenje">{tekst}</p>;
             default:
-                return <p className="poruka-obavestenje">{tekst}</p>;
+                return <p className="poruka-greska poruka-obavestenje">{tekst}</p>;
         }
     }
 

@@ -63,7 +63,7 @@ namespace mikroservisprocesi.Fasada.implementacija
                     throw new Exception("Дошло је до грешке, систем не може сачувати процес.", ex);
                 }
             }
-            throw new ArgumentNullException(nameof(podaci), "Поља назив, категорија и опис су обавезна.");
+            throw new ArgumentNullException(null, "Поља назив, категорија и опис су обавезна.");
         }
 
         public List<Proces> VratiSveMogucePodproceseSistema(long id)

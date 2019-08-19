@@ -381,6 +381,11 @@ svg {
 .poruka-greska {
   color: #A33333;
   text-align: center;
+  margin: 1em;
+}
+
+.poruka-obavestenje {
+  color: #55308B;
 }
 
 .input-kreiraj-sacuvaj-tok {

@@ -17,9 +17,9 @@ class Sadrzaj extends Component<Props> {
 
     _vratiStranicu() {
         switch (this.props.stranica) {
-            case STRANICE[3]:
+            case STRANICE[1]:
                 return <Kreiraj />
-            case STRANICE[2]:
+            case STRANICE[0]:
                 return <KreirajAktivnost />
             default:
                 return <Kreiraj />

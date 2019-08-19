@@ -2,6 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { TIP_PROCESA } from "../pomocnici/Konstante";
 import { SacuvajProces } from "../store/proces/akcije";
 import { IProces } from "../store/proces/tipovi";
+import { ObrisiPoruku } from "../store/poruke/akcije";
 
 interface ProcesFormaProps {
     proces?: IProces
@@ -25,6 +26,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
     _sacuvajProces = (e: FormEvent<any>) => {
         e.preventDefault();
+        ObrisiPoruku();
         const naziv = this.state.naziv;
         const kategorija = TIP_PROCESA[this.state.kategorija];
         const opis = this.state.opis;

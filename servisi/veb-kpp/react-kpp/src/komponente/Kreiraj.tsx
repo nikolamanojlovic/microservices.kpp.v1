@@ -7,7 +7,6 @@ import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
 import { OmoguciDodavanjeAktivnosti, ObrisiProces } from "../store/proces/akcije";
-import { TIP_PORUKE } from "../pomocnici/Konstante";
 
 interface KreirajProps {
 
@@ -27,7 +26,7 @@ class Kreiraj extends Component<Props> {
     }
 
     _renderujFunkcionalnosti() {
-        let { proces, poruka } = this.props;
+        let { proces } = this.props;
         let funkcionalnosti: Array<JSX.Element> = [];
 
         if ( proces ) {
@@ -51,7 +50,7 @@ class Kreiraj extends Component<Props> {
     }
 
     render() {
-        const { proces, poruka } = this.props;
+        const { proces } = this.props;
 
         return (
             <div className="kreiraj-kontejner">

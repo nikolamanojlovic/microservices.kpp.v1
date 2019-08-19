@@ -43,5 +43,18 @@ namespace mikroservisprocesi.Kontroleri
                 return StatusCode(StatusCodes.Status404NotFound, ex.Message);
             }
         }
+
+        [HttpPost("SacuvajAktivnost")]
+        public ActionResult<Proces> SacuvajAktivnost([FromBody] ProcesPodaci proces)
+        {
+            try
+            {
+                return _procesFasada.SacuvajProces(proces);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
+            }
+        }
     }
 }
