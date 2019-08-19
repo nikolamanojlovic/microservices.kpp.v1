@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, ObrisiProces } from "../store/proces/akcije";
+import { TIP_PORUKE } from "../pomocnici/Konstante";
 
 interface KreirajProps {
 
@@ -20,6 +21,11 @@ class Kreiraj extends Component<Props> {
         OmoguciDodavanjeAktivnosti(false);
     }
 
+    _obrisiProces() {
+        ObrisiProces(this.props.proces!.idProcesa);
+        OmoguciDodavanjeAktivnosti(true);
+    }
+
     _renderujFunkcionalnosti() {
         let { proces, poruka } = this.props;
         let funkcionalnosti: Array<JSX.Element> = [];
@@ -29,10 +35,10 @@ class Kreiraj extends Component<Props> {
                 <h1 className="kreiraj-proces-h1">Ток процеса</h1>
             );
             funkcionalnosti.push(
-                poruka ? <Poruka poruka={this.props.poruka} /> : 
+                poruka && poruka.tip === TIP_PORUKE[1] ? <Poruka poruka={this.props.poruka} /> : 
                 <div className="input-kreiraj-sacuvaj-tok">
                     <input className="input-dugme input-dugme-kreiraj" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()}/>
-                    <input className="input-dugme input-dugme-kreiraj input-dugme-crveno" type="button" value="Обриши процес"/>
+                    <input className="input-dugme input-dugme-kreiraj input-dugme-crveno" type="button" value="Обриши процес" onClick={() => this._obrisiProces()}/>
                 </div>
             );
             funkcionalnosti.push(
@@ -46,13 +52,16 @@ class Kreiraj extends Component<Props> {
     }
 
     render() {
-        const { proces } = this.props;
+        const { proces, poruka } = this.props;
 
         return (
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
                     <ProcesForma proces={proces} />
+                    { 
+                        poruka && poruka.tip === TIP_PORUKE[0] ? <Poruka poruka={this.props.poruka} /> : <span/>
+                    }
                 </div>
                 {
                     this._renderujFunkcionalnosti()

@@ -9,6 +9,6 @@ namespace mikroservisprocesi.OPP
         T Sacuvaj(T entitet);
         bool Obrisi(T entitet);
         List<T> VratiSve();
-        T VratiPoPK<K>(K primarni) where K : class;
+        T VratiPoPK<K>(K primarni) where K : struct;
     }
 }

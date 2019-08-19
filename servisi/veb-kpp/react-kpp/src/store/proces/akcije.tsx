@@ -1,4 +1,4 @@
-import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE, IUslovTranzicije, DODAJ_TRANZICIJU } from "./tipovi";
+import { IProces, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, IAktivnost, ITok, DODAJ_SEKVENCIJALNU_AKTIVNOST, DODAJ_PARALELNU_AKTIVNOST, DODAJ_TOK, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE, IUslovTranzicije, DODAJ_TRANZICIJU, OBRISI_PROCES } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_PROCESI, TIP_PORUKE } from "../../pomocnici/Konstante";
@@ -11,6 +11,12 @@ export const sacuvajProces = (proces: IProces): AkcijeAplikacije => {
   return {
     type: SACUVAJ_PROCES,
     payload: proces
+  }
+}
+
+export const obrisiProces = (): AkcijeAplikacije => {
+  return {
+    type: OBRISI_PROCES
   }
 }
 
@@ -110,7 +116,7 @@ export const dodajTranziciju = ({nadproces, nadtok, ulazniProces, ulazniTok, idU
 
 /********************************* FUNKCIJE *********************************/ 
 export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kategorija: string, opis: string }) => {
-  Axios.post(API_PROCESI + "/KreriajKontroler/SacuvajProces", {
+  Axios.post(API_PROCESI + "&&&&/KreirajKontroler/SacuvajProces", {
     naziv: naziv,
     kategorija: kategorija,
     opis: opis,
@@ -138,6 +144,22 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
       tekst: error.response.data
     } as IPoruka));
     */
+  })
+}
+
+export const ObrisiProces = (IDProcesa: number) => {
+  Axios.post(API_PROCESI + "/KreirajKontroler/ObrisiProces/" + IDProcesa)
+  .then(function (response) {
+    store.dispatch(sacuvajPoruku({
+      tip: TIP_PORUKE[0],
+      tekst: response.data
+    }));
+    store.dispatch(obrisiProces());
+  }).catch(function (error) {
+    store.dispatch(sacuvajPoruku({
+      tip: TIP_PORUKE[1],
+      tekst: error.response.data
+    } as IPoruka));
   })
 }
 

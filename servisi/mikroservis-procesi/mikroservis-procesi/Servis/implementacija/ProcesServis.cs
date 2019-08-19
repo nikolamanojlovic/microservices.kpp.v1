@@ -14,11 +14,16 @@ namespace mikroservisprocesi.Servis.implementacija
             _procesOPP = procesOPP;
         }
 
-        public Proces SacuvajProces(long ID, string naziv, string kategorija, string opis)
+        public bool ObrisiProces(long id)
+        {
+            return _procesOPP.Obrisi(_procesOPP.VratiPoPK(id));
+        }
+
+        public Proces SacuvajProces(long id, string naziv, string kategorija, string opis)
         {
             return _procesOPP.Sacuvaj(new Proces()
             {
-                IDProcesa = ID,
+                IDProcesa = id,
                 Naziv = naziv,
                 Kategorija = kategorija,
                 Opis = opis

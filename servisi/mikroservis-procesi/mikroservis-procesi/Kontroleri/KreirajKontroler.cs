@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.Fasada;
@@ -21,6 +22,19 @@ namespace mikroservisprocesi.Kontroleri
         public ActionResult<Proces> SacuvajProces([FromBody] ProcesPodaci proces)
         {
             return null;
+        }
+
+        [HttpPost("ObrisiProces/{IDProcesa}")]
+        public ActionResult<String> ObrisiProces(long IDProcesa)
+        {
+            try
+            {
+                return _procesFasada.ObrisiProces(IDProcesa);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
+            }
         }
     }
 }

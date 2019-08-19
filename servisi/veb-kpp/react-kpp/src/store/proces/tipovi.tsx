@@ -52,6 +52,8 @@ export interface IProcesStanje {
 
 /********************************* TIP AKCIJA *********************************/ 
 export const SACUVAJ_PROCES = "SACUVAJ_PROCES";
+export const OBRISI_PROCES = "OBRISI_PROCES";
+
 export const OBRISI_PODPROCES = "OBRISI_PODPROCES";
 export const AZURIRAJ_NAZIV_PODPROCES = "AZURIRAJ_NAZIV_PODPROCES";
 
@@ -72,6 +74,10 @@ export const OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU = "OMOGUCI_DODAVANJE_AKTI
 interface ISacuvajProcesAkcija {
     type: typeof SACUVAJ_PROCES
     payload: IProces
+}
+
+interface IObrisiProcesAkcija {
+    type: typeof OBRISI_PROCES
 }
 
 interface IObrisiPodprocesAkcija {
@@ -136,6 +142,6 @@ interface IOmoguciDodavanjeAktivnostiUPodprocesu {
 }
 
 /********************************* EKSPORT *********************************/ 
-export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija 
+export type ProcesAkcije = ISacuvajProcesAkcija | IObrisiProcesAkcija | IObrisiPodprocesAkcija | IAzurirajNazivPodprocesAkcija | IDodajTokAkcija | IObrisiTokAkcija 
                            | IVratiSveAktivnostiSistemaAkcija | IVratiSvePodproceseSistemaAkcija | IDodajSekvencijalnuAktivnostAkcija 
                            | IDodajParalelnuAktivnostAkcija | IOmoguciDodavanjeAktivnosti | IOmoguciDodavanjeAktivnostiUPodprocesu | IDodajTranziciju;

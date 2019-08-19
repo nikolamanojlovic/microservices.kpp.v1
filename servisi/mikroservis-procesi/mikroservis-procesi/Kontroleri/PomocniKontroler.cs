@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.Fasada;
+using mikroservisprocesi.Izuzeci;
 
 namespace mikroservisprocesi.Kontroleri
 {
@@ -41,7 +42,7 @@ namespace mikroservisprocesi.Kontroleri
             {
                 return _dokumentFasada.VratiSveDokumenteSistema();
             }
-            catch (Exception ex)
+            catch (SistemNemaDokumenataIzuzetak ex)
             {
                 return StatusCode(StatusCodes.Status404NotFound, ex.Message);
             }

@@ -1,4 +1,4 @@
-import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE, DODAJ_TRANZICIJU, IUslovTranzicije, ITranzicija } from "./tipovi";
+import { IProcesStanje, ProcesAkcije, SACUVAJ_PROCES, VRATI_SVE_AKTIVNOSTI, DODAJ_PARALELNU_AKTIVNOST, DODAJ_SEKVENCIJALNU_AKTIVNOST, IAktivnost, IProces, DODAJ_TOK, ITok, OMOGUCI_DODAVANJE_AKTIVNOSTI, OBRISI_PODPROCES, OBRISI_TOK, AZURIRAJ_NAZIV_PODPROCES, OMOGUCI_DODAVANJE_AKTIVNOSTI_U_PODPROCESU, VRATI_SVE_PODPROCESE, DODAJ_TRANZICIJU, IUslovTranzicije, ITranzicija, OBRISI_PROCES } from "./tipovi";
 
 // INICIJALNO STANJE
 const inicijalnoStanje: IProcesStanje = {
@@ -15,6 +15,8 @@ const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesS
     switch (action.type) {
         case SACUVAJ_PROCES:
             return { ...state, proces: action.payload };
+        case OBRISI_PROCES:
+            return { ...state, proces: undefined };
         case OBRISI_PODPROCES:
             return { ...state, proces: _odbrisiPodprocesAktivnost({ state: state, podproces: action.payload }) };
         case AZURIRAJ_NAZIV_PODPROCES:
