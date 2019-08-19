@@ -135,11 +135,11 @@ export const SacuvajProces = ({ naziv, kategorija, opis }: { naziv: string, kate
 export const ObrisiProces = (IDProcesa: number) => {
   Axios.post(API_PROCESI + "/KreirajKontroler/ObrisiProces/" + IDProcesa)
     .then(function (response) {
+      store.dispatch(obrisiProces());
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[0],
         tekst: response.data
       }));
-      store.dispatch(obrisiProces());
     }).catch(function (error) {
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[1],

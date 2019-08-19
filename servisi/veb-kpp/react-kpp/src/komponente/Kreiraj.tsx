@@ -8,13 +8,18 @@ import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
 import { OmoguciDodavanjeAktivnosti, ObrisiProces } from "../store/proces/akcije";
 
-interface KreirajProps {
-
+// NOTE: Quick Fix
+interface KreirajStanje {
+    kljuc: number
 }
 
-type Props = KreirajProps & KreirajLinkStateProps;
+type Props = KreirajLinkStateProps;
 
-class Kreiraj extends Component<Props> {
+class Kreiraj extends Component<Props,KreirajStanje> {
+
+    state: Readonly<KreirajStanje> = {
+        kljuc: 0
+    }
 
     _sacuvajTokProcesa() {
         OmoguciDodavanjeAktivnosti(false);
@@ -23,6 +28,7 @@ class Kreiraj extends Component<Props> {
     _obrisiProces() {
         ObrisiProces(this.props.proces!.idProcesa);
         OmoguciDodavanjeAktivnosti(true);
+        this.setState({kljuc: this.state.kljuc+1})
     }
 
     _renderujFunkcionalnosti() {
@@ -50,16 +56,14 @@ class Kreiraj extends Component<Props> {
     }
 
     render() {
-        const { proces } = this.props;
-
         return (
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
+                    <ProcesForma key={this.state.kljuc} proces={this.props.proces} />
                     {
                         this.props.poruka ? <Poruka poruka={this.props.poruka} /> : <span/>
                     }
-                    <ProcesForma proces={proces} />
                 </div>
                 {
                     this._renderujFunkcionalnosti()
@@ -74,7 +78,7 @@ interface KreirajLinkStateProps {
     poruka?: IPoruka
 }
 
-const mapStateToProps = (state: StanjeAplikacije, ownProps: KreirajProps): KreirajLinkStateProps => ({
+const mapStateToProps = (state: StanjeAplikacije, ownProps: {}): KreirajLinkStateProps => ({
     proces: state.procesReducer.proces,
     poruka: state.porukaReducer.poruka
 });
