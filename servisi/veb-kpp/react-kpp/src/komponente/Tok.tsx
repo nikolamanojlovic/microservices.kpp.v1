@@ -62,7 +62,7 @@ class Tok extends Component<Props, TokStanje> {
     _dodajParalelnuAktivnost() {
         let { proces, tok } = this.props;
         let podproces = {
-            idProcesa: parseInt(proces.idProcesa + "" + tok.rbToka + "" + tok.podprocesiUToku.length),
+            idProcesa: parseInt(proces.idProcesa + "" + tok.rbToka + "" + (tok.podprocesiUToku === null || tok.podprocesiUToku === undefined ? 0 : tok.podprocesiUToku.length)),
             naziv: "",
             opis: "",
             kategorija: proces.kategorija,

@@ -106,6 +106,7 @@ const _obrisiPodprocesRekurzija = ({ pocetni, podproces }: { pocetni: IProces, p
                 t.podprocesiUToku = t.podprocesiUToku.filter(function (value) {
                     return value.idProcesa !== podproces.idProcesa;
                 });
+                pocetni.tranzicije.pop();
                 return;
             } else {
                 _obrisiPodprocesRekurzija({ pocetni: put, podproces: podproces });
@@ -146,6 +147,9 @@ const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni
 const _dodajParalelnuAktivnostRekurzija = ({ pocetni, proces, tok, podproces }: { pocetni: IProces, proces: IProces, tok: ITok, podproces: IProces }): void => {
     pocetni.tokovi.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {
+            if ( t.podprocesiUToku === undefined || t.podprocesiUToku === null) {
+                t.podprocesiUToku = [];
+            }
             t.podprocesiUToku.push(podproces);
             return;
         } else {

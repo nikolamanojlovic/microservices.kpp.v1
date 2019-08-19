@@ -43,6 +43,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     _promeniIzabranuAktivnost(e: FormEvent<HTMLSelectElement>) {
+        console.log(e.currentTarget.value)
         let aktivnost = this.props.aktivnostiSistema![parseInt(e.currentTarget.value)];
         this.setState({ izabrana: aktivnost });
     }

@@ -23,7 +23,7 @@ namespace mikroservisprocesi.Domen
         [IgnoreDataMember]
         public Proces Proces { get; set; }
 
-        public List<ProcesUToku> ProcesiUToku { get; set; }
+        public List<ProcesUToku> PodprocesiUToku { get; set; }
 
         public List<AktivnostUToku> AktivnostiUToku { get; set; }
     }

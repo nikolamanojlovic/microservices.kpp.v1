@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace mikroservisprocesi.Domen
 {
@@ -28,6 +30,8 @@ namespace mikroservisprocesi.Domen
 
         public List<Tranzicija> Tranzicije { get; set; }
 
-        public List<ProcesUToku> ProcesiUToku { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public List<ProcesUToku> PodprocesiUToku { get; set; }
     }
 }

@@ -50,8 +50,8 @@ namespace mikroservisprocesi.Domen
             modelBuilder.Entity<Izlaz>().HasOne(i => i.Dokument).WithMany(a => a.AktivnostiIzlaz).HasForeignKey(i => new { i.IDDokumenta, i.SifraDokumenta });
 
             modelBuilder.Entity<ProcesUToku>().HasKey(put => new { put.IDNadprocesa, put.RBToka, put.IDPodprocesa });
-            modelBuilder.Entity<Tok>().HasMany(t => t.ProcesiUToku).WithOne(put => put.Tok);
-            modelBuilder.Entity<Proces>().HasMany(p => p.ProcesiUToku).WithOne(put => put.Proces);
+            modelBuilder.Entity<Tok>().HasMany(t => t.PodprocesiUToku).WithOne(put => put.Tok);
+            modelBuilder.Entity<Proces>().HasMany(p => p.PodprocesiUToku).WithOne(put => put.Proces);
 
             modelBuilder.Entity<AktivnostUToku>().HasKey(aut => new { aut.IDProcesa, aut.RBToka, aut.IDAktivnosti });
             modelBuilder.Entity<Tok>().HasMany(t => t.AktivnostiUToku).WithOne(aut => aut.Tok);
