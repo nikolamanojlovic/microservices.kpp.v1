@@ -19,9 +19,9 @@ type Props = ProcesFormaProps;
 export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
     state: Readonly<ProcesFormaStanje> = {
-        naziv: "",
-        kategorija: 0,
-        opis: ""
+        naziv: this.props.proces ? this.props.proces.naziv : "",
+        kategorija: this.props.proces ? TIP_PROCESA.findIndex(e => {return e === this.props.proces!.kategorija}) : 0,
+        opis: this.props.proces ? this.props.proces.opis : "",
     };
 
     _sacuvajProces = (e: FormEvent<any>) => {

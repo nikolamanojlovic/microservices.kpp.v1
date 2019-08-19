@@ -73,7 +73,7 @@ class Tok extends Component<Props, TokStanje> {
 
         SacuvajParalelnuAktivnost({ proces, tok, podproces });
         podproces.tokovi.forEach(t => {
-            SacuvajPocetnuAktivnost({proces: podproces, tok: t});
+            SacuvajPocetnuAktivnost({ proces: podproces, tok: t });
             DodajTranziciju({ nadproces: podproces, nadtok: t, ulazniProces: podproces, ulazniTok: t, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
         });
         DodajTranziciju({ nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: podproces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
@@ -104,7 +104,7 @@ class Tok extends Component<Props, TokStanje> {
             </div>);
         } else {
             let { tok } = this.props;
-            let aktivnostiSistema = this.props.aktivnostiSistema !== null  && tok.aktivnostiUToku !== null ? this.props.aktivnostiSistema.filter(e =>  tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined) : [];
+            let aktivnostiSistema = this.props.aktivnostiSistema !== null && tok.aktivnostiUToku !== null ? this.props.aktivnostiSistema.filter(e => tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined) : [];
 
             return (<div className="tok-funkcionalnosti">
                 {
@@ -157,10 +157,27 @@ class Tok extends Component<Props, TokStanje> {
                 }
 
                 if (this.props.tok.podprocesiUToku != null) {
-                    let put = this.props.tok.podprocesiUToku.slice(podprocesiOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);
+                    let put = this._vratiPodproceseKojiNisuIzBE().slice(podprocesiOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);
 
                     if (put) {
                         tok.push(<Proces nadproces={this.props.proces} nadtok={this.props.tok} proces={put} />);
+                        podprocesiOffset = podprocesiOffset + 1;
+                    }
+                }
+
+                if (this.props.tok.podprocesiUToku != null) {
+                    let put = this._vratiPodproceseKojiSuIzBE().slice(podprocesiOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);
+
+                    if (put) {
+                        tok.push(
+                            <div className="aktivnost-kontejner">
+                                <div className="aktivnost">
+                                    <div className="aktivnost-forma">
+                                        <p className="aktivnost-naziv">{put.naziv} (процес)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        );
                         podprocesiOffset = podprocesiOffset + 1;
                     }
                 }
@@ -169,6 +186,36 @@ class Tok extends Component<Props, TokStanje> {
             return tok;
         }
     }
+
+    _vratiPodproceseKojiNisuIzBE(): Array<IProces> {
+        let { podprocesiSistema } = this.props;
+        let { podprocesiUToku } = this.props.tok;
+
+        return podprocesiUToku.filter(e => {
+            return podprocesiSistema.find(m => e.idProcesa === m.idProcesa) === undefined;
+        })
+    }
+
+    _vratiPodproceseKojiSuIzBE(): Array<IProces> {
+        let { podprocesiSistema } = this.props;
+        let { podprocesiUToku } = this.props.tok;
+
+        return podprocesiUToku.filter(e => {
+            return podprocesiSistema.find(m => e.idProcesa === m.idProcesa) !== undefined;
+        })
+    }
+
+    /*
+    _vratiIzlazneDokumente() : Array<IDokument> {
+        let { dokumenti, izlazni } = this.props;
+
+        if ( dokumenti ) {
+            return dokumenti.filter(e => {
+                return izlazni.find(i => { return i.idDokumenta === e.idDokumenta}) === undefined
+            })
+        }
+        return [];
+    }*/
 
     render() {
         return (

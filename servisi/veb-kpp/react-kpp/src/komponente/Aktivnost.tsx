@@ -91,7 +91,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         })
 
         this.props.podprocesiSistema!.map(function (e, i) {
-            opcije.push(<option key={i + ofset} value={i + ofset}>{" (процес) " + e.naziv}</option>)
+            opcije.push(<option key={i + ofset} value={i + ofset}>{e.naziv} (процес)</option>)
         })
 
         return opcije;

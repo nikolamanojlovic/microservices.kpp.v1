@@ -60,10 +60,10 @@ class Kreiraj extends Component<Props,KreirajStanje> {
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
-                    <ProcesForma key={this.state.kljuc} proces={this.props.proces} />
                     {
                         this.props.poruka ? <Poruka poruka={this.props.poruka} /> : <span/>
                     }
+                    <ProcesForma key={this.state.kljuc} proces={this.props.proces} />
                 </div>
                 {
                     this._renderujFunkcionalnosti()
