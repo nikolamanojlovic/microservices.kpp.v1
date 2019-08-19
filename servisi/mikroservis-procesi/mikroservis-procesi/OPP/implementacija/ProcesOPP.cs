@@ -12,6 +12,12 @@ namespace mikroservisprocesi.OPP.implementacija
         {
         }
 
+        public bool SacuvajTranzicijeZaProces(long id, List<Tranzicija> tranzicije)
+        {
+            VratiPoPK(id).Tranzicije = tranzicije;
+            return VratiKontekst().SaveChanges() > 0;
+        }
+
         public long VratiIDNovogProcesa()
         {
             DbSet<Proces> procesi = VratiKontekst().Set<Proces>();
@@ -20,7 +26,7 @@ namespace mikroservisprocesi.OPP.implementacija
 
         public List<Proces> VratiSveMogucePodproceseSistema(long id)
         {
-            return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa != id).ToList();
+            return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa != id).Include(p => p.Tokovi).ToList();
         }
     }
 }

@@ -8,5 +8,6 @@ namespace mikroservisprocesi.OPP
     {
         long VratiIDNovogProcesa();
         List<Proces> VratiSveMogucePodproceseSistema(long id);
+        bool SacuvajTranzicijeZaProces(long id, List<Tranzicija> tranzicije);
     }
 }

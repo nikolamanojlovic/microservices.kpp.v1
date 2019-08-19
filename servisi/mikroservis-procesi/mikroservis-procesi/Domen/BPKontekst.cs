@@ -64,47 +64,47 @@ namespace mikroservisprocesi.Domen
             modelBuilder.Entity<Aktivnost>().HasData(
                 new
                 {
-                    IDAktivnosti = Int64.Parse("0"),
+                    IDAktivnosti = Int64.Parse("100000"),
                     Naziv = "Почетна активност",
                     Opis = "Активност која означава почетак."
                 },
                 new
                 {
-                    IDAktivnosti = Int64.Parse("1"),
+                    IDAktivnosti = Int64.Parse("100001"),
                     Naziv = "Крајња активност",
                     Opis = "Активност која означава крај."
                 },
                  new
                  {
-                     IDAktivnosti = Int64.Parse("3"),
+                     IDAktivnosti = Int64.Parse("100002"),
                      Naziv = "Састанак са клијентом",
                      Opis = "Утврђивање захтева и основих захтева."
 
                  },
                   new
                   {
-                      IDAktivnosti = Int64.Parse("4"),
+                      IDAktivnosti = Int64.Parse("100003"),
                       Naziv = "Израда сцена",
                       Opis = "Анимирање делова рекламе."
 
                   },
                   new
                   {
-                      IDAktivnosti = Int64.Parse("5"),
+                      IDAktivnosti = Int64.Parse("100005"),
                       Naziv = "Израда звука",
                       Opis = "Снимање гласа и музике."
 
                   },
                   new
                   {
-                      IDAktivnosti = Int64.Parse("6"),
+                      IDAktivnosti = Int64.Parse("100006"),
                       Naziv = "Монтажа",
                       Opis = " Интеграција сцена и звука."
 
                   },
                   new
                   {
-                      IDAktivnosti = Int64.Parse("7"),
+                      IDAktivnosti = Int64.Parse("100007"),
                       Naziv = "Слање рекламе клијенту",
                       Opis = "Слање рекламе путем електронске поште."
 

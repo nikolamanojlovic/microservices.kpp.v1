@@ -63,6 +63,7 @@ class KreirajAktivnost extends Component<Props, KreirajAktivnostiStanje> {
     _sacuvajAktivnost() {
         let {naziv, opis, ulaznaDokumenta, izlaznaDokumenta} = this.state;
         SacuvajAktivnost({naziv: naziv, opis: opis, ulazniDokumenti: ulaznaDokumenta, izlazniDokumenti: izlaznaDokumenta});
+        this.setState({onemoguciCuvanje: true, naziv: "", opis: "", ulaznaDokumenta: [], izlaznaDokumenta: []});
     }
 
     render() {
@@ -71,7 +72,7 @@ class KreirajAktivnost extends Component<Props, KreirajAktivnostiStanje> {
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Активност</h1>
                     <Poruka poruka={this.props.poruka} />
-                    <KreirajAktivnostForma postaviNaziv={this._postaviNaziv} postaviOpis={this._postaviOpis} />
+                    <KreirajAktivnostForma naziv={this.state.naziv} opis={this.state.opis} postaviNaziv={this._postaviNaziv} postaviOpis={this._postaviOpis} />
                 </div>
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Улази и излази</h1>

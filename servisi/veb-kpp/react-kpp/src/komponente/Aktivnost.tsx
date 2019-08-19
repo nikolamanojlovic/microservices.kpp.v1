@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from "react";
 import { IAktivnost, IProces, ITok, IUslovTranzicije } from "../store/proces/tipovi";
-import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu, DodajTranziciju } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu, DodajTranziciju, SacuvajParalelnuAktivnost } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 import { Granjanje } from "./Granjanje";
 import { string } from "prop-types";
@@ -18,6 +18,7 @@ interface AktivnostProps {
 
 interface AktivnostStanje {
     izabrana?: IAktivnost,
+    izabranProces?: IProces,
     uslov: string
     usloviTranzicije: Array<IUslovTranzicije>,
     granjanje?: JSX.Element
@@ -43,32 +44,60 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     _promeniIzabranuAktivnost(e: FormEvent<HTMLSelectElement>) {
-        console.log(e.currentTarget.value)
         let aktivnost = this.props.aktivnostiSistema![parseInt(e.currentTarget.value)];
-        this.setState({ izabrana: aktivnost });
+        let ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0;
+
+        if (aktivnost) {
+            console.log(aktivnost)
+            this.setState({ izabranProces: undefined, izabrana: aktivnost });
+        } else {
+            this.setState({ izabranProces: this.props.podprocesiSistema![parseInt(e.currentTarget.value) - ofset], izabrana: undefined });
+        }
     }
 
     _dodajGranjanje() {
-        this.setState({ granjanje: <Granjanje proces={this.props.proces} tok={this.props.tok} postojeciUslovi={this.state.usloviTranzicije} izgasiGranjanje={() => this._izgasiGranjanje()} postaviUsloveTranzicijeZaAktivnost={this._postaviUsloveTranzicijeZaAktivnost}/> })
+        this.setState({ granjanje: <Granjanje proces={this.props.proces} tok={this.props.tok} postojeciUslovi={this.state.usloviTranzicije} izgasiGranjanje={() => this._izgasiGranjanje()} postaviUsloveTranzicijeZaAktivnost={this._postaviUsloveTranzicijeZaAktivnost} /> })
     }
 
     _sacuvajAktivnost() {
         let { proces, tok } = this.props;
-        let { izabrana } = this.state;
+        let { izabrana, izabranProces } = this.state;
 
-        SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
-        DodajTranziciju({
-            nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1],
-            uslov: this.state.uslov, uslovTranzicije: this.state.usloviTranzicije
-        });
+        if (izabrana) {
+            SacuvajSekvencijalnuAktivnost({ proces, tok, aktivnost: izabrana! });
+            DodajTranziciju({
+                nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1],
+                uslov: this.state.uslov, uslovTranzicije: this.state.usloviTranzicije
+            });
+        } else if ( izabranProces ) {
+            SacuvajParalelnuAktivnost({proces: proces, tok: tok, podproces: izabranProces});
+            DodajTranziciju({
+                nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabranProces.idProcesa, tip: TIP_TRANZICIJE[1],
+                uslov: "", uslovTranzicije: []
+            });
+
+        }
 
         this.props.obrisiStanje!();
         this.props.aktivnostPodprocesa ? OmoguciDodavanjeAktivnostiUPodprocesu(true) : OmoguciDodavanjeAktivnosti(this.props.omoguciPromenu!());
     }
 
-    render() {
-        const ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0
+    _renderujOpcije() {
+        let ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0;
+        let opcije: Array<JSX.Element> = [];
 
+        this.props.aktivnostiSistema!.map(function (e, i) {
+            opcije.push(<option key={i} value={i}>{e.naziv}</option>);
+        })
+
+        this.props.podprocesiSistema!.map(function (e, i) {
+            opcije.push(<option key={i + ofset} value={i + ofset}>{e.naziv}</option>)
+        })
+
+        return opcije;
+    }
+
+    render() {
         return (
             <div className="aktivnost-kontejner">
                 {
@@ -80,16 +109,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                             this.props.aktivnost ? <p className="aktivnost-naziv">{this.props.aktivnost.naziv}</p> :
                                 <select className="input-tekst input-aktivnost" name="izabrana" onChange={(e: FormEvent<HTMLSelectElement>) => this._promeniIzabranuAktivnost(e)}>
                                     {
-                                        this.props.aktivnostiSistema!.map(function (e, i) {
-                                            return <option key={i} value={i}>{e.naziv}</option>
-                                        })
-                                    }
-                                    {
-                                        this.props.podprocesiSistema!.map(function (e, i) {
-                                            return <option key={i + ofset} value={i}>
-                                                {" + " + e.naziv}
-                                            </option>
-                                        })
+                                        this._renderujOpcije()
                                     }
                                 </select>
                         }
@@ -99,7 +119,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                     this.props.aktivnost ? <span /> :
                         <div className="aktivnost-funkcionalnosti">
                             {
-                                this.props.tok.aktivnostiUToku.length < 2 ? <span /> :
+                                this.props.tok.aktivnostiUToku.length < 2 || this.state.izabranProces !== undefined ? <span /> :
                                     <svg className="input" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajGranjanje()}>
                                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
                                     </svg>

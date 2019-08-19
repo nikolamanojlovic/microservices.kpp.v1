@@ -70,5 +70,10 @@ namespace mikroservisprocesi.Servis.implementacija
 
             return _procesOPP.VratiPoPK(id);
         }
+
+        public bool SacuvajTranzicijeZaProces(long id, List<Tranzicija> tranzicije)
+        {
+            return _procesOPP.SacuvajTranzicijeZaProces(id, tranzicije);
+        }
     }
 }
