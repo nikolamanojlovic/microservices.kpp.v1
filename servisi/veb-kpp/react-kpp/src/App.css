@@ -523,3 +523,7 @@ svg {
 .input-sacuvaj-aktivnost {
   margin-left: 1.4em;
 }
+
+.tekst-kreiraj-aktinost {
+  white-space: pre-wrap;
+}
