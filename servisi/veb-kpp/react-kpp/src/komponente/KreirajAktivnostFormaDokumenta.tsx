@@ -3,7 +3,7 @@ import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { VratiSveDokumenteSistema } from "../store/dokument/akcije"
 import { IDokument } from "../store/dokument/tipovi";
-import { thisExpression } from "@babel/types";
+import { thisExpression, tsThisType } from "@babel/types";
 
 interface KreirajAktivnostFormaDokumentaProps {
     ulazni: Array<IDokument>,
@@ -65,6 +65,28 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
         this.props.obrisiDokument(ulazi);
     }
 
+    _vratiUlazneDokumente() : Array<IDokument> {
+        let { dokumenti, ulazni } = this.props;
+
+        if ( dokumenti ) {
+            return dokumenti.filter(e => {
+                return ulazni.find(u => { return u.idDokumenta === e.idDokumenta}) === undefined
+            })
+        }
+        return [];
+    }
+
+    _vratiIzlazneDokumente() : Array<IDokument> {
+        let { dokumenti, izlazni } = this.props;
+
+        if ( dokumenti ) {
+            return dokumenti.filter(e => {
+                return izlazni.find(i => { return i.idDokumenta === e.idDokumenta}) === undefined
+            })
+        }
+        return [];
+    }
+
     render() {
         return (
             <div className="kreiraj-aktivnost-forma kreiraj-aktivnost-forma-dokumenta">
@@ -73,7 +95,7 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
                     <form className="forma-dokumenti-izbor">
                         <select className="input-tekst input-kreiraj input-kreiraj-aktivnost input-kreiraj-aktivnost-select" name="ulazni" onChange={(e: FormEvent<HTMLSelectElement>) => this._obradiSelect(e, true)}>
                             {
-                                this.props.dokumenti.map((e, i) => {
+                                this._vratiUlazneDokumente().map((e, i) => {
                                     return <option key={i} value={i}>{e.sifraDokumenta + " - " + e.naziv}</option>
                                 })
                             }
@@ -93,7 +115,7 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
                     <form className="forma-dokumenti-izbor">
                         <select className="input-tekst input-kreiraj input-kreiraj-aktivnost input-kreiraj-aktivnost-select" name="izlazi" onChange={(e: FormEvent<HTMLSelectElement>) => this._obradiSelect(e, false)}>
                             {
-                                this.props.dokumenti.map((e, i) => {
+                                this._vratiIzlazneDokumente().map((e, i) => {
                                     return <option key={i} value={i}>{e.sifraDokumenta + " - " + e.naziv}</option>
                                 })
                             }

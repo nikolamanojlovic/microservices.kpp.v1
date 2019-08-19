@@ -2,7 +2,7 @@ import { PRIJAVA, ODJAVA, IKorisnik, PROMENA_STRANE } from "./tipovi";
 import { AkcijeAplikacije, store } from "../konfiguracija";
 import Axios from "axios";
 import { API_ZAPOSLENI, TIP_PORUKE } from "../../pomocnici/Konstante";
-import { sacuvajPoruku } from "../poruke/akcije";
+import { sacuvajPoruku, ObrisiPoruku } from "../poruke/akcije";
 import { IPoruka } from "../poruke/tipovi";
 
 /******************************** KREATORI AKCIJA ********************************/

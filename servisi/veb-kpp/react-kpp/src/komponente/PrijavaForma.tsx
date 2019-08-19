@@ -5,6 +5,7 @@ import { IPoruka } from "../store/poruke/tipovi";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { Poruka } from "./Poruka";
+import { ObrisiPoruku } from "../store/poruke/akcije";
 
 interface PrijavaFormaProps {
 }
@@ -24,11 +25,13 @@ class PrijavaForma extends React.Component<Props, PrijavaFormaStanje> {
     };
 
     _obradiPromenu(e: FormEvent<HTMLInputElement>) {
+        ObrisiPoruku();
         this.setState({ ...this.state, [e.currentTarget.name]: e.currentTarget.value })
     }
 
     _prijavaKorisnika(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        ObrisiPoruku();
         PrijavaFunkcija(this.state);
     }
 

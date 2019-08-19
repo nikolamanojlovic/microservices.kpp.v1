@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PromeniStranicu } from "../store/korisnik/akcije";
+import { ObrisiPoruku } from "../store/poruke/akcije";
 
 interface NavigacijaOpcijaProps {
     opcija: string
@@ -10,6 +11,7 @@ type Props = NavigacijaOpcijaProps;
 export class NavigacijaOpcija extends Component<Props> {
 
     _promenaStrane() {
+        ObrisiPoruku();
         PromeniStranicu(this.props.opcija);
     }
 

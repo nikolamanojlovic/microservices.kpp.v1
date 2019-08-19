@@ -3,6 +3,7 @@ import { IKorisnik } from "../store/korisnik/tipovi";
 import { OdjaviKorisnika } from "../store/korisnik/akcije";
 import { STRANICE } from "../pomocnici/Konstante";
 import { NavigacijaOpcija } from "./NavigacijaOpcija";
+import { ObrisiPoruku } from "../store/poruke/akcije";
 
 interface NavigacijaFormaProps {
     korisnik: IKorisnik
@@ -13,6 +14,7 @@ type Props = NavigacijaFormaProps;
 export class NavigacijaForma extends Component<Props> {
 
     _odjaviKorisnika = () => {
+        ObrisiPoruku();
         OdjaviKorisnika();
     }
 

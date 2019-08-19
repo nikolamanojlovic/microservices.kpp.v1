@@ -31,6 +31,10 @@ namespace mikroserviszaposleni.Fasada.implementacija
             {
                 throw new ZaposleniNemaPravoPristupaIzuzetak("Погрешан формат корисничког имена.");
             }
+            catch (Exception ex) when (ex is NullReferenceException)
+            {
+                throw new ZaposleniNemaPravoPristupaIzuzetak("У систему не постоји радник са унетим креденцијалнима.");
+            }
         }
     }
 }
