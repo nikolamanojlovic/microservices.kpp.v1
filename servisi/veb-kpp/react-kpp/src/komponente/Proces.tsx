@@ -33,6 +33,7 @@ class Proces extends Component<Props, ProcesStanje> {
 
     _obrisiPodproces() {
         ObrisiPodproces(this.props.proces);
+        OmoguciDodavanjeAktivnostiUPodprocesu(true);
         OmoguciDodavanjeAktivnosti(true);
     }
 

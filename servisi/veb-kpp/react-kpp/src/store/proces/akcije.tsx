@@ -209,7 +209,6 @@ export const SacuvajPocetnuAktivnost = ({proces, tok} : {proces: IProces, tok: I
     .then(function (response) {
       SacuvajSekvencijalnuAktivnost({proces: proces, tok: tok, aktivnost: response.data});
     }).catch(function (error) {
-      console.log(error)
       store.dispatch(sacuvajPoruku({
         tip: TIP_PORUKE[1],
         tekst: error.response.data

@@ -41,7 +41,7 @@ class Tok extends Component<Props, TokStanje> {
 
     _obrisiStanje() {
         this.setState({ aktivnostiUToku: undefined })
-        OmoguciDodavanjeAktivnosti(true);
+        this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(true) : OmoguciDodavanjeAktivnosti(true);
     }
 
     _daLiOmogucitiDodavanjeAktivnosti(): boolean {
@@ -72,6 +72,10 @@ class Tok extends Component<Props, TokStanje> {
         };
 
         SacuvajParalelnuAktivnost({ proces, tok, podproces });
+        podproces.tokovi.forEach(t => {
+            SacuvajPocetnuAktivnost({proces: podproces, tok: t});
+            DodajTranziciju({ nadproces: podproces, nadtok: t, ulazniProces: podproces, ulazniTok: t, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
+        });
         DodajTranziciju({ nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: podproces.idProcesa, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
         OmoguciDodavanjeAktivnosti(false);
     }

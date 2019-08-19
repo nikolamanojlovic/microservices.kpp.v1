@@ -131,7 +131,7 @@ const _azurirajNazivPodprocesaRekurzija = ({ pocetni, podproces }: { pocetni: IP
 const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni: IProces, proces: IProces, tok: ITok, aktivnost: IAktivnost }): void => {
     pocetni.tokovi.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {
-            if ( t.aktivnostiUToku === null ) {
+            if (t.aktivnostiUToku === null) {
                 t.aktivnostiUToku = [];
             }
             t.aktivnostiUToku.push(aktivnost);
@@ -147,7 +147,7 @@ const _dodajAktivnostRekurzija = ({ pocetni, proces, tok, aktivnost }: { pocetni
 const _dodajParalelnuAktivnostRekurzija = ({ pocetni, proces, tok, podproces }: { pocetni: IProces, proces: IProces, tok: ITok, podproces: IProces }): void => {
     pocetni.tokovi.map((t) => {
         if (pocetni.idProcesa === proces.idProcesa && t.rbToka === tok.rbToka) {
-            if ( t.podprocesiUToku === undefined || t.podprocesiUToku === null) {
+            if (t.podprocesiUToku === undefined || t.podprocesiUToku === null) {
                 t.podprocesiUToku = [];
             }
             t.podprocesiUToku.push(podproces);
@@ -165,32 +165,33 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
 
         if (pocetni.tranzicije === null) {
             pocetni.tranzicije = [];
-            let poslednjaTranzicija = pocetni.tranzicije.pop();
+        }
 
-            // PROSLA 
-            // izmena stare tranzicije
-            if (poslednjaTranzicija) {
-                // ako ima poslednju tranziciju onda je uslovna
-                let poslednjiUslovTranzicije = poslednjaTranzicija.uslovTranzicije.pop();
+        let poslednjaTranzicija = pocetni.tranzicije.pop();
 
-                if (poslednjiUslovTranzicije) {
-                    poslednjaTranzicija.uslovTranzicije[0].izlazniProces = ulazniProces.idProcesa;
-                    poslednjaTranzicija.uslovTranzicije[0].izlazniTok = ulazniTok.rbToka;
-                    poslednjaTranzicija.uslovTranzicije[0].idIzlaza = idUlaza;
-                } else {
-                    // ako nema poslednju tranziciju onda je bezuslovna
-                    poslednjiUslovTranzicije = {
-                        rbTranzicije: 1,
-                        rezultat: "",
-                        izlazniProces: ulazniProces.idProcesa,
-                        izlazniTok: ulazniTok.rbToka,
-                        idIzlaza: idUlaza
-                    }
+        // PROSLA 
+        // izmena stare tranzicije
+        if (poslednjaTranzicija) {
+            // ako ima poslednju tranziciju onda je uslovna
+            let poslednjiUslovTranzicije = poslednjaTranzicija.uslovTranzicije.pop();
+
+            if (poslednjiUslovTranzicije && poslednjaTranzicija.uslovTranzicije.length > 0) {
+                poslednjaTranzicija.uslovTranzicije[0].izlazniProces = ulazniProces.idProcesa;
+                poslednjaTranzicija.uslovTranzicije[0].izlazniTok = ulazniTok.rbToka;
+                poslednjaTranzicija.uslovTranzicije[0].idIzlaza = idUlaza;
+            } else {
+                // ako nema poslednju tranziciju onda je bezuslovna
+                poslednjiUslovTranzicije = {
+                    rbTranzicije: 1,
+                    rezultat: "",
+                    izlazniProces: ulazniProces.idProcesa,
+                    izlazniTok: ulazniTok.rbToka,
+                    idIzlaza: idUlaza
                 }
-
-                poslednjaTranzicija.uslovTranzicije.push(poslednjiUslovTranzicije!)
-                pocetni.tranzicije.push(poslednjaTranzicija);
             }
+
+            poslednjaTranzicija.uslovTranzicije.push(poslednjiUslovTranzicije!)
+            pocetni.tranzicije.push(poslednjaTranzicija);
         }
 
         // NOVA - SLEDECA
