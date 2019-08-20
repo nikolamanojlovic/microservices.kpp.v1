@@ -36,7 +36,7 @@ namespace mikroservisprocesi.Fasada.implementacija
 
         public Proces SacuvajProces(ProcesPodaci podaci)
         {
-            if ((podaci != null) && (!String.IsNullOrEmpty(podaci.naziv) && !String.IsNullOrEmpty(podaci.kategorija) && !String.IsNullOrEmpty(podaci.opis)))
+            if ((podaci != null) && (!String.IsNullOrEmpty(podaci.naziv) && !String.IsNullOrEmpty(podaci.kategorija)))
             {
                 try
                 {
@@ -56,14 +56,14 @@ namespace mikroservisprocesi.Fasada.implementacija
 
                         return _procesServis.SacuvajProcesSaTokovima(noviID, podaci.naziv, podaci.kategorija, podaci.opis, tokovi);
                     }
-                    throw new ArgumentNullException(nameof(podaci.tokovi), "Процес мора имати бар један ток.");
+                    throw new Exception("Процес мора имати бар један ток.");
                 }
                 catch (DbUpdateException ex)
                 {
                     throw new Exception("Дошло је до грешке, систем не може сачувати процес.", ex);
                 }
             }
-            throw new ArgumentNullException(null, "Поља назив, категорија и опис су обавезна.");
+            throw new Exception("Поља назив, категорија су обавезна.");
         }
 
         public string SacuvajTranzicijeZaProces(long id, List<TranzicijaPodaci> tranzicije)

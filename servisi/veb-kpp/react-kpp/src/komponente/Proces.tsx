@@ -2,7 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
 import { connect } from "react-redux";
-import { VratiSveAktivnostiSistema, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju } from "../store/proces/akcije";
+import { VratiSveAktivnostiSistema, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju, SacuvajPocetnuAktivnost } from "../store/proces/akcije";
 import Tok from "./Tok";
 import { SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
 import { TIP_PORUKE, PORUKE, TIP_TRANZICIJE } from "../pomocnici/Konstante";
@@ -39,14 +39,15 @@ class Proces extends Component<Props, ProcesStanje> {
 
     _dodajTok() {
         let { proces } = this.props;
-        DodajTok({
-            proces: proces,
-            tok: {
-                rbToka: proces.tokovi.length + 1,
-                aktivnostiUToku: [],
-                podprocesiUToku: []
-            }
-        })
+        let novi = {
+            rbToka: proces.tokovi.length + 1,
+            aktivnostiUToku: [],
+            podprocesiUToku: []
+        };
+          
+        DodajTok({proces: proces, tok: novi })
+        SacuvajPocetnuAktivnost({proces: proces, tok: novi});
+        DodajTranziciju({ nadproces: proces, nadtok: novi, ulazniProces: proces, ulazniTok: novi, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
     }
 
     _izmeniProces() {
@@ -123,7 +124,7 @@ class Proces extends Component<Props, ProcesStanje> {
                             <svg className="input proces-dodaj-tok" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajTok()}>
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._izmeniProces()}>
+                            <svg className="input" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._izmeniProces()}>
                                 <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
                             </svg>
                         </div> : <span />

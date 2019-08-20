@@ -38,18 +38,22 @@ class Kreiraj extends Component<Props> {
     _sacuvajPodproceseKojiNisuUSistemu() {
         let podprocesi = this.props.podprocesiSistema;
 
-        if (podprocesi && podprocesi !== null) {
-            let podprocesiKojiNisuIzBE = this.props.proces!.tokovi[0].podprocesiUToku.filter(p => {
-                return podprocesi.find(u => { return u.idProcesa === p.idProcesa }) === undefined;
-            })
+        if (podprocesi && podprocesi !== null && podprocesi.length > 0) {
+            let podprocesiUToku = this.props.proces!.tokovi[0].podprocesiUToku;
 
-            if (podprocesiKojiNisuIzBE && podprocesiKojiNisuIzBE.length > 0) {
-                podprocesiKojiNisuIzBE.forEach(p => {
-                    let podproces: IProces | undefined = SacuvajProcesBezDispatch({naziv: p.naziv, kategorija: p.kategorija, opis: p.opis});
-                    if ( podproces ) {
-                        SacuvajTranzicijeZaProces({id: podproces.idProcesa, tranzicije: p.tranzicije })
-                    }
+            if (podprocesiUToku) {
+                let podprocesiKojiNisuIzBE = podprocesiUToku.filter(p => {
+                    return podprocesi.find(u => { return u.idProcesa === p.idProcesa }) === undefined;
                 })
+
+                if (podprocesiKojiNisuIzBE && podprocesiKojiNisuIzBE.length > 0) {
+                    podprocesiKojiNisuIzBE.forEach(p => {
+                        let podproces: IProces | undefined = SacuvajProcesBezDispatch({ naziv: p.naziv, kategorija: p.kategorija, opis: p.opis });
+                        if (podproces) {
+                            SacuvajTranzicijeZaProces({ id: podproces.idProcesa, tranzicije: p.tranzicije })
+                        }
+                    })
+                }
             }
         }
     }
@@ -62,7 +66,7 @@ class Kreiraj extends Component<Props> {
         ObrisiProces(this.props.proces!.idProcesa);
         OmoguciDodavanjeAktivnosti(true);
 
-        this.setState({kljuc: this.state.kljuc + 1});
+        this.setState({ kljuc: this.state.kljuc + 1 });
     }
 
     _renderujFunkcionalnosti() {
