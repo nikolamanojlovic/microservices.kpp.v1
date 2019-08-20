@@ -66,6 +66,43 @@ namespace mikroservisprocesi.Fasada.implementacija
             throw new ArgumentNullException(null, "Поља назив, категорија и опис су обавезна.");
         }
 
+        public string SacuvajTranzicijeZaProces(long id, List<TranzicijaPodaci> tranzicije)
+        {
+            if (tranzicije != null && tranzicije.Count != 0)
+            {
+                try
+                {
+                    List<Tranzicija> noveTranzicije = tranzicije.Select(t => new Tranzicija
+                    {
+                        IDProcesa = t.idProcesa,
+                        RBTranzicije = t.rbTranzicije,
+                        UlazniProces = t.ulazniProces,
+                        UlazniTok = t.ulazniTok,
+                        IDUlaza = t.idUlaza,
+                        Uslov = t.uslov,
+                        UsloviTranzicije = t.uslovTranzicije.Select(ut => new UslovTranzicije
+                        {
+                            IDProcesa = t.idProcesa,
+                            RBTranzicije = ut.rbTranzicije,
+                            Rezultat = ut.rezultat,
+                            IzlazniProces = ut.izlazniProces,
+                            IzlazniTok = ut.izlazniTok,
+                            IDIzlaza = ut.idIzlaza
+                        }).ToList()
+                    }).ToList();
+
+                    _procesServis.SacuvajTranzicijeZaProces(id, noveTranzicije);
+                    return "Транзиције за процес су успешно сачуване!";
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw new Exception("Дошло је до грешке, систем не може да сачува транзиције за процес: " + id, ex);
+                }
+            }
+
+            throw new Exception("Процес мора имати бар две транзиције да би се могао сачувати у систем.");
+        }
+
         public List<Proces> VratiSveMogucePodproceseSistema(long id)
         {
             return _procesServis.VratiSveMogucePodproceseSistema(id);

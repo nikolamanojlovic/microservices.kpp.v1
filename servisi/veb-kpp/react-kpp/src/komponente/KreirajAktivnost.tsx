@@ -8,6 +8,7 @@ import KreirajAktivnostFormaDokumenta from "./KreirajAktivnostFormaDokumenta";
 import { IDokument } from "../store/dokument/tipovi";
 import { SacuvajPoruku } from "../store/poruke/akcije";
 import { SacuvajAktivnost } from "../store/proces/akcije";
+import { VratiSveDokumenteSistema } from "../store/dokument/akcije";
 
 interface KreirajAktivnostProps {
 
@@ -76,7 +77,7 @@ class KreirajAktivnost extends Component<Props, KreirajAktivnostiStanje> {
                 </div>
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Улази и излази</h1>
-                    <KreirajAktivnostFormaDokumenta ulazni={this.state.ulaznaDokumenta} izlazni={this.state.izlaznaDokumenta} dodajDokument={this._dodajDokument} obrisiDokument={this._obrisiDokument} />
+                    <KreirajAktivnostFormaDokumenta dokumenti={this.props.dokumenti} ulazni={this.state.ulaznaDokumenta} izlazni={this.state.izlaznaDokumenta} dodajDokument={this._dodajDokument} obrisiDokument={this._obrisiDokument} />
                 </div>
                 {
                     this.state.onemoguciCuvanje ? <span /> :
@@ -90,11 +91,13 @@ class KreirajAktivnost extends Component<Props, KreirajAktivnostiStanje> {
 }
 
 interface KreirajAktivnostLinkStateProps {
-    poruka?: IPoruka
+    poruka?: IPoruka,
+    dokumenti: Array<IDokument>
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: KreirajAktivnostProps): KreirajAktivnostLinkStateProps => ({
-    poruka: state.porukaReducer.poruka
+    poruka: state.porukaReducer.poruka,
+    dokumenti: state.dokumentReducer.dokumenti
 });
 
 export default connect(mapStateToProps)(KreirajAktivnost);

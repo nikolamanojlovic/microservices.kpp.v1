@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mikroservisprocesi.Domen;
@@ -52,6 +53,19 @@ namespace mikroservisprocesi.Kontroleri
             try
             {
                 return _aktivnostFasada.SacuvajAktivnost(aktivnost);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
+            }
+        }
+
+        [HttpPost("SacuvajTranzicijeZaProces/{IDProcesa}")]
+        public ActionResult<String> SacuvajTranzicijeZaProces(long IDProcesa, [FromBody] List<TranzicijaPodaci> tranzicije)
+        {
+            try
+            {
+                return _procesFasada.SacuvajTranzicijeZaProces(IDProcesa, tranzicije);
             }
             catch (Exception ex)
             {

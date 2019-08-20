@@ -6,43 +6,76 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti, ObrisiProces } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, ObrisiProces, dodajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajProces, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch } from "../store/proces/akcije";
+import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
-// NOTE: Quick Fix
 interface KreirajStanje {
     kljuc: number
 }
 
 type Props = KreirajLinkStateProps;
 
-class Kreiraj extends Component<Props,KreirajStanje> {
+class Kreiraj extends Component<Props> {
 
     state: Readonly<KreirajStanje> = {
         kljuc: 0
     }
 
     _sacuvajTokProcesa() {
+        let { proces } = this.props;
+        let tok = this.props.proces!.tokovi[0];
+
         OmoguciDodavanjeAktivnosti(false);
+        OmoguciDodavanjeAktivnostiUPodprocesu(false);
+
+        VratiKrajnjuAktivnost({ proces: proces!, tok: tok });
+        DodajTranziciju({ nadproces: proces!, nadtok: tok, ulazniProces: proces!, ulazniTok: tok, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
+
+        this._sacuvajPodproceseKojiNisuUSistemu();
+    }
+
+    _sacuvajPodproceseKojiNisuUSistemu() {
+        let podprocesi = this.props.podprocesiSistema;
+
+        if (podprocesi && podprocesi !== null) {
+            let podprocesiKojiNisuIzBE = this.props.proces!.tokovi[0].podprocesiUToku.filter(p => {
+                return podprocesi.find(u => { return u.idProcesa === p.idProcesa }) === undefined;
+            })
+
+            if (podprocesiKojiNisuIzBE && podprocesiKojiNisuIzBE.length > 0) {
+                podprocesiKojiNisuIzBE.forEach(p => {
+                    let podproces: IProces | undefined = SacuvajProcesBezDispatch({naziv: p.naziv, kategorija: p.kategorija, opis: p.opis});
+                    if ( podproces ) {
+                        SacuvajTranzicijeZaProces({id: podproces.idProcesa, tranzicije: p.tranzicije })
+                    }
+                })
+            }
+        }
+    }
+
+    _sacuvajProces() {
+
     }
 
     _obrisiProces() {
         ObrisiProces(this.props.proces!.idProcesa);
         OmoguciDodavanjeAktivnosti(true);
-        this.setState({kljuc: this.state.kljuc+1})
+
+        this.setState({kljuc: this.state.kljuc + 1});
     }
 
     _renderujFunkcionalnosti() {
         let { proces } = this.props;
         let funkcionalnosti: Array<JSX.Element> = [];
 
-        if ( proces ) {
+        if (proces) {
             funkcionalnosti.push(
                 <h1 className="kreiraj-proces-h1">Ток процеса</h1>
             );
             funkcionalnosti.push(
                 <div className="input-kreiraj-sacuvaj-tok">
-                    <input className="input-dugme input-dugme-kreiraj" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()}/>
-                    <input className="input-dugme input-dugme-kreiraj input-dugme-crveno" type="button" value="Обриши процес" onClick={() => this._obrisiProces()}/>
+                    <input className="input-dugme input-dugme-kreiraj" type="button" value="Сачувај ток процеса" onClick={() => this._sacuvajTokProcesa()} />
+                    <input className="input-dugme input-dugme-kreiraj input-dugme-crveno" type="button" value="Обриши процес" onClick={() => this._obrisiProces()} />
                 </div>
             );
             funkcionalnosti.push(
@@ -56,14 +89,16 @@ class Kreiraj extends Component<Props,KreirajStanje> {
     }
 
     render() {
+        const { poruka, proces } = this.props;
+
         return (
             <div className="kreiraj-kontejner">
                 <div className="kreiraj-proces">
                     <h1 className="kreiraj-proces-h1">Процес</h1>
                     {
-                        this.props.poruka ? <Poruka poruka={this.props.poruka} /> : <span/>
+                        poruka ? <Poruka poruka={poruka} /> : <span />
                     }
-                    <ProcesForma key={this.state.kljuc} proces={this.props.proces} />
+                    <ProcesForma key={this.state.kljuc} proces={proces} />
                 </div>
                 {
                     this._renderujFunkcionalnosti()
@@ -75,12 +110,14 @@ class Kreiraj extends Component<Props,KreirajStanje> {
 
 interface KreirajLinkStateProps {
     proces?: IProces,
-    poruka?: IPoruka
+    poruka?: IPoruka,
+    podprocesiSistema: Array<IProces>
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: {}): KreirajLinkStateProps => ({
     proces: state.procesReducer.proces,
-    poruka: state.porukaReducer.poruka
+    poruka: state.porukaReducer.poruka,
+    podprocesiSistema: state.procesReducer.podprocesiSistema
 });
 
 export default connect(mapStateToProps)(Kreiraj);

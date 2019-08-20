@@ -7,8 +7,11 @@ namespace mikroservisprocesi.Fasada
 {
     public interface IProcesFasada
     {
-        Proces SacuvajProces(ProcesPodaci podaci);
-        List<Proces> VratiSveMogucePodproceseSistema(long id);
         String ObrisiProces(long id);
+        String SacuvajTranzicijeZaProces(long id, List<TranzicijaPodaci> tranzicije);
+
+        Proces SacuvajProces(ProcesPodaci podaci);
+
+        List<Proces> VratiSveMogucePodproceseSistema(long id);
     }
 }

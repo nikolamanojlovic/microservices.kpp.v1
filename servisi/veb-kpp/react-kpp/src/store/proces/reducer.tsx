@@ -176,13 +176,14 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
             let poslednjiUslovTranzicije = poslednjaTranzicija.uslovTranzicije.pop();
 
             if (poslednjiUslovTranzicije && poslednjaTranzicija.uslovTranzicije.length > 0) {
+                poslednjaTranzicija.uslovTranzicije[0].rbTranzicije = poslednjaTranzicija.rbTranzicije;
                 poslednjaTranzicija.uslovTranzicije[0].izlazniProces = ulazniProces.idProcesa;
                 poslednjaTranzicija.uslovTranzicije[0].izlazniTok = ulazniTok.rbToka;
                 poslednjaTranzicija.uslovTranzicije[0].idIzlaza = idUlaza;
             } else {
                 // ako nema poslednju tranziciju onda je bezuslovna
                 poslednjiUslovTranzicije = {
-                    rbTranzicije: 1,
+                    rbTranzicije: poslednjaTranzicija.rbTranzicije,
                     rezultat: "",
                     izlazniProces: ulazniProces.idProcesa,
                     izlazniTok: ulazniTok.rbToka,
@@ -196,9 +197,12 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
 
         // NOVA - SLEDECA
         // dodavanje nove tranzicije
+        let brTranzicije = pocetni.tranzicije.length + 1;
+        uslovTranzicije.map(e => e.rbTranzicije = brTranzicije);
+
         pocetni.tranzicije.push({
             idProcesa: nadproces.idProcesa,
-            rbTranzicije: pocetni.tranzicije.length + 1,
+            rbTranzicije: brTranzicije,
             ulazniProces: ulazniProces.idProcesa,
             ulazniTok: ulazniTok.rbToka,
             idUlaza: idUlaza,

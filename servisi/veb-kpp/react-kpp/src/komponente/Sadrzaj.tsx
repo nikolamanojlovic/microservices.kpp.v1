@@ -6,6 +6,7 @@ import KreirajAktivnost from "./KreirajAktivnost";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { STRANICE } from "../pomocnici/Konstante";
+import { VratiSveDokumenteSistema } from "../store/dokument/akcije";
 
 interface SadrzajProps {
     korisnik?: IKorisnik
@@ -20,6 +21,7 @@ class Sadrzaj extends Component<Props> {
             case STRANICE[1]:
                 return <Kreiraj />
             case STRANICE[0]:
+                VratiSveDokumenteSistema();
                 return <KreirajAktivnost />
             default:
                 return <Kreiraj />

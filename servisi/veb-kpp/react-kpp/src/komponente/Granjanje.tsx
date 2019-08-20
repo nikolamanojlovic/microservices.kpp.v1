@@ -91,7 +91,7 @@ export class Granjanje extends Component<Props, GranjanjeStanje> {
         let postojeci: Array<IUslovTranzicije> = this.props.postojeciUslovi;
 
         postojeci[id] = {
-            rbTranzicije: id + 1,
+            rbTranzicije: id,
             rezultat: uslovGranjanja,
             izlazniProces: this.props.proces.idProcesa,
             izlazniTok: this.props.tok.rbToka,

@@ -3,9 +3,9 @@ import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
 import { VratiSveDokumenteSistema } from "../store/dokument/akcije"
 import { IDokument } from "../store/dokument/tipovi";
-import { thisExpression, tsThisType } from "@babel/types";
 
 interface KreirajAktivnostFormaDokumentaProps {
+    dokumenti: Array<IDokument>,
     ulazni: Array<IDokument>,
     izlazni: Array<IDokument>,
     dodajDokument: (dokument: IDokument, ulazni: boolean) => void;
@@ -26,18 +26,15 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
         izlazniDokumet: this.props.dokumenti[0]
     }
 
-    UNSAFE_componentWillMount() {
-        VratiSveDokumenteSistema();
-    }
-
     _obradiSelect(e: FormEvent<HTMLSelectElement>, ulaz: boolean) {
         let dokument = this.props.dokumenti[parseInt(e.currentTarget.value)];
 
-        if (ulaz) {
+        if (ulaz && dokument) {
             this.setState({ ulazniDokument: dokument })
             return;
+        } else if (dokument) {
+            this.setState({ izlazniDokumet: dokument })
         }
-        this.setState({ izlazniDokumet: dokument })
     }
 
     _vratiVrednostZaTekst(dokumenti: Array<IDokument>): string {
@@ -65,26 +62,24 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
         this.props.obrisiDokument(ulazi);
     }
 
-    _vratiUlazneDokumente() : Array<IDokument> {
+    _vratiUlazneDokumente(): Array<IDokument> {
         let { dokumenti, ulazni } = this.props;
+        console.log(this.props)
+        console.log("DOK" + dokumenti)
+        console.log("ULAZNI" + ulazni)
 
-        if ( dokumenti ) {
-            return dokumenti.filter(e => {
-                return ulazni.find(u => { return u.idDokumenta === e.idDokumenta}) === undefined
-            })
-        }
-        return [];
+        return dokumenti.filter(e => {
+            return ulazni.find(u => { return u.idDokumenta === e.idDokumenta }) === undefined;
+        })
     }
 
-    _vratiIzlazneDokumente() : Array<IDokument> {
+    _vratiIzlazneDokumente(): Array<IDokument> {
         let { dokumenti, izlazni } = this.props;
 
-        if ( dokumenti ) {
-            return dokumenti.filter(e => {
-                return izlazni.find(i => { return i.idDokumenta === e.idDokumenta}) === undefined
-            })
-        }
-        return [];
+        return dokumenti.filter(e => {
+            return izlazni.find(i => { return i.idDokumenta === e.idDokumenta }) === undefined;
+        })
+
     }
 
     render() {
@@ -136,11 +131,10 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
 }
 
 interface KreirajAktivnostFormaDokumentaLinkStateProps {
-    dokumenti: Array<IDokument>
 }
 
 const mapStateToProps = (state: StanjeAplikacije, ownProps: KreirajAktivnostFormaDokumentaProps): KreirajAktivnostFormaDokumentaLinkStateProps => ({
-    dokumenti: state.dokumentReducer.dokumenti
+
 });
 
 export default connect(mapStateToProps)(KreirajAktivnostFormaDokumenta);
