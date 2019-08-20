@@ -34,6 +34,10 @@ class KreirajAktivnost extends Component<Props, KreirajAktivnostiStanje> {
         izlaznaDokumenta: []
     }
 
+    async UNSAFE_componentWillMount() {
+        await VratiSveDokumenteSistema();
+    }
+
     _postaviNaziv = (naziv: string) => {
         this.setState({ naziv: naziv });
         naziv === "" ? this.setState({ onemoguciCuvanje: true }) : this.setState({ onemoguciCuvanje: false });

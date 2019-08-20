@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti, ObrisiProces, dodajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajProces, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
+// QUICK FIX
 interface KreirajStanje {
     kljuc: number
 }

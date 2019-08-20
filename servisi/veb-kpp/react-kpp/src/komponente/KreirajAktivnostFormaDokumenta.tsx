@@ -13,8 +13,8 @@ interface KreirajAktivnostFormaDokumentaProps {
 }
 
 interface KreirajAktivnostFormaDokumentaStanje {
-    ulazniDokument: IDokument,
-    izlazniDokumet: IDokument
+    ulazniDokument: number,
+    izlazniDokumet: number
 }
 
 type Props = KreirajAktivnostFormaDokumentaProps & KreirajAktivnostFormaDokumentaLinkStateProps;
@@ -22,18 +22,18 @@ type Props = KreirajAktivnostFormaDokumentaProps & KreirajAktivnostFormaDokument
 class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFormaDokumentaStanje> {
 
     state: Readonly<KreirajAktivnostFormaDokumentaStanje> = {
-        ulazniDokument: this.props.dokumenti[0],
-        izlazniDokumet: this.props.dokumenti[0]
+        ulazniDokument: 0,
+        izlazniDokumet: 0
     }
 
     _obradiSelect(e: FormEvent<HTMLSelectElement>, ulaz: boolean) {
-        let dokument = this.props.dokumenti[parseInt(e.currentTarget.value)];
+        let izabrani = parseInt(e.currentTarget.value);
 
-        if (ulaz && dokument) {
-            this.setState({ ulazniDokument: dokument })
+        if (ulaz) {
+            this.setState({ ulazniDokument:  izabrani})
             return;
-        } else if (dokument) {
-            this.setState({ izlazniDokumet: dokument })
+        } else {
+            this.setState({ izlazniDokumet: izabrani })
         }
     }
 
@@ -51,10 +51,14 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
     }
 
     _dodajDokument(ulazni: boolean) {
-        if (ulazni) {
-            this.props.dodajDokument(this.state.ulazniDokument, true);
-        } else {
-            this.props.dodajDokument(this.state.izlazniDokumet, false)
+        let {ulazniDokument, izlazniDokumet } = this.state;
+        let ulaz = this._vratiUlazneDokumente()[ulazniDokument];
+        let izlaz = this._vratiIzlazneDokumente()[izlazniDokumet];
+
+        if (ulazni && ulaz)  {
+            this.props.dodajDokument(ulaz, true);
+        } else if (ulazni === false && izlaz) {
+            this.props.dodajDokument(izlaz, false)
         }
     }
 
@@ -64,9 +68,6 @@ class KreirajAktivnostFormaDokumenta extends Component<Props, KreirajAktivnostFo
 
     _vratiUlazneDokumente(): Array<IDokument> {
         let { dokumenti, ulazni } = this.props;
-        console.log(this.props)
-        console.log("DOK" + dokumenti)
-        console.log("ULAZNI" + ulazni)
 
         return dokumenti.filter(e => {
             return ulazni.find(u => { return u.idDokumenta === e.idDokumenta }) === undefined;
