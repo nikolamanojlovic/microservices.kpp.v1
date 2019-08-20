@@ -26,7 +26,7 @@ namespace mikroservisprocesi.OPP.implementacija
 
         public List<Proces> VratiSveMogucePodproceseSistema(long id)
         {
-            return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa != id).Include(p => p.Tokovi).ToList();
+            return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa != id).Include(p => p.Tokovi).ToList(); // dodaj include
         }
     }
 }

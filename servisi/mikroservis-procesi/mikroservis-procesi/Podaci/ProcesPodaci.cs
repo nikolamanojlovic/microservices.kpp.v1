@@ -5,6 +5,7 @@ namespace mikroservisprocesi.Podaci
 {
     public class ProcesPodaci
     {
+        public long idProcesa { get; set; }
         public string naziv { get; set; }
         public string kategorija { get; set; }
         public string opis { get; set; }
