@@ -186,25 +186,6 @@ export const SacuvajAktivnost = ({ naziv, opis, ulazniDokumenti, izlazniDokument
   })
 }
 
-export const SacuvajTokProcesa = ({ naziv, opis, ulazniDokumenti, izlazniDokumenti }: { naziv: string, opis: string, ulazniDokumenti: Array<IDokument>, izlazniDokumenti: Array<IDokument> }) => {
-  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajAktivnost", {
-    naziv: naziv,
-    opis: opis,
-    ulazi: ulazniDokumenti,
-    izlazi: izlazniDokumenti
-  }).then(function (response) {
-    store.dispatch(sacuvajPoruku({
-      tip: TIP_PORUKE[0],
-      tekst: response.data
-    } as IPoruka));
-  }).catch(function (error) {
-    store.dispatch(sacuvajPoruku({
-      tip: TIP_PORUKE[1],
-      tekst: error.response.data
-    } as IPoruka));
-  })
-}
-
 export const SacuvajTranzicijeZaProces = ({ id, tranzicije }: { id: number, tranzicije: Array<ITranzicija> }) => {
   Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTranzicijeZaProces/" + id, {
     tranzicije: tranzicije
@@ -215,6 +196,18 @@ export const SacuvajTranzicijeZaProces = ({ id, tranzicije }: { id: number, tran
     } as IPoruka));
   })
 }
+
+export const SacuvajTokoveZaProces = ({ id, tokovi }: { id: number, tokovi: Array<ITok> }) => {
+  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTokoveZaProces/" + id, tokovi).catch(function (error) {
+    console.log(error.response.data);
+    console.log(tokovi)
+    store.dispatch(sacuvajPoruku({
+      tip: TIP_PORUKE[1],
+      tekst: error.response.data
+    } as IPoruka));
+  })
+}
+
 
 export const VratiSveAktivnostiSistema = () => {
   Axios.get(API_PROCESI + "/PomocniKontroler/VratiAktivnostiSistema")

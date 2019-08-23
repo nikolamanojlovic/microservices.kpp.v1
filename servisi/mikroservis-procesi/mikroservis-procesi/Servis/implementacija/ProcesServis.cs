@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using mikroservisprocesi.Domen;
 using mikroservisprocesi.OPP;
 
@@ -39,14 +40,6 @@ namespace mikroservisprocesi.Servis.implementacija
             return _procesOPP.VratiPoPK(id);
         }
 
-        public void SacuvajTokZaProces(long idProcesa, int rbToka)
-        {
-            _tokOPP.Sacuvaj(new Tok {
-                IDProcesa = idProcesa,
-                RBToka = rbToka
-            });
-        }
-
         public long VratiIDNovogProcesa()
         {
             return _procesOPP.VratiIDNovogProcesa();
@@ -74,6 +67,31 @@ namespace mikroservisprocesi.Servis.implementacija
         public bool SacuvajTranzicijeZaProces(long id, List<Tranzicija> tranzicije)
         {
             return _procesOPP.SacuvajTranzicijeZaProces(id, tranzicije);
+        }
+
+        public void SacuvajTokoveZaProces(long idProcesa, List<Tok> tokovi)
+        {
+            Proces proces = _procesOPP.VratiPoPK(idProcesa);
+
+            if ( proces != null )
+            {
+                tokovi.ForEach(tok =>
+                {
+                    Tok tokUProcesu = proces.Tokovi.FirstOrDefault(t => t.RBToka == tok.RBToka);
+
+                    if ( tokUProcesu == null )
+                    {
+                        proces.Tokovi.Add(tok);
+                    } else
+                    {
+                        tokUProcesu.AktivnostiUToku = tok.AktivnostiUToku;
+                        tokUProcesu.PodprocesiUToku = tok.PodprocesiUToku;
+                    }
+                });
+
+                _procesOPP.Sacuvaj(proces);
+            }
+            throw new Exception("Процес " + idProcesa + " не постоји.");
         }
     }
 }

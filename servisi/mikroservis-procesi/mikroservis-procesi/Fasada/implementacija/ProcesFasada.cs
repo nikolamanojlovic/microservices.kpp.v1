@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using mikroservisprocesi.Domen;
-using mikroservisprocesi.OPP;
 using mikroservisprocesi.Podaci;
 using mikroservisprocesi.Servis;
 
@@ -34,7 +33,7 @@ namespace mikroservisprocesi.Fasada.implementacija
             throw new Exception("Систем није у могућности обрисати процес!");
         }
 
-        public Proces SacuvajProces(ProcesPodaci podaci)
+        public Proces SacuvajNoviProces(ProcesPodaci podaci)
         {
             if ((podaci != null) && (!String.IsNullOrEmpty(podaci.naziv) && !String.IsNullOrEmpty(podaci.kategorija)))
             {
@@ -43,44 +42,11 @@ namespace mikroservisprocesi.Fasada.implementacija
                     if (podaci.tokovi.Any())
                     {
                         long noviID = _procesServis.VratiIDNovogProcesa();
-                        List<Tok> tokovi = new List<Tok>();
-
-                        podaci.tokovi.ForEach(t =>
+                        List<Tok> tokovi = podaci.tokovi.Select(t => new Tok
                         {
-                            Tok noviTok = new Tok
-                            {
-                                IDProcesa = noviID,
-                                RBToka = t.rbToka
-                            };
-
-                            if ( t.aktivnostiUToku != null )
-                            {
-                                t.aktivnostiUToku.ForEach(aut =>
-                                {
-                                    noviTok.AktivnostiUToku = t.aktivnostiUToku.Select(a => new AktivnostUToku
-                                    {
-                                        IDProcesa = noviID,
-                                        RBToka = t.rbToka,
-                                        IDAktivnosti = aut.idAktivnosti
-                                    }).ToList();
-                                });
-                            }
-
-                            if (t.podprocesiUToku != null)
-                            {
-                                t.podprocesiUToku.ForEach(put =>
-                                {
-                                    noviTok.PodprocesiUToku = t.podprocesiUToku.Select(p => new ProcesUToku
-                                    {
-                                        IDNadprocesa = noviID,
-                                        RBToka = t.rbToka,
-                                        IDPodprocesa = put.idProcesa
-                                    }).ToList();
-                                });
-                            }
-
-                            tokovi.Add(noviTok);
-                        });
+                            IDProcesa = noviID,
+                            RBToka = t.rbToka
+                        }).ToList();
 
                         return _procesServis.SacuvajProcesSaTokovima(noviID, podaci.naziv, podaci.kategorija, podaci.opis, tokovi);
                     }
@@ -92,6 +58,40 @@ namespace mikroservisprocesi.Fasada.implementacija
                 }
             }
             throw new Exception("Поља назив, категорија су обавезна.");
+        }
+
+        public string SacuvajTokoveZaProces(long id, List<TokPodaci> tokovi)
+        {
+            if (tokovi.Any())
+            {
+                try
+                {
+                    List<Tok> tokoviModel = tokovi.Select(t => new Tok
+                    {
+                        IDProcesa = id,
+                        RBToka = t.rbToka,
+                        AktivnostiUToku = t.aktivnostiUToku.OfType<AktivnostPodaci>().Select(aut => new AktivnostUToku()
+                        {
+                            IDProcesa = id,
+                            RBToka = t.rbToka,
+                            IDAktivnosti = aut.idAktivnosti
+                        }).ToList(),
+                        PodprocesiUToku = t.podprocesiUToku.OfType<ProcesPodaci>().Select(put => new ProcesUToku()
+                        {
+                            IDNadprocesa = id,
+                            RBToka = t.rbToka,
+                            IDPodprocesa = put.idProcesa
+                        }).ToList()
+                    }).ToList();
+
+                    return "Дошло је до грешке, систем не може сачувати токове за процес " + id + ".";
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw new Exception("Токови за процес " + id + " су успешно сачувани.", ex);
+                }
+            }
+            throw new Exception("Процес мора имати бар један ток.");
         }
 
         public string SacuvajTranzicijeZaProces(long id, List<TranzicijaPodaci> tranzicije)

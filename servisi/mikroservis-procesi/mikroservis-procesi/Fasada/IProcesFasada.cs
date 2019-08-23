@@ -9,8 +9,9 @@ namespace mikroservisprocesi.Fasada
     {
         String ObrisiProces(long id);
         String SacuvajTranzicijeZaProces(long id, List<TranzicijaPodaci> tranzicije);
+        String SacuvajTokoveZaProces(long id, List<TokPodaci> tokovi);
 
-        Proces SacuvajProces(ProcesPodaci podaci);
+        Proces SacuvajNoviProces(ProcesPodaci podaci);
 
         List<Proces> VratiSveMogucePodproceseSistema(long id);
     }

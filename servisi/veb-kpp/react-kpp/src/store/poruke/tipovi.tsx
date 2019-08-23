@@ -1,4 +1,4 @@
-// TIPOVI
+/********************************* TIPOVI *********************************/ 
 export interface IPoruka {
     tip: string,
     tekst: string

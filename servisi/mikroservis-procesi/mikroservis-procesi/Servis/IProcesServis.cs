@@ -8,13 +8,12 @@ namespace mikroservisprocesi.Servis
     {
         long VratiIDNovogProcesa();
 
-        void SacuvajTokZaProces(long idProcesa, int rbToka);
+        void SacuvajTokoveZaProces(long idProcesa, List<Tok> tokovi);
 
         bool ObrisiProces(long id);
         bool SacuvajTranzicijeZaProces(long id, List<Tranzicija> tranzicije);
 
         Proces VratiProcesPoID(long id);
-        Proces SacuvajProces(long id, String naziv, String kategorija, String opis);
         Proces SacuvajProcesSaTokovima(long id, String naziv, String kategorija, String opis, List<Tok> tokovi);
 
         List<Proces> VratiSveMogucePodproceseSistema(long id);

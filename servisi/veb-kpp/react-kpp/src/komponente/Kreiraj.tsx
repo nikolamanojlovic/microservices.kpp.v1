@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch, SacuvajTokoveZaProces } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 // QUICK FIX
@@ -33,6 +33,8 @@ class Kreiraj extends Component<Props> {
         DodajTranziciju({ nadproces: proces!, nadtok: tok, ulazniProces: proces!, ulazniTok: tok, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
 
         this._sacuvajPodproceseKojiNisuUSistemu();
+
+        SacuvajTokoveZaProces({ id: proces!.idProcesa, tokovi: proces!.tokovi})
     }
 
     _sacuvajPodproceseKojiNisuUSistemu() {
@@ -50,6 +52,7 @@ class Kreiraj extends Component<Props> {
                     podprocesiKojiNisuIzBE.forEach(p => {
                         let podproces: IProces | undefined = SacuvajProcesBezDispatch({ naziv: p.naziv, kategorija: p.kategorija, opis: p.opis });
                         if (podproces) {
+                            SacuvajTokoveZaProces( { id: podproces.idProcesa, tokovi: podproces.tokovi });
                             SacuvajTranzicijeZaProces({ id: podproces.idProcesa, tranzicije: p.tranzicije })
                         }
                     })
