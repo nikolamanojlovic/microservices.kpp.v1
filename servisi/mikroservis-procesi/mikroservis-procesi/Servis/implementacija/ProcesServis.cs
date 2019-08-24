@@ -71,7 +71,7 @@ namespace mikroservisprocesi.Servis.implementacija
 
         public void SacuvajTokoveZaProces(long idProcesa, List<Tok> tokovi)
         {
-            Proces proces = _procesOPP.VratiPoPK(idProcesa);
+            Proces proces = _procesOPP.VratiProcesPoIDSaTokovima(idProcesa);
 
             if ( proces != null )
             {
@@ -89,7 +89,7 @@ namespace mikroservisprocesi.Servis.implementacija
                     }
                 });
 
-                _procesOPP.Sacuvaj(proces);
+                _procesOPP.SacuvajPromene();
             }
             throw new Exception("Процес " + idProcesa + " не постоји.");
         }

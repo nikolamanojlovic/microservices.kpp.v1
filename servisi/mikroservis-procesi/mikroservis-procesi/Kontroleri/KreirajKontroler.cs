@@ -79,8 +79,6 @@ namespace mikroservisprocesi.Kontroleri
         {
             try
             {
-                Console.WriteLine(tokovi);
-               // List<TokPodaci> tokPodaci = tokovi.Select(t => t.Value).ToList();
                 return _procesFasada.SacuvajTokoveZaProces(IDProcesa, tokovi.ToList());
             }
             catch (Exception ex)

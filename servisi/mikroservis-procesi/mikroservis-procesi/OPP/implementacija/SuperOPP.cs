@@ -28,6 +28,11 @@ namespace mikroservisprocesi.OPP.implementacija
             return entitet;
         }
 
+        public void SacuvajPromene()
+        {
+            _kontekst.SaveChanges();
+        }
+
         public T VratiPoPK<K>(K primarni) where K : struct
         {
 

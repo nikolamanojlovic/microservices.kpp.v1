@@ -38,6 +38,7 @@ export const PrijavaFunkcija = ({ korisnickoIme, sifra }: { korisnickoIme: strin
   }).then(function (response) {
     store.dispatch(prijava(response.data));
   }).catch(function (error) {
+    console.log(error.response)
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
       tekst: error.response.data

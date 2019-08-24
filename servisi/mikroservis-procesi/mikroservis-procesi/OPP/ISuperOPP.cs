@@ -10,5 +10,6 @@ namespace mikroservisprocesi.OPP
         bool Obrisi(T entitet);
         List<T> VratiSve();
         T VratiPoPK<K>(K primarni) where K : struct;
+        void SacuvajPromene();
     }
 }

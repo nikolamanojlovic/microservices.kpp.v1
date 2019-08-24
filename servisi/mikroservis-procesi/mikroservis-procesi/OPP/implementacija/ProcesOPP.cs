@@ -24,6 +24,11 @@ namespace mikroservisprocesi.OPP.implementacija
             return !procesi.Any() ? 100000 : procesi.Last().IDProcesa + 1;
         }
 
+        public Proces VratiProcesPoIDSaTokovima(long id)
+        {
+            return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa == id).Include(p => p.Tokovi).FirstOrDefault();
+        }
+
         public List<Proces> VratiSveMogucePodproceseSistema(long id)
         {
             return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa != id)

@@ -66,29 +66,45 @@ namespace mikroservisprocesi.Fasada.implementacija
             {
                 try
                 {
-                    List<Tok> tokoviModel = tokovi.Select(t => new Tok
+                    List<Tok> tokoviModel = new List<Tok>();
+
+                    tokovi.ForEach(t =>
                     {
-                        IDProcesa = id,
-                        RBToka = t.rbToka,
-                        AktivnostiUToku = t.aktivnostiUToku.OfType<AktivnostPodaci>().Select(aut => new AktivnostUToku()
+                        Tok novi = new Tok
                         {
                             IDProcesa = id,
-                            RBToka = t.rbToka,
-                            IDAktivnosti = aut.idAktivnosti
-                        }).ToList(),
-                        PodprocesiUToku = t.podprocesiUToku.OfType<ProcesPodaci>().Select(put => new ProcesUToku()
-                        {
-                            IDNadprocesa = id,
-                            RBToka = t.rbToka,
-                            IDPodprocesa = put.idProcesa
-                        }).ToList()
-                    }).ToList();
+                            RBToka = t.rbToka
+                        };
 
-                    return "Дошло је до грешке, систем не може сачувати токове за процес " + id + ".";
+                        if (t.aktivnostiUToku != null)
+                        {
+                            novi.AktivnostiUToku = t.aktivnostiUToku.Select(aut => new AktivnostUToku()
+                            {
+                                IDProcesa = id,
+                                RBToka = t.rbToka,
+                                IDAktivnosti = aut.idAktivnosti
+                            }).ToList();
+                        }
+
+                        if (t.podprocesiUToku != null)
+                        {
+                            novi.PodprocesiUToku = t.podprocesiUToku.Select(put => new ProcesUToku()
+                            {
+                                IDNadprocesa = id,
+                                RBToka = t.rbToka,
+                                IDPodprocesa = put.idProcesa
+                            }).ToList();
+                        }
+
+                        tokoviModel.Add(novi);
+                    });
+
+                    _procesServis.SacuvajTokoveZaProces(id, tokoviModel);
+                    return "Токови за процес " + id + " су успешно сачувани.";
                 }
                 catch (DbUpdateException ex)
                 {
-                    throw new Exception("Токови за процес " + id + " су успешно сачувани.", ex);
+                    throw new Exception("Дошло је до грешке, систем не може сачувати токове за процес " + id + ".", ex);
                 }
             }
             throw new Exception("Процес мора имати бар један ток.");
