@@ -6,12 +6,13 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch, SacuvajTokoveZaProces } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch, SacuvajTokoveZaProces, ObrisiProcesIzStanja } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 // QUICK FIX
 interface KreirajStanje {
-    kljuc: number
+    kljuc: number,
+    sacuvan: boolean
 }
 
 type Props = KreirajLinkStateProps;
@@ -19,7 +20,8 @@ type Props = KreirajLinkStateProps;
 class Kreiraj extends Component<Props> {
 
     state: Readonly<KreirajStanje> = {
-        kljuc: 0
+        kljuc: 0,
+        sacuvan: this.props.proces ? false : true
     }
 
     _sacuvajTokProcesa() {
@@ -35,6 +37,7 @@ class Kreiraj extends Component<Props> {
         this._sacuvajPodproceseKojiNisuUSistemu();
 
         SacuvajTokoveZaProces({ id: proces!.idProcesa, tokovi: proces!.tokovi})
+        this.setState({sacuvan: true});
     }
 
     _sacuvajPodproceseKojiNisuUSistemu() {
@@ -60,11 +63,11 @@ class Kreiraj extends Component<Props> {
             }
         }
     }
-
-    _sacuvajProces() {
-
+    
+    _kreirajNoviProces() {
+        ObrisiProcesIzStanja();
+        this.setState({sacuvan: false});
     }
-
     _obrisiProces() {
         ObrisiProces(this.props.proces!.idProcesa);
         OmoguciDodavanjeAktivnosti(true);
@@ -92,7 +95,6 @@ class Kreiraj extends Component<Props> {
                 </div>
             )
         }
-
         return funkcionalnosti;
     }
 

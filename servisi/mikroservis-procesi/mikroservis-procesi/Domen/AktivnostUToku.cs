@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace mikroservisprocesi.Domen
 {
@@ -14,6 +16,8 @@ namespace mikroservisprocesi.Domen
         [Key, Column("rb_toka", Order = 1)]
         public int RBToka { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public Tok Tok { get; set; }
 
         [Key, Column("id_aktivnosti", Order = 2)]

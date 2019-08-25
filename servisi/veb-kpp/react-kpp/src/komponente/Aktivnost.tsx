@@ -48,7 +48,6 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         let ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0;
 
         if (aktivnost) {
-            console.log(aktivnost)
             this.setState({ izabranProces: undefined, izabrana: aktivnost });
         } else {
             this.setState({ izabranProces: this.props.podprocesiSistema![parseInt(e.currentTarget.value) - ofset], izabrana: undefined });
@@ -91,7 +90,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         })
 
         this.props.podprocesiSistema!.map(function (e, i) {
-            opcije.push(<option key={i + ofset} value={i + ofset}>{e.naziv} (процес)</option>)
+            opcije.push(<option key={i + ofset} value={i + ofset}>{e.naziv + " + "}</option>)
         })
 
         return opcije;

@@ -167,6 +167,10 @@ export const ObrisiProces = (IDProcesa: number) => {
     })
 }
 
+export const ObrisiProcesIzStanja = () => {
+  store.dispatch(obrisiProces());
+}
+
 export const SacuvajAktivnost = ({ naziv, opis, ulazniDokumenti, izlazniDokumenti }: { naziv: string, opis: string, ulazniDokumenti: Array<IDokument>, izlazniDokumenti: Array<IDokument> }) => {
   Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajAktivnost", {
     naziv: naziv,
@@ -199,13 +203,11 @@ export const SacuvajTranzicijeZaProces = ({ id, tranzicije }: { id: number, tran
 
 export const SacuvajTokoveZaProces = ({ id, tokovi }: { id: number, tokovi: Array<ITok> }) => {
   Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTokoveZaProces/" + id, tokovi).catch(function (error) {
-    console.log(error.response.data);
-    console.log(tokovi)
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
       tekst: error.response.data
     } as IPoruka));
-  })
+  });
 }
 
 

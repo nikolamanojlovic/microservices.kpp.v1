@@ -75,21 +75,29 @@ namespace mikroservisprocesi.Servis.implementacija
 
             if ( proces != null )
             {
-                tokovi.ForEach(tok =>
+                if ( tokovi == null || !tokovi.Any())
                 {
-                    Tok tokUProcesu = proces.Tokovi.FirstOrDefault(t => t.RBToka == tok.RBToka);
+                    proces.Tokovi.AddRange(tokovi);
+                } else
+                {
+                    tokovi.ForEach(tok =>
+                    {
+                        Tok tokUProcesu = proces.Tokovi.FirstOrDefault(t => t.RBToka == tok.RBToka);
 
-                    if ( tokUProcesu == null )
-                    {
-                        proces.Tokovi.Add(tok);
-                    } else
-                    {
-                        tokUProcesu.AktivnostiUToku = tok.AktivnostiUToku;
-                        tokUProcesu.PodprocesiUToku = tok.PodprocesiUToku;
-                    }
-                });
+                        if (tokUProcesu == null)
+                        {
+                            proces.Tokovi.Add(tok);
+                        }
+                        else
+                        {
+                            tokUProcesu.AktivnostiUToku = tok.AktivnostiUToku;
+                            tokUProcesu.PodprocesiUToku = tok.PodprocesiUToku;
+                        }
+                    });
+                }
 
                 _procesOPP.SacuvajPromene();
+                return;
             }
             throw new Exception("Процес " + idProcesa + " не постоји.");
         }

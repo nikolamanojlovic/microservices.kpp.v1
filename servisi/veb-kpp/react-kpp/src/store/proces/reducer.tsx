@@ -214,6 +214,8 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
         return;
     }
 
+    console.log(pocetni);
+    console.log(pocetni.tokovi)
     pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((p) => {
             _dodajTranzicijuRekurzija({ pocetni: p, nadproces: nadproces, nadtok: nadtok, ulazniProces: ulazniProces, ulazniTok: ulazniTok, idUlaza: idUlaza, tip: tip, uslov: uslov, uslovTranzicije: uslovTranzicije });

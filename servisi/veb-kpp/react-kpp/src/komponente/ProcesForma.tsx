@@ -40,7 +40,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
 
     render() {
         const onemoguciUnos = this.props.proces !== undefined;
-
+       
         return (
             <form className="forma-proces">
                 <div className="forma-proces-naziv-kategorija">

@@ -26,7 +26,7 @@ namespace mikroservisprocesi.OPP.implementacija
 
         public Proces VratiProcesPoIDSaTokovima(long id)
         {
-            return VratiKontekst().Set<Proces>().Where(p => p.IDProcesa == id).Include(p => p.Tokovi).FirstOrDefault();
+            return VratiKontekst().Set<Proces>().Include(p => p.Tokovi).SingleOrDefault(p => p.IDProcesa == id);
         }
 
         public List<Proces> VratiSveMogucePodproceseSistema(long id)
