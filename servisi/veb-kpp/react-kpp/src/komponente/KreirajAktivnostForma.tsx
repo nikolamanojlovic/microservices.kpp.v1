@@ -26,7 +26,7 @@ class KreirajAktivnostForma extends Component<Props> {
             <div className="kreiraj-aktivnost-forma">
                 <label className="label-kreiraj">Назив активности:</label>
                 <input className="input-tekst input-kreiraj input-kreiraj-aktivnost" name="naziv" type="text" value={this.props.naziv} onChange={(e: FormEvent<HTMLInputElement>) => this._postaviNaziv(e)}/>
-                <label className="label-kreiraj label-kreiraj-opis">Опис процеса:</label>
+                <label className="label-kreiraj label-kreiraj-opis">Опис активности:</label>
                 <textarea className="input-tekst input-kreiraj input-opis input-kreiraj-aktivnost" name="opis" value={this.props.opis} rows={4} cols={3} onChange={(e: FormEvent<HTMLTextAreaElement>) => this._postaviOpis(e)}/>
             </div>
         )
