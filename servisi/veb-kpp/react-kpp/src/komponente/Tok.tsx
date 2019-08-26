@@ -126,6 +126,7 @@ class Tok extends Component<Props, TokStanje> {
         let tok: Array<JSX.Element> = [];
         let aktivnostOffset = 0;
         let podprocesiOffset = 0;
+        let podprocesiIzBeOffset = 0;
 
         if (this.props.proces.tranzicije != null) {
             this.props.proces.tranzicije.forEach(t => {
@@ -165,7 +166,7 @@ class Tok extends Component<Props, TokStanje> {
                 }
 
                 if (this.props.tok.podprocesiUToku != null) {
-                    let put = this._vratiPodproceseKojiSuIzBE().slice(podprocesiOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);
+                    let put = this._vratiPodproceseKojiSuIzBE().slice(podprocesiIzBeOffset).find((put) => t.ulazniTok === this.props.tok.rbToka && t.idUlaza === put.idProcesa);
 
                     if (put) {
                         tok.push(
@@ -177,7 +178,7 @@ class Tok extends Component<Props, TokStanje> {
                                 </div>
                             </div>
                         );
-                        podprocesiOffset = podprocesiOffset + 1;
+                        podprocesiIzBeOffset = podprocesiIzBeOffset + 1;
                     }
                 }
             })

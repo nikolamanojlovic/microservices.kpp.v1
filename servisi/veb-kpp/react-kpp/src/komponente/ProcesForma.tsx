@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from "react";
 import { TIP_PROCESA } from "../pomocnici/Konstante";
-import { SacuvajProces } from "../store/proces/akcije";
+import { SacuvajProces, OmoguciDodavanjeAktivnosti } from "../store/proces/akcije";
 import { IProces } from "../store/proces/tipovi";
 import { ObrisiPoruku } from "../store/poruke/akcije";
 
@@ -32,6 +32,7 @@ export class ProcesForma extends Component<Props, ProcesFormaStanje> {
         const opis = this.state.opis;
 
         SacuvajProces({ naziv, kategorija, opis });
+        OmoguciDodavanjeAktivnosti(true);
     }
 
     _obradiPromenu(e: FormEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
