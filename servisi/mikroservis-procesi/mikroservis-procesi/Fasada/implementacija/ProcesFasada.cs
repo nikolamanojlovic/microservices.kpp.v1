@@ -70,6 +70,8 @@ namespace mikroservisprocesi.Fasada.implementacija
 
                     tokovi.ForEach(t =>
                     {
+                        int prebroj = 0;
+
                         Tok novi = new Tok
                         {
                             IDProcesa = id,
@@ -78,6 +80,7 @@ namespace mikroservisprocesi.Fasada.implementacija
 
                         if (t.aktivnostiUToku != null)
                         {
+                            prebroj += t.aktivnostiUToku.Count;
                             novi.AktivnostiUToku = t.aktivnostiUToku.Select(aut => new AktivnostUToku()
                             {
                                 IDProcesa = id,
@@ -88,12 +91,18 @@ namespace mikroservisprocesi.Fasada.implementacija
 
                         if (t.podprocesiUToku != null)
                         {
+                            prebroj += t.podprocesiUToku.Count;
                             novi.PodprocesiUToku = t.podprocesiUToku.Select(put => new ProcesUToku()
                             {
                                 IDNadprocesa = id,
                                 RBToka = t.rbToka,
                                 IDPodprocesa = put.idProcesa
                             }).ToList();
+                        }
+
+                        if ( prebroj < 2 )
+                        {
+                            throw new Exception("Сваки ток мора имати најмање једну активност или подпроцес.");
                         }
 
                         tokoviModel.Add(novi);

@@ -210,7 +210,9 @@ export const SacuvajTokoveZaProces = ({ id, tokovi }: { id: number, tokovi: Arra
   });
 }
 
-export const SacuvajTokoveZaGlavniProces = ({ id, tokovi }: { id: number, tokovi: Array<ITok> }) => {
+export const SacuvajTokoveZaGlavniProces = ({ id, tokovi }: { id: number, tokovi: Array<ITok> }) : boolean => {
+  let ret: boolean = true;
+
   Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTokoveZaProces/" + id, tokovi).then(function (response) {
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[0],
@@ -218,11 +220,14 @@ export const SacuvajTokoveZaGlavniProces = ({ id, tokovi }: { id: number, tokovi
     } as IPoruka));
     store.dispatch(obrisiProces());
   }).catch(function (error) {
+    ret = false;
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
       tekst: error.response.data
     } as IPoruka));
   });
+
+  return ret;
 }
 
 
