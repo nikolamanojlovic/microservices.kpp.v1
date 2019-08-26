@@ -45,7 +45,8 @@ export class Granjanje extends Component<Props, GranjanjeStanje> {
         this.props.proces.tokovi.map((t) => {
             t.aktivnostiUToku.map((e, i) => {
                 if (e.idAktivnosti !== 0 && e.idAktivnosti !== 1) {
-                    opcije.push(<option key={i} value={e.idAktivnosti}>{(opcije.length + 1) + " - " + t.rbToka + " " + e.naziv}</option>)
+                    opcije.push(<option key={i} value={e.idAktivnosti}>{(opcije.length + 1) + " - " + t.rbToka + " " + e.naziv}</option>);
+                    return;
                 };
             });
         })

@@ -2,7 +2,7 @@ import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { IAktivnost, IProces, ITok } from "../store/proces/tipovi";
 import { connect } from "react-redux";
-import { VratiSveAktivnostiSistema, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, SacuvajSekvencijalnuAktivnost, VratiKrajnjuAktivnost, DodajTranziciju, SacuvajPocetnuAktivnost } from "../store/proces/akcije";
+import { VratiSveAktivnostiSistema, ObrisiPodproces, DodajTok, OmoguciDodavanjeAktivnosti, AzurirajNazivPodprocesa, OmoguciDodavanjeAktivnostiUPodprocesu, VratiSvePodproceseSistema, VratiKrajnjuAktivnost, DodajTranziciju, SacuvajPocetnuAktivnost } from "../store/proces/akcije";
 import Tok from "./Tok";
 import { SacuvajPoruku, ObrisiPoruku } from "../store/poruke/akcije";
 import { TIP_PORUKE, PORUKE, TIP_TRANZICIJE } from "../pomocnici/Konstante";
