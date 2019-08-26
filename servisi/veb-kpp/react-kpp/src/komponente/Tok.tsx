@@ -35,8 +35,7 @@ class Tok extends Component<Props, TokStanje> {
             SacuvajPocetnuAktivnost({ proces, tok });
             DodajTranziciju({ nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: 0, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] })
         }
-        OmoguciDodavanjeAktivnosti(true);
-        OmoguciDodavanjeAktivnostiUPodprocesu(true);
+
     }
 
     _obrisiStanje() {

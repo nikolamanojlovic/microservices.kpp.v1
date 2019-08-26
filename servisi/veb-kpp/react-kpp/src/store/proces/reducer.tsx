@@ -172,6 +172,7 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
         // PROSLA 
         // izmena stare tranzicije
         if (poslednjaTranzicija) {
+
             // ako ima poslednju tranziciju onda je uslovna
             let poslednjiUslovTranzicije = poslednjaTranzicija.uslovTranzicije.pop();
 
@@ -198,7 +199,6 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
         // NOVA - SLEDECA
         // dodavanje nove tranzicije
         let brTranzicije = pocetni.tranzicije.length + 1;
-        uslovTranzicije.map(e => e.rbTranzicije = brTranzicije);
 
         pocetni.tranzicije.push({
             idProcesa: nadproces.idProcesa,
@@ -214,8 +214,6 @@ const _dodajTranzicijuRekurzija = ({ pocetni, nadproces, nadtok, ulazniProces, u
         return;
     }
 
-    console.log(pocetni);
-    console.log(pocetni.tokovi)
     pocetni.tokovi.map((t) => {
         t.podprocesiUToku.map((p) => {
             _dodajTranzicijuRekurzija({ pocetni: p, nadproces: nadproces, nadtok: nadtok, ulazniProces: ulazniProces, ulazniTok: ulazniTok, idUlaza: idUlaza, tip: tip, uslov: uslov, uslovTranzicije: uslovTranzicije });
