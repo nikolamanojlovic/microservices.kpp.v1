@@ -12,7 +12,6 @@ import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 // QUICK FIX
 interface KreirajStanje {
     kljuc: number,
-    sacuvan: boolean
 }
 
 type Props = KreirajLinkStateProps;
@@ -20,8 +19,7 @@ type Props = KreirajLinkStateProps;
 class Kreiraj extends Component<Props> {
 
     state: Readonly<KreirajStanje> = {
-        kljuc: 0,
-        sacuvan: this.props.proces ? false : true
+        kljuc: 0
     }
 
     _sacuvajTokProcesa() {
@@ -37,7 +35,7 @@ class Kreiraj extends Component<Props> {
         this._sacuvajPodproceseKojiNisuUSistemu();
 
         SacuvajTokoveZaGlavniProces({ id: proces!.idProcesa, tokovi: proces!.tokovi})
-        this.setState({sacuvan: true});
+        this.setState({kljuc: this.state.kljuc+1});
     }
 
     _sacuvajPodproceseKojiNisuUSistemu() {
@@ -63,11 +61,7 @@ class Kreiraj extends Component<Props> {
             }
         }
     }
-    
-    _kreirajNoviProces() {
-        ObrisiProcesIzStanja();
-        this.setState({sacuvan: false});
-    }
+
     _obrisiProces() {
         ObrisiProces(this.props.proces!.idProcesa);
         OmoguciDodavanjeAktivnosti(true);

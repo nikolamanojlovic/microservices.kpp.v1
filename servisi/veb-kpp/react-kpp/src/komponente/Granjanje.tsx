@@ -125,7 +125,7 @@ export class Granjanje extends Component<Props, GranjanjeStanje> {
                         </svg>
                     </div>
                     <div className="granjanje-uslovi-uslov">
-                        <label className="label-granjanje">Услов грањања процеса:</label>
+                        <label className="label-granjanje">Услов гранања процеса:</label>
                         <input className="input-tekst input-kreiraj input-granjanje" name="uslov" type="text" onChange={(e: FormEvent<HTMLInputElement>) => this._obradiPromenuUslov(e)}/>
                     </div>
                     <div className="granjanje-uslovi-sadrzaj">
