@@ -211,7 +211,11 @@ export const SacuvajTokoveZaProces = ({ id, tokovi }: { id: number, tokovi: Arra
 }
 
 export const SacuvajTokoveZaGlavniProces = ({ id, tokovi }: { id: number, tokovi: Array<ITok> }) => {
-  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTokoveZaProces/" + id, tokovi).then(function(response) {
+  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTokoveZaProces/" + id, tokovi).then(function (response) {
+    store.dispatch(sacuvajPoruku({
+      tip: TIP_PORUKE[0],
+      tekst: response.data
+    } as IPoruka));
     ObrisiProcesIzStanja();
   }).catch(function (error) {
     store.dispatch(sacuvajPoruku({
