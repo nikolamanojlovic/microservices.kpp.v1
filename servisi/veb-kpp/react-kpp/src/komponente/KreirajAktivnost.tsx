@@ -6,7 +6,6 @@ import { IPoruka } from "../store/poruke/tipovi";
 import KreirajAktivnostForma from "./KreirajAktivnostForma";
 import KreirajAktivnostFormaDokumenta from "./KreirajAktivnostFormaDokumenta";
 import { IDokument } from "../store/dokument/tipovi";
-import { SacuvajPoruku } from "../store/poruke/akcije";
 import { SacuvajAktivnost } from "../store/proces/akcije";
 import { VratiSveDokumenteSistema } from "../store/dokument/akcije";
 

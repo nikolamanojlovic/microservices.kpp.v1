@@ -1,7 +1,6 @@
 import React, { Component, FormEvent } from "react";
 import { StanjeAplikacije } from "../store/konfiguracija";
 import { connect } from "react-redux";
-import { VratiSveDokumenteSistema } from "../store/dokument/akcije"
 import { IDokument } from "../store/dokument/tipovi";
 
 interface KreirajAktivnostFormaDokumentaProps {

@@ -9,7 +9,6 @@ const inicijalnoStanje: IKorisnikStanje = {
 
 // REDUCER
 const korisnikReducer = (state = inicijalnoStanje, action: KorisnikAkcije): IKorisnikStanje => {
-    console.log(state)
     switch (action.type) {
         case PRIJAVA:
             return { ...state, korisnik: action.payload }

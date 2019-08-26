@@ -3,7 +3,6 @@ import { IAktivnost, IProces, ITok, IUslovTranzicije } from "../store/proces/tip
 import { OmoguciDodavanjeAktivnosti, SacuvajSekvencijalnuAktivnost, OmoguciDodavanjeAktivnostiUPodprocesu, DodajTranziciju, SacuvajParalelnuAktivnost } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 import { Granjanje } from "./Granjanje";
-import { string } from "prop-types";
 
 interface AktivnostProps {
     proces: IProces,

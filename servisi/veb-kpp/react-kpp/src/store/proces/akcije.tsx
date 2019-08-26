@@ -216,7 +216,7 @@ export const SacuvajTokoveZaGlavniProces = ({ id, tokovi }: { id: number, tokovi
       tip: TIP_PORUKE[0],
       tekst: response.data
     } as IPoruka));
-    ObrisiProcesIzStanja();
+    store.dispatch(obrisiProces());
   }).catch(function (error) {
     store.dispatch(sacuvajPoruku({
       tip: TIP_PORUKE[1],
