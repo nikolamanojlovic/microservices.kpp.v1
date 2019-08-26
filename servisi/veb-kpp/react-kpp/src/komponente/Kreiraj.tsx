@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Proces from "./Proces";
 import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
-import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch, SacuvajTokoveZaProces, ObrisiProcesIzStanja } from "../store/proces/akcije";
+import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch, SacuvajTokoveZaProces, ObrisiProcesIzStanja, SacuvajTokoveZaGlavniProces } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
 
 // QUICK FIX
@@ -36,7 +36,7 @@ class Kreiraj extends Component<Props> {
 
         this._sacuvajPodproceseKojiNisuUSistemu();
 
-        SacuvajTokoveZaProces({ id: proces!.idProcesa, tokovi: proces!.tokovi})
+        SacuvajTokoveZaGlavniProces({ id: proces!.idProcesa, tokovi: proces!.tokovi})
         this.setState({sacuvan: true});
     }
 

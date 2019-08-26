@@ -210,6 +210,17 @@ export const SacuvajTokoveZaProces = ({ id, tokovi }: { id: number, tokovi: Arra
   });
 }
 
+export const SacuvajTokoveZaGlavniProces = ({ id, tokovi }: { id: number, tokovi: Array<ITok> }) => {
+  Axios.post(API_PROCESI + "/KreirajKontroler/SacuvajTokoveZaProces/" + id, tokovi).then(function(response) {
+    ObrisiProcesIzStanja();
+  }).catch(function (error) {
+    store.dispatch(sacuvajPoruku({
+      tip: TIP_PORUKE[1],
+      tekst: error.response.data
+    } as IPoruka));
+  });
+}
+
 
 export const VratiSveAktivnostiSistema = () => {
   Axios.get(API_PROCESI + "/PomocniKontroler/VratiAktivnostiSistema")
