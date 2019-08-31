@@ -139,7 +139,35 @@ namespace mikroservisprocesi.Domen
                     Naziv = "AEP датотека",
                     Opis = "Пројекат који садржи сцене."
                 }
-            });
+            },
+             new
+             {
+                 IDDokumenta = 102,
+                 SifraDokumenta = "МПГ",
+                 Naziv = "Звук",
+                 Opis = "Пратећа музика и глас",
+                 Tip = "mp3",
+                 Stavke = new
+                 {
+                     RBStavke = 1,
+                     Naziv = "MP3 датотека",
+                     Opis = "Датотека која садржи звук."
+                 }
+             },
+              new
+              {
+                  IDDokumenta = 103,
+                  SifraDokumenta = "РКЛ",
+                  Naziv = "Реклама",
+                  Opis = "Финална анимација за клијентаФинална анимација за клијента",
+                  Tip = "mov",
+                  Stavke = new
+                  {
+                      RBStavke = 1,
+                      Naziv = "MOV датотека",
+                      Opis = "Датотека која садржи финалну анимацију."
+                  }
+              });
         }
     }
 }
