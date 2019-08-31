@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace mikroservisprocesi.Domen
 {
@@ -16,6 +18,8 @@ namespace mikroservisprocesi.Domen
         [Key, Column("id_aktivnosti", Order = 2)]
         public long IDAktivnosti { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public AktivnostUToku AktivnostUToku { get; set; }
 
         [Key, Column("vreme_od", Order = 3)]
