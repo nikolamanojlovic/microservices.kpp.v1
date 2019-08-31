@@ -51,9 +51,21 @@ class Tok extends Component<Props, TokStanje> {
         let { tok } = this.props;
         this.props.nadproces ? OmoguciDodavanjeAktivnostiUPodprocesu(false) : OmoguciDodavanjeAktivnosti(false);
 
-        let aktivnostiSistema = this.props.aktivnostiSistema.filter(e => tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined);
+        let aktivnostiSistema = this.props.aktivnostiSistema != null ? this.props.aktivnostiSistema.filter(e => tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined) : [];
+
+
+        let podprocesiSistema: Array<IProces> = [];
+
+        if (this.props.podprocesiSistema != null) {
+            if (tok.podprocesiUToku === null) {
+                podprocesiSistema = this.props.podprocesiSistema;
+            } else {
+                podprocesiSistema = this.props.podprocesiSistema.filter(e => tok.podprocesiUToku.find(m => { return m.idProcesa === e.idProcesa }) === undefined)
+            }
+        }
+
         this.setState({
-            ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={tok} aktivnostiSistema={aktivnostiSistema} podprocesiSistema={this.props.podprocesiSistema}
+            ...this.state, aktivnostiUToku: <Aktivnost proces={this.props.proces} tok={tok} aktivnostiSistema={aktivnostiSistema} podprocesiSistema={podprocesiSistema}
                 obrisiStanje={() => this._obrisiStanje()} omoguciPromenu={() => this._daLiOmogucitiDodavanjeAktivnosti()} aktivnostPodprocesa={this.props.nadproces !== undefined} />
         })
     }
@@ -105,9 +117,19 @@ class Tok extends Component<Props, TokStanje> {
             let { tok } = this.props;
             let aktivnostiSistema = this.props.aktivnostiSistema !== null && tok.aktivnostiUToku !== null ? this.props.aktivnostiSistema.filter(e => tok.aktivnostiUToku.find(m => { return m.idAktivnosti === e.idAktivnosti }) === undefined) : [];
 
+            let podprocesiSistema: Array<IProces> = [];
+
+            if (this.props.podprocesiSistema != null) {
+                if (tok.podprocesiUToku === null) {
+                    podprocesiSistema = this.props.podprocesiSistema;
+                } else {
+                    podprocesiSistema = this.props.podprocesiSistema.filter(e => tok.podprocesiUToku.find(m => { return m.idProcesa === e.idProcesa }) === undefined)
+                }
+            }
+
             return (<div className="tok-funkcionalnosti">
                 {
-                    this.props.omoguciDodavanjeAktivnosti && aktivnostiSistema.length > 0 ?
+                    this.props.omoguciDodavanjeAktivnosti && (aktivnostiSistema.length > 0 || podprocesiSistema.length > 0) ?
                         <svg className="input input-tok-dodaj-aktivnost" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" onClick={() => this._dodajSekvencijalnuAktivnost()}>
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
                         </svg> : <span />
@@ -173,7 +195,7 @@ class Tok extends Component<Props, TokStanje> {
                             <div className="aktivnost-kontejner">
                                 <div className="aktivnost">
                                     <div className="aktivnost-forma">
-                                        <p className="aktivnost-naziv">{put.naziv} (процес)</p>
+                                        <p className="aktivnost-naziv">{put.naziv} - процес</p>
                                     </div>
                                 </div>
                             </div>
@@ -204,18 +226,6 @@ class Tok extends Component<Props, TokStanje> {
             return podprocesiSistema.find(m => e.idProcesa === m.idProcesa) !== undefined;
         })
     }
-
-    /*
-    _vratiIzlazneDokumente() : Array<IDokument> {
-        let { dokumenti, izlazni } = this.props;
-
-        if ( dokumenti ) {
-            return dokumenti.filter(e => {
-                return izlazni.find(i => { return i.idDokumenta === e.idDokumenta}) === undefined
-            })
-        }
-        return [];
-    }*/
 
     render() {
         return (

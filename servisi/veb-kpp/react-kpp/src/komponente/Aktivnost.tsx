@@ -29,6 +29,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
 
     state: Readonly<AktivnostStanje> = {
         izabrana: this.props.aktivnostiSistema ? this.props.aktivnostiSistema![0] : undefined,
+        izabranProces: this.props.aktivnostiSistema ? undefined : (this.props.podprocesiSistema ? this.props.podprocesiSistema[0] : undefined),
         uslov: "",
         usloviTranzicije: [],
         granjanje: undefined
@@ -43,6 +44,7 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
     }
 
     _promeniIzabranuAktivnost(e: FormEvent<HTMLSelectElement>) {
+        console.log(e.currentTarget.value)
         let aktivnost = this.props.aktivnostiSistema![parseInt(e.currentTarget.value)];
         let ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0;
 
@@ -67,8 +69,8 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
                 nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabrana!.idAktivnosti, tip: TIP_TRANZICIJE[1],
                 uslov: this.state.uslov, uslovTranzicije: this.state.usloviTranzicije
             });
-        } else if ( izabranProces ) {
-            SacuvajParalelnuAktivnost({proces: proces, tok: tok, podproces: izabranProces});
+        } else if (izabranProces) {
+            SacuvajParalelnuAktivnost({ proces: proces, tok: tok, podproces: izabranProces });
             DodajTranziciju({
                 nadproces: proces, nadtok: tok, ulazniProces: proces, ulazniTok: tok, idUlaza: izabranProces.idProcesa, tip: TIP_TRANZICIJE[1],
                 uslov: "", uslovTranzicije: []
@@ -84,13 +86,17 @@ export class Aktivnost extends Component<Props, AktivnostStanje> {
         let ofset = this.props.aktivnostiSistema ? this.props.aktivnostiSistema!.length : 0;
         let opcije: Array<JSX.Element> = [];
 
-        this.props.aktivnostiSistema!.map(function (e, i) {
-            opcije.push(<option key={i} value={i}>{e.naziv}</option>);
-        })
+        if (this.props.aktivnostiSistema) {
+            this.props.aktivnostiSistema.map(function (e, i) {
+                opcije.push(<option key={i} value={i}>{e.naziv}</option>);
+            })
+        }
 
-        this.props.podprocesiSistema!.map(function (e, i) {
-            opcije.push(<option key={i + ofset} value={i + ofset}>{e.naziv + " + "}</option>)
-        })
+        if (this.props.podprocesiSistema) {
+            this.props.podprocesiSistema!.map(function (e, i) {
+                opcije.push(<option key={i + ofset} value={i + ofset}>{e.naziv} - процес</option>)
+            })
+        }
 
         return opcije;
     }
