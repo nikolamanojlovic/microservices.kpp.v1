@@ -22,13 +22,13 @@ export class Granjanje extends Component<Props, GranjanjeStanje> {
     state: Readonly<GranjanjeStanje> = {
         uslov: "",
         usloviElementi: [
-            <form data-key={0} className="granjanje-uslovi-input" onChange={(e: FormEvent<HTMLFormElement>) => this._obradiPromenu(e)}>
+            <form key={0} data-key={0} className="granjanje-uslovi-input" onChange={(e: FormEvent<HTMLFormElement>) => this._obradiPromenu(e)}>
                 <input className="input-tekst input-kreiraj input-granjanje-uslov" name="uslov" type="text" />
                 <select className="input-tekst input-kreiraj input-granjanje-uslov" name="aktivnost" disabled={true}>
                     <option key={-1} value={SELEDECA}>{SELEDECA}</option>
                 </select>
             </form>,
-            <form data-key={1} className="granjanje-uslovi-input" onChange={(e: FormEvent<HTMLFormElement>) => this._obradiPromenu(e)}>
+            <form key={1} data-key={1} className="granjanje-uslovi-input" onChange={(e: FormEvent<HTMLFormElement>) => this._obradiPromenu(e)}>
                 <input className="input-tekst input-kreiraj input-granjanje-uslov" name="uslov" type="text" />
                 <select className="input-tekst input-kreiraj input-granjanje-uslov" name="aktivnost" >
                     {

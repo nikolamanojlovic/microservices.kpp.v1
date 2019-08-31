@@ -11,7 +11,6 @@ const inicijalnoStanje: IProcesStanje = {
 
 // REDUCER
 const procesReducer = (state = inicijalnoStanje, action: ProcesAkcije): IProcesStanje => {
-    console.log(state)
     switch (action.type) {
         case SACUVAJ_PROCES:
             return { ...state, proces: action.payload };
