@@ -8,6 +8,7 @@ import { Poruka } from "./Poruka";
 import { IPoruka } from "../store/poruke/tipovi";
 import { OmoguciDodavanjeAktivnosti, ObrisiProces, VratiKrajnjuAktivnost, DodajTranziciju, OmoguciDodavanjeAktivnostiUPodprocesu, SacuvajTranzicijeZaProces, SacuvajProcesBezDispatch, SacuvajTokoveZaProces, ObrisiProcesIzStanja, SacuvajTokoveZaGlavniProces } from "../store/proces/akcije";
 import { TIP_TRANZICIJE } from "../pomocnici/Konstante";
+import { SacuvajPoruku } from "../store/poruke/akcije";
 
 // QUICK FIX
 interface KreirajStanje {
@@ -26,16 +27,16 @@ class Kreiraj extends Component<Props> {
         let { proces } = this.props;
         let tok = this.props.proces!.tokovi[0];
 
+        this._sacuvajPodproceseKojiNisuUSistemu();
+
         OmoguciDodavanjeAktivnosti(false);
         OmoguciDodavanjeAktivnostiUPodprocesu(false);
 
         VratiKrajnjuAktivnost({ proces: proces!, tok: tok });
         DodajTranziciju({ nadproces: proces!, nadtok: tok, ulazniProces: proces!, ulazniTok: tok, idUlaza: 1, tip: TIP_TRANZICIJE[1], uslov: "", uslovTranzicije: [] });
 
-        this._sacuvajPodproceseKojiNisuUSistemu();
-
-        SacuvajTokoveZaGlavniProces({ id: proces!.idProcesa, tokovi: proces!.tokovi})
-        this.setState({kljuc: this.state.kljuc+1});
+        SacuvajTokoveZaGlavniProces({ id: proces!.idProcesa, tokovi: proces!.tokovi })
+        this.setState({ kljuc: this.state.kljuc + 1 });
     }
 
     _sacuvajPodproceseKojiNisuUSistemu() {
@@ -53,7 +54,7 @@ class Kreiraj extends Component<Props> {
                     podprocesiKojiNisuIzBE.forEach(p => {
                         let podproces: IProces | undefined = SacuvajProcesBezDispatch({ naziv: p.naziv, kategorija: p.kategorija, opis: p.opis });
                         if (podproces) {
-                            SacuvajTokoveZaProces( { id: podproces.idProcesa, tokovi: podproces.tokovi });
+                            SacuvajTokoveZaProces({ id: podproces.idProcesa, tokovi: podproces.tokovi });
                             SacuvajTranzicijeZaProces({ id: podproces.idProcesa, tranzicije: p.tranzicije })
                         }
                     })
