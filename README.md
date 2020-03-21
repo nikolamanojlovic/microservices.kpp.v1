@@ -27,3 +27,9 @@ Basic app for the creation of workflows with service-oriented architecture.
 ## Dockerization
 
 ![Architecture Stack-Dockerization](https://user-images.githubusercontent.com/17787973/77230935-2947e500-6b98-11ea-9ca2-ed9d969fa7fe.png)
+
+## UI Mock
+
+![UI-LogIn](https://user-images.githubusercontent.com/17787973/77231073-df133380-6b98-11ea-9c52-e2ce7258fe98.png)
+
+
